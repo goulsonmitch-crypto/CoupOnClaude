@@ -17,11 +17,12 @@ function closeRulesOverlay() {
   document.body.style.overflow = '';
 }
 function switchOverlayTab(tab) {
-  const isStd = tab === 'standard';
-  document.getElementById('ov-tab-std').classList.toggle('active', isStd);
-  document.getElementById('ov-tab-dc').classList.toggle('active', !isStd);
-  document.getElementById('ov-rules-std').style.display = isStd ? '' : 'none';
-  document.getElementById('ov-rules-dc').style.display  = isStd ? 'none' : '';
+  ['std','dc','blitz'].forEach(t => {
+    const btn = document.getElementById('ov-tab-'+t);
+    const body = document.getElementById('ov-rules-'+(t==='std'?'std':t));
+    if (btn) btn.classList.toggle('active', tab === (t==='std'?'standard':t));
+    if (body) body.style.display = tab === (t==='std'?'standard':t) ? '' : 'none';
+  });
 }
 </script>
 <style>
@@ -741,6 +742,59 @@ html, body { height: 100%; background: var(--bg); color: var(--text); font-famil
 @keyframes flashOut { to { opacity:0; transform:translateY(-12px) scale(0.95); } }
 @keyframes deathShake { 0%,100%{transform:translateX(0)} 25%{transform:translateX(-8px)} 75%{transform:translateX(8px)} }
 @keyframes challengeShake { 0%,100%{transform:translateX(0) rotate(0)} 25%{transform:translateX(-5px) rotate(-1deg)} 75%{transform:translateX(5px) rotate(1deg)} }
+
+/* ── SCREEN BORDER PULSE (challenge flash Option E) ── */
+#screen-border-flash { position:fixed; inset:0; z-index:9500; pointer-events:none; border:0px solid transparent; border-radius:0; }
+@keyframes borderPulse { 0%{box-shadow:inset 0 0 0 0 rgba(192,57,43,0)} 15%{box-shadow:inset 0 0 0 8px rgba(231,76,60,0.85)} 35%{box-shadow:inset 0 0 0 2px rgba(192,57,43,0.3)} 50%{box-shadow:inset 0 0 0 8px rgba(231,76,60,0.85)} 70%{box-shadow:inset 0 0 0 2px rgba(192,57,43,0.3)} 85%{box-shadow:inset 0 0 0 8px rgba(231,76,60,0.85)} 100%{box-shadow:inset 0 0 0 0 rgba(192,57,43,0)} }
+.border-pulse-anim { animation:borderPulse 1.2s ease forwards !important; }
+
+/* ── VERDICT STAMP (card reveal Option C) ── */
+.verdict-stamp { position:fixed; left:50%; top:44%; transform:translate(-50%,-50%) rotate(-8deg) scale(0); z-index:9400; pointer-events:none; font-family:'Cinzel',serif; font-size:clamp(2rem,7vw,3.5rem); font-weight:700; letter-spacing:0.18em; padding:0.4rem 1.2rem; border-radius:6px; border:4px solid; text-align:center; line-height:1.1; }
+.verdict-stamp.bluff { color:#ff4444; border-color:#ff4444; background:rgba(255,68,68,0.1); text-shadow:0 0 20px rgba(255,68,68,0.6); }
+.verdict-stamp.honest { color:#44ff88; border-color:#44ff88; background:rgba(68,255,136,0.08); text-shadow:0 0 20px rgba(68,255,136,0.5); }
+@keyframes stampIn { 0%{transform:translate(-50%,-50%) rotate(-8deg) scale(2.5);opacity:0} 30%{transform:translate(-50%,-50%) rotate(-8deg) scale(0.92);opacity:1} 40%{transform:translate(-50%,-50%) rotate(-8deg) scale(1.06)} 50%{transform:translate(-50%,-50%) rotate(-8deg) scale(1)} 80%{opacity:1} 100%{opacity:0} }
+.verdict-stamp.show { animation:stampIn 2.2s ease forwards; }
+
+/* ── FLYING COIN (coin animation Option G+H) ── */
+.flying-coin { position:fixed; z-index:9300; pointer-events:none; font-size:1.4rem; }
+@keyframes flyArcUp { 0%{opacity:1;transform:translate(0,0) scale(1)} 50%{opacity:1;transform:translate(var(--cx),var(--cy-mid)) scale(1.3)} 100%{opacity:0;transform:translate(var(--cx-end),var(--cy-end)) scale(0.7)} }
+
+/* ── BLITZ MODE badge ── */
+.blitz-badge { display:inline-block; font-family:'Cinzel',serif; font-size:0.6rem; letter-spacing:0.12em; color:#ff9944; padding:0.18rem 0.6rem; border:1px solid rgba(255,153,68,0.5); border-radius:4px; background:rgba(255,153,68,0.1); margin-left:0.5rem; vertical-align:middle; }
+.blitz-timer-urgent { color:#ff6644 !important; animation:blitzUrgent 0.5s ease-in-out infinite; }
+@keyframes blitzUrgent { 0%,100%{opacity:1} 50%{opacity:0.5} }
+
+/* ── POST-GAME REVEAL SCREEN ── */
+#screen-reveal { flex-direction:column; align-items:center; justify-content:flex-start; padding:1.5rem 1rem; overflow-y:auto; gap:1rem; background:radial-gradient(ellipse at 50% 20%,rgba(212,168,67,0.10) 0%,transparent 60%),var(--bg); }
+.reveal-title { font-family:'Cinzel',serif; font-size:clamp(1.2rem,4vw,1.8rem); letter-spacing:0.2em; color:var(--gold); text-align:center; }
+.reveal-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(160px,1fr)); gap:0.8rem; width:100%; max-width:700px; }
+.reveal-card { background:var(--surface); border:1px solid var(--border); border-radius:10px; padding:0.9rem; position:relative; }
+.reveal-card.winner-card { border-color:var(--gold); box-shadow:0 0 20px rgba(212,168,67,0.2); }
+.reveal-player-name { font-family:'Cinzel',serif; font-size:0.72rem; letter-spacing:0.15em; color:var(--gold-dim); margin-bottom:0.5rem; }
+.reveal-cards-row { display:flex; gap:0.4rem; flex-wrap:wrap; margin-bottom:0.5rem; }
+.reveal-role-chip { font-size:0.65rem; padding:0.2rem 0.5rem; border-radius:4px; border:1px solid; }
+.reveal-role-chip.starting { border-color:rgba(255,255,255,0.2); color:var(--text-dim); background:var(--surface2); }
+.reveal-role-chip.alive { border-color:var(--green); color:var(--green-light); background:rgba(30,132,73,0.15); }
+.reveal-role-chip.dead { border-color:rgba(192,57,43,0.4); color:var(--red-bright); background:rgba(192,57,43,0.08); text-decoration:line-through; opacity:0.7; }
+.reveal-bluff-line { font-size:0.62rem; color:var(--gold-light); margin-top:0.3rem; }
+.reveal-stats-grid { display:grid; grid-template-columns:repeat(2,1fr); gap:0.6rem; width:100%; max-width:400px; }
+.reveal-stat-box { background:var(--surface); border:1px solid var(--border); border-radius:8px; padding:0.8rem; text-align:center; }
+.reveal-stat-num { font-family:'Cinzel',serif; font-size:1.6rem; color:var(--gold); }
+.reveal-stat-lbl { font-size:0.6rem; color:var(--text-dim); letter-spacing:0.08em; text-transform:uppercase; margin-top:0.2rem; }
+.bluff-bar-wrap { width:100%; max-width:400px; }
+.bluff-bar-row { margin-bottom:0.5rem; }
+.bluff-bar-label { display:flex; justify-content:space-between; font-size:0.65rem; color:var(--text-dim); margin-bottom:0.2rem; }
+.bluff-bar-track { height:6px; background:var(--surface3); border-radius:3px; overflow:hidden; }
+.bluff-bar-fill { height:100%; border-radius:3px; background:var(--gold); transition:width 1s ease; }
+
+/* ── RIGHT-CLICK CONTEXT MENU ── */
+#ctx-menu { position:fixed; z-index:9200; background:var(--surface); border:1px solid var(--border-gold); border-radius:6px; padding:4px; min-width:150px; box-shadow:0 8px 24px rgba(0,0,0,0.7); display:none; }
+.ctx-item { padding:6px 12px; font-size:0.75rem; color:var(--text); cursor:pointer; border-radius:3px; font-family:'JetBrains Mono',monospace; transition:background 0.12s; }
+.ctx-item:hover { background:var(--surface2); color:var(--gold); }
+.ctx-item.ctx-danger { color:var(--red-bright); }
+.ctx-item.ctx-danger:hover { background:rgba(192,57,43,0.15); }
+.ctx-item.ctx-disabled { opacity:0.35; cursor:not-allowed; pointer-events:none; }
+.ctx-sep { height:1px; background:var(--border); margin:3px 0; }
 .settings-btn { background:var(--surface2); border:1px solid var(--border); color:var(--text-dim); cursor:pointer; padding:0.3rem 0.55rem; border-radius:4px; font-size:0.85rem; transition:all 0.15s; }
 .settings-btn:hover { color:var(--gold); border-color:var(--gold-dim); }
 .settings-btn.quit-btn { color:var(--red-bright); border-color:rgba(231,76,60,0.4); }
@@ -822,6 +876,19 @@ html, body { height: 100%; background: var(--bg); color: var(--text); font-famil
         <div class="lr-tabs">
           <button class="lr-tab active" id="tab-standard" onclick="switchRulesTab('standard')">Standard</button>
           <button class="lr-tab" id="tab-dc" onclick="switchRulesTab('dc')">🌹 Double Contessa</button>
+          <button class="lr-tab" id="tab-blitz" onclick="switchRulesTab('blitz')">⚡ Blitz</button>
+        </div>
+
+        <!-- BLITZ RULES -->
+        <div class="lr-body lr-body-std" id="rules-blitz" style="display:none">
+          <p><strong>⚡ Blitz Mode</strong> — all timers cut in half. Same rules as Standard. Pure instinct, no waiting.</p>
+          <ul>
+            <li>⏱ <strong>Your turn:</strong> 10 seconds</li>
+            <li>⏱ <strong>Respond to actions:</strong> 8 seconds</li>
+            <li>⏱ <strong>DC holder turn:</strong> 6 seconds</li>
+          </ul>
+          <div class="rules-section-head">PRESSURE</div>
+          <p>Time out on your turn → auto-Income. Time out on a response → auto-Pass. All bluffing, challenges and blocks work exactly as in Standard.</p>
         </div>
 
         <!-- STANDARD RULES -->
@@ -868,7 +935,7 @@ html, body { height: 100%; background: var(--bg); color: var(--text); font-famil
     <div class="landing-center">
       <div>
         <div class="logo-main">COUP</div>
-        <div class="logo-tagline">VERSION 52</div>
+        <div class="logo-tagline">VERSION 55</div>
         <div class="card-showcase">
           <div class="showcase-card duke">👑<span class="sc-name">Duke</span></div>
           <div class="showcase-card assassin">🗡️<span class="sc-name">Assassin</span></div>
@@ -898,6 +965,7 @@ html, body { height: 100%; background: var(--bg); color: var(--text); font-famil
     <div class="rules-overlay-tabs">
       <button class="lr-tab active" id="ov-tab-std" onclick="switchOverlayTab('standard')">Standard</button>
       <button class="lr-tab" id="ov-tab-dc" onclick="switchOverlayTab('dc')">🌹 Double Contessa</button>
+      <button class="lr-tab" id="ov-tab-blitz" onclick="switchOverlayTab('blitz')">⚡ Blitz</button>
     </div>
     <div class="rules-overlay-body">
       <div class="lr-body lr-body-std" id="ov-rules-std">
@@ -918,6 +986,17 @@ html, body { height: 100%; background: var(--bg); color: var(--text); font-famil
           <li><strong>Challenge fails</strong> → challenger loses 1; your card returns to deck, you draw fresh</li>
         </ul>
         <p><strong>Double loss:</strong> Fail a challenge against the Assassin <em>or</em> lose a Contessa bluff while being assassinated — you lose both influences at once.</p>
+      </div>
+      <div class="lr-body lr-body-std" id="ov-rules-blitz" style="display:none">
+        <p><strong>⚡ Blitz Mode</strong> — same rules as Standard, but all timers are cut in half. No analysis paralysis. No waiting. Pure instinct.</p>
+        <ul>
+          <li>⏱ <strong>Your turn timer:</strong> 10 seconds (down from 20)</li>
+          <li>⏱ <strong>Response timer:</strong> 8 seconds (down from 15)</li>
+          <li>⏱ <strong>DC holder timer:</strong> 6 seconds (down from 12)</li>
+        </ul>
+        <div class="rules-section-head">STRATEGY</div>
+        <p>If you don't act in time, the game auto-plays Income for you. If you fail to respond to another player's action in time, you auto-pass. Slow players get punished.</p>
+        <p>All other rules are identical to Standard mode — bluffing, challenges, blocks, and eliminations work the same way.</p>
       </div>
       <div class="lr-body lr-body-dc" id="ov-rules-dc" style="display:none">
         <p>Most standard rules apply, with two twists:</p>
@@ -1048,6 +1127,31 @@ html, body { height: 100%; background: var(--bg); color: var(--text); font-famil
     <button class="btn primary" id="rematch-btn" onclick="rematch()">Rematch</button>
     <button class="btn" id="back-to-lobby-btn" onclick="backToWaitingRoom()">⬅ Waiting Room</button>
     <button class="btn ghost" id="main-menu-btn" onclick="goHome()">Main Menu</button>
+  </div>
+</div>
+
+<!-- SCREEN BORDER FLASH OVERLAY -->
+<div id="screen-border-flash"></div>
+
+<!-- RIGHT-CLICK CONTEXT MENU -->
+<div id="ctx-menu">
+  <div class="ctx-item" id="ctx-steal" onclick="ctxAction('steal')">⚓ Steal</div>
+  <div class="ctx-item" id="ctx-assassinate" onclick="ctxAction('assassinate')">🗡️ Assassinate (3🪙)</div>
+  <div class="ctx-sep"></div>
+  <div class="ctx-item ctx-danger" id="ctx-coup" onclick="ctxAction('coup')">💥 Coup (7🪙)</div>
+</div>
+
+<!-- POST-GAME REVEAL SCREEN -->
+<div id="screen-reveal" class="screen" style="display:none;flex-direction:column;align-items:center;justify-content:flex-start;padding:1.5rem 1rem;overflow-y:auto;gap:1rem;">
+  <div class="reveal-title">⚔ THE DUST SETTLES</div>
+  <div id="reveal-winner-banner" style="font-family:'Cinzel',serif;font-size:clamp(1rem,3vw,1.4rem);color:var(--gold-light);text-align:center;"></div>
+  <div class="reveal-grid" id="reveal-grid"></div>
+  <div style="font-family:'Cinzel',serif;font-size:0.7rem;letter-spacing:0.18em;color:var(--gold-dim);text-align:center;margin-top:0.3rem;">BLUFF SUCCESS RATES</div>
+  <div class="bluff-bar-wrap" id="reveal-bluff-bars"></div>
+  <div style="font-family:'Cinzel',serif;font-size:0.7rem;letter-spacing:0.18em;color:var(--gold-dim);text-align:center;">GAME STATS</div>
+  <div class="reveal-stats-grid" id="reveal-stats-grid"></div>
+  <div style="display:flex;gap:0.6rem;margin-top:0.8rem;flex-wrap:wrap;justify-content:center;">
+    <button class="btn primary" onclick="revealToWinner()">Continue →</button>
   </div>
 </div>
 
@@ -1459,7 +1563,8 @@ function randomUnusedCharacter(taken) {
 // ════════════════════════════════════════
 // GAME MODE HELPERS
 // ════════════════════════════════════════
-function isDCMode() { return (G ? G.mode : selectedGameMode) === 'doubleContessa'; }
+function isDCMode()    { return (G ? G.mode : selectedGameMode) === 'doubleContessa'; }
+function isBlitzMode() { return (G ? G.mode : selectedGameMode) === 'blitz'; }
 
 // Does this player hold a "double Contessa"? (Both alive cards are Contessa.)
 function hasDoubleContessa(p) {
@@ -1497,7 +1602,8 @@ function setGameMode(mode) {
     G.mode = mode;
     fbBroadcastAll({ type: 'mode_change', mode });
     broadcastLobbyUpdate();
-    flashBanner(mode === 'doubleContessa' ? '🌹🌹 Double Contessa Mode activated' : '⚔️ Standard Mode activated', 'action-flash', { duration: 2000 });
+    const modeLabel = mode === 'doubleContessa' ? '🌹🌹 Double Contessa Mode activated' : mode === 'blitz' ? '⚡ Blitz Mode activated' : '⚔️ Standard Mode activated';
+    flashBanner(modeLabel, 'action-flash', { duration: 2000 });
   }
   // Re-render waiting room if visible
   const active = document.querySelector('.screen.active');
@@ -1537,11 +1643,14 @@ function applyDCTheme(active) {
 
 function modeSelectHtml() {
   const isDC = selectedGameMode === 'doubleContessa';
+  const isBlitz = selectedGameMode === 'blitz';
+  const isStd = !isDC && !isBlitz;
   return `<div class="mode-select">
     <div class="mode-select-label">GAME MODE</div>
     <div class="mode-btns">
-      <button class="mode-btn${!isDC?' active':''}" data-mode="standard" onclick="setGameMode('standard')">Standard</button>
+      <button class="mode-btn${isStd?' active':''}" data-mode="standard" onclick="setGameMode('standard')">Standard</button>
       <button class="mode-btn${isDC?' dc-active-btn':''}" data-mode="doubleContessa" onclick="setGameMode('doubleContessa')">🌹🌹 Double Contessa</button>
+      <button class="mode-btn${isBlitz?' active':''}" data-mode="blitz" onclick="setGameMode('blitz')" style="${isBlitz?'border-color:#ff9944;color:#ff9944;background:rgba(255,153,68,0.12);':''}">⚡ Blitz</button>
     </div>
   </div>`;
 }
@@ -2034,6 +2143,7 @@ function revealBanner(actorName, role, isTrue, isMe=false) {
         </div>
       </div>`;
     flashBanner('', 'block-flash', { html: html_, duration: 2400 });
+    setTimeout(() => showVerdictStamp(true), pace(400));
   } else {
     const spicy = SETTINGS.spicy ? 'FUCKING ' : '';
     const headline = `${whoUpper} ${isMe?'DO':'DOES'} NOT HAVE A ${spicy}${roleName}!`;
@@ -2047,6 +2157,7 @@ function revealBanner(actorName, role, isTrue, isMe=false) {
         </div>
       </div>`;
     flashBanner('', 'death-flash', { html: html_, duration: 2700 });
+    setTimeout(() => showVerdictStamp(false), pace(400));
   }
 }
 
@@ -2212,7 +2323,7 @@ function swapRevealedCardForFresh(player, role) {
         swapped = true;
         G.deck.unshift(c.role);
         if (isDCMode()) { shuffle(G.deck); addEv('🔀 Deck reshuffled','system'); flashBanner('🔀 Deck Reshuffled','action-flash',{duration:1300}); speak('Deck reshuffled.'); }
-        const newRole = G.deck.pop();
+        const newRole = G.deck.pop() || 'duke'; // fallback if deck is empty (edge case in large games)
         return { role: newRole, alive: true, justSwapped: Date.now() };
       }
       return c;
@@ -3348,7 +3459,10 @@ function onGuestMsg(d, gid) {
       G.players.splice(lastCpuIdx, 1);
       renumberCPUs();
     }
-    const realPid = 'p' + G.players.filter(p => !p.isCPU).length;
+    // Find next available non-CPU player ID (avoids collision when a player leaves and is replaced)
+    const usedNums = new Set(G.players.filter(p=>!p.isCPU).map(p=>parseInt(p.id.replace('p',''))||0));
+    let _nextN = 1; while (usedNums.has(_nextN)) _nextN++;
+    const realPid = 'p' + _nextN;
     // Add player with real pid
     G.players.push({ id: realPid, name: d.name, playerName: d.name, coins: 2, cards: [], eliminated: false, isCPU: false,
       character: null, characterVariant: null, displayName: d.name, status: 'choosing' });
@@ -3605,6 +3719,8 @@ function initGame(players, roomCode) {
 function dealCards() {
   const deck = shuffle([...FULL_DECK]); G.deck = deck;
   G.players.forEach(p=>{p.cards=[{role:deck.pop(),alive:true},{role:deck.pop(),alive:true}];p.coins=2;p.eliminated=false;});
+  initRoundTracking();
+  requestNotifPermission();
 }
 
 // ════════════════════════════════════════
@@ -3692,6 +3808,11 @@ function renderSeats() {
         <div class="seat-coins"><span class="seat-coins-icon">🪙</span> ${p.coins} <span style="opacity:0.5;font-weight:400">· ${aliveCount}♥</span></div>
         ${youTag}
       </div>`;
+    // Right-click context menu for opponents (not me, not eliminated)
+    if (!isMe && !p.eliminated) {
+      seat.style.pointerEvents = 'auto';
+      seat.addEventListener('contextmenu', e => showCtxMenu(e, p.id));
+    }
     seats.appendChild(seat);
   });
 }
@@ -3908,7 +4029,7 @@ function startTurn() {
   renderGame(); bcastState();
   const cur = G.players[G.currentTurn];
   if (!cur || cur.eliminated) { nextTurn(); return; } // safety guard
-  if (cur.id === ME) { flashBanner(t('your_turn_banner'), 'turn-self'); speak(t('v_your_turn')); }
+  if (cur.id === ME) { flashBanner(t('your_turn_banner'), 'turn-self'); speak(t('v_your_turn')); sendTurnNotification(cur.displayName||cur.name); }
   else { flashBanner(t('name_turn', {name: cur.displayName||cur.name}), 'turn-other'); speak(t('name_turn', {name: cur.displayName||cur.name}) + '.'); }
   // Broadcast turn info to guests so they see banners and CPU thinking indicator
   if (isHost && !isSolo) {
@@ -3922,8 +4043,9 @@ function startTurn() {
     const cpuThinkSec = SETTINGS.fastCPU ? Math.max(1,Math.round(pace(2000)/1000)) : Math.max(3,Math.round(pace(4000)/1000));
     startTimer(cpuThinkSec, `${cur.displayName||cur.name} thinking…`, ()=>{ try { doCPUTurn(cur); } catch(e) { console.error('doCPUTurn error:', e); nextTurn(); } });
   } else if (cur.id === ME) {
-    const turnSec = isDCHolder ? 12 : 20;
-    startTimer(turnSec, isDCHolder ? '🌹🌹 Your turn (DC)' : 'Your turn', ()=>{
+    const _blitz = isBlitzMode();
+    const turnSec = isDCHolder ? (_blitz?6:12) : (_blitz?10:20);
+    startTimer(turnSec, isDCHolder ? '🌹🌹 Your turn (DC)' : (_blitz?'⚡ Your turn':' Your turn'), ()=>{
       if (turnActionTaken) return;
       turnActionTaken = true;
       if (cur.coins >= 10) { const opps=G.players.filter(p=>p.id!==cur.id&&!p.eliminated); if(opps.length){const tgt=opps[Math.floor(Math.random()*opps.length)]; addEv(`<span class="ev-name">${esc(cur.displayName||cur.name)}</span> timed out — auto-Coup`,'system'); flashBanner(t('timed_out_coup',{name:cur.displayName||cur.name,target:tgt.displayName||tgt.name}),'death-flash'); speak(t('v_x_timed_out',{name:cur.displayName||cur.name})); doAction('coup',cur.id,tgt.id); return;} }
@@ -3935,7 +4057,8 @@ function startTurn() {
       flashBanner(t('timed_out_income',{name:cur.displayName||cur.name}),'warn'); speak(t('v_time_up_income')); doAction('income',cur.id,null);
     });
   } else if (isHost) {
-    const turnSec = isDCHolder ? 12 : 20;
+    const _blitz2 = isBlitzMode();
+    const turnSec = isDCHolder ? (_blitz2?6:12) : (_blitz2?10:20);
     startTimer(turnSec,`${cur.displayName||cur.name}'s turn`,()=>{
       if (turnActionTaken) return;
       if (G.players[G.currentTurn]?.id !== cur.id) return;
@@ -3946,7 +4069,7 @@ function startTurn() {
   }
 }
 
-function onMyAction(at, me) {
+function onMyAction(at, me, forcedTargetPid=null) {
   if (turnActionTaken) return; // prevent double-action race condition
   // DC mode: double-Contessa holder cannot take Income or Foreign Aid
   if ((at === 'income' || at === 'foreignAid') && isDCMode() && hasDoubleContessa(me)) {
@@ -3955,9 +4078,16 @@ function onMyAction(at, me) {
   }
   const act=ACTS[at]; if(!act) return;
   if (me.coins<act.cost){toast('Not enough coins!');return;} // check BEFORE locking turnActionTaken
+  if (me.coins>=10&&at!=='coup'){toast('10+ coins — must Coup!');return;}
   turnActionTaken = true;
   stopTimer();
   if (act.target) {
+    // If called from right-click context menu with a preselected target
+    if (forcedTargetPid) {
+      const tgt = G.players.find(p=>p.id===forcedTargetPid&&!p.eliminated);
+      if (!tgt) { turnActionTaken=false; return; }
+      doOrSend(at, forcedTargetPid); return;
+    }
     let tgts=G.players.filter(p=>p.id!==ME&&!p.eliminated);
     // Bug 9 fix: steal only valid against players with coins
     if (at==='steal') tgts = tgts.filter(p=>p.coins>0);
@@ -4057,7 +4187,7 @@ function doAction(at, actorId, targetId) {
       setTimeout(()=>{ if(!pResponders.includes(cpuId)) return; const r=cpuResp(cpuId); recordResp(cpuId,r.r,r.ch||null); }, pace(SETTINGS.fastCPU?900:1800)+Math.random()*pace(800));
     });
     const humanR2=pResponders.filter(pid=>!G.players.find(p=>p.id===pid)?.isCPU);
-    if (humanR2.length>0) startTimer(20,'Respond in',()=>{[...pResponders].forEach(pid=>{if(!G.players.find(p=>p.id===pid)?.isCPU)recordResp(pid,'pass');});});
+    if (humanR2.length>0) startTimer(isBlitzMode()?8:20,'Respond in',()=>{[...pResponders].forEach(pid=>{if(!G.players.find(p=>p.id===pid)?.isCPU)recordResp(pid,'pass');});});
     // All-CPU fast-forward for dcCoupBlockable path (e.g. CPU is coup target with Double Contessa)
     if ((isHost||isSolo) && humanR2.length===0 && pResponders.length>0) {
       setTimeout(()=>{
@@ -4095,7 +4225,7 @@ function doAction(at, actorId, targetId) {
     setTimeout(() => {
       if (!pAction||pAction.type!==at||pAction.actorId!==actorId) return;
       G.priorityResponder = null;
-      const allOthers = G.players.filter(p=>p.id!==actorId&&!p.eliminated&&!pResponders.includes(p.id)).map(p=>p.id);
+      const allOthers = G.players.filter(p=>p.id!==actorId&&!p.eliminated&&!pResponders.includes(p.id)&&!pResponses[p.id]).map(p=>p.id);
       allOthers.forEach(pid => pResponders.push(pid));
       bcastState(); renderGame();
       allOthers.filter(pid=>G.players.find(p=>p.id===pid)?.isCPU).forEach(cpuId=>{
@@ -4103,7 +4233,7 @@ function doAction(at, actorId, targetId) {
       });
       if (!isSolo) { G.players.filter(p=>!p.isCPU&&p.id!==hostPid&&pResponders.includes(p.id)).forEach(p=>{ fbToGuest(p.id,{type:'ask_resp',pAction,opts:getOpts(p.id)}); }); }
       const humansNow = pResponders.filter(pid=>!G.players.find(p=>p.id===pid)?.isCPU);
-      if (humansNow.length>0&&!timerIv) startTimer(15,'Respond in',()=>{[...pResponders].forEach(pid=>{if(!G.players.find(p=>p.id===pid)?.isCPU){addEv(`<span class="ev-name">${esc(G.players.find(p=>p.id===pid)?.displayName||'?')}</span> timed out → passed`,'system');recordResp(pid,'pass');}});});
+      if (humansNow.length>0&&!timerIv) startTimer(isBlitzMode()?8:15,'Respond in',()=>{[...pResponders].forEach(pid=>{if(!G.players.find(p=>p.id===pid)?.isCPU){addEv(`<span class="ev-name">${esc(G.players.find(p=>p.id===pid)?.displayName||'?')}</span> timed out → passed`,'system');recordResp(pid,'pass');}});});
       if (pResponders.length===0){stopTimer();resolveResps();}
       // All-CPU fast-forward for expanded responders (after priority window)
       if ((isHost||isSolo) && humansNow.length===0 && pResponders.length>0) {
@@ -4120,7 +4250,7 @@ function doAction(at, actorId, targetId) {
     setTimeout(()=>{ if(!pResponders.includes(cpuId)) return; const r=cpuResp(cpuId); recordResp(cpuId,r.r,r.ch||null); }, pace(baseDelay)+Math.random()*pace(SETTINGS.fastCPU?700:1300));
   });
   const humanR = pResponders.filter(pid=>!G.players.find(p=>p.id===pid)?.isCPU);
-  if (humanR.length>0) startTimer(20,'Respond in',()=>{[...pResponders].forEach(pid=>{if(!G.players.find(p=>p.id===pid)?.isCPU){addEv(`<span class="ev-name">${esc(G.players.find(p=>p.id===pid)?.displayName||'?')}</span> timed out → passed`,'system');recordResp(pid,'pass');}});});
+  if (humanR.length>0) startTimer(isBlitzMode()?8:20,'Respond in',()=>{[...pResponders].forEach(pid=>{if(!G.players.find(p=>p.id===pid)?.isCPU){addEv(`<span class="ev-name">${esc(G.players.find(p=>p.id===pid)?.displayName||'?')}</span> timed out → passed`,'system');recordResp(pid,'pass');}});});
   // All-CPU fast-forward: when there are no human responders (e.g. host is eliminated, or host is
   // the actor and all other players are CPUs), resolve CPUs immediately instead of waiting 3-5s for
   // their setTimeouts. This is the fix for the endgame freeze when the last human is eliminated.
@@ -4132,10 +4262,25 @@ function doAction(at, actorId, targetId) {
       });
     }, 350);
   }
-  // Safety watchdog: force-pass any still-pending responders after 8s.
-  // Belt-and-suspenders fallback; should rarely fire given the fast-forward above.
+  // CPU catch-up: 1.2s safety net ensures CPUs respond even if main setTimeouts are delayed
+  // (e.g. when a guest human is the actor, Firebase timing can cause CPU timeouts to misfire).
+  // Harmless if CPUs already responded (pResponders.includes check guards double-recordResp).
+  if ((isHost||isSolo) && !isTargetedAttack) {
+    setTimeout(()=>{
+      if (!pAction) return;
+      pResponders.filter(pid=>G.players.find(p=>p.id===pid)?.isCPU).forEach(cpuId=>{
+        if (pResponders.includes(cpuId)) { const r=cpuResp(cpuId); recordResp(cpuId,r.r,r.ch||null); }
+      });
+    }, 1200);
+  }
+  // Safety watchdog: force-pass any still-pending responders.
+  // For non-targeted actions: 5s (reduced from 8s) — CPUs respond within 1.2s catch-up, so
+  // 5s is plenty and prevents long freezes when a guest is actor.
+  // For targeted attacks: pace(5000)+18000ms — priority window (5s) + full visual timer (15s)
+  // + 3s buffer, so the target's countdown runs to zero before auto-pass fires.
   if (isHost || isSolo) {
     if (_respWatchdog) clearTimeout(_respWatchdog);
+    const watchdogDelay = isTargetedAttack ? (pace(5000) + 18000) : 5000;
     _respWatchdog = setTimeout(() => {
       _respWatchdog = null;
       if (!pAction) return; // already resolved
@@ -4143,7 +4288,7 @@ function doAction(at, actorId, targetId) {
       if (!pending.length) return;
       addEv('⚠ Response timed out — auto-passing remaining players', 'system');
       pending.forEach(pid => { if (pResponders.includes(pid)) recordResp(pid, 'pass'); });
-    }, 8000);
+    }, watchdogDelay);
   }
 }
 
@@ -4152,6 +4297,8 @@ function getOpts(pid) {
   const {type,targetId}=pAction;
   // dcBlock phase: the blocker's DC claim can only be challenged or passed
   if (type === 'dcBlock') return pid === pAction.actorId ? [] : ['pass', 'challenge'];
+  // Actor can never respond to their own action
+  if (pid === pAction.actorId) return [];
   const opts=['pass'];
   if (ACTS[type]?.challengeable) opts.push('challenge');
   if (type==='foreignAid') opts.push('block:duke');
@@ -4306,11 +4453,16 @@ function handleChallenge(actorId,challId,reqCard,at,tid) {
   if (!actor||!chall) { console.error('handleChallenge: missing actor or challenger — skipping'); nextTurn(); return; }
   addEv(`<span class="ev-name">${esc(chall.displayName||chall.name)}</span> challenges <span class="ev-name">${esc(actor.displayName||actor.name)}</span>!`,'challenge');
   const challWho = chall.id===ME ? t('you_word') : (chall.displayName||chall.name).toUpperCase();
-  flashBanner(`${challWho} ${chall.id===ME?'CHALLENGE!':'CHALLENGES!'}`, 'challenge-flash');
+  const actorRoleD = CD[reqCard]||{};
+  const challBannerText = `${challWho} ${chall.id===ME?'CHALLENGES':'CHALLENGES'} ${esc(actor.displayName||actor.name).toUpperCase()}'S ${(actorRoleD.name||reqCard).toUpperCase()}!`;
+  flashBanner(challBannerText, 'challenge-flash');
+  pulseScreenBorder();
   speak(chall.id===ME ? t('v_you_challenge') : t('v_x_challenges',{name:chall.displayName||chall.name}));
   const has = actor.cards.some(c=>c.alive&&c.role===reqCard);
   if (has) {
     const d=CD[reqCard];
+    recordChallengeAttempt(challId, false);
+    recordBluffAttempt(actorId, true);
     addEv(`<span class="ev-name">${esc(actor.displayName||actor.name)}</span> reveals ${d.emoji} ${d.name} — challenge fails!`,'challenge');
     setTimeout(()=>{ revealBanner(actor.displayName||actor.name,reqCard,true,actor.id===ME); speak(t('v_x_reveals',{who:actor.id===ME?t('you_word_lower'):(actor.displayName||actor.name),reveals:actor.id===ME?t('reveal_base'):t('reveals_s'),role:t(reqCard)})); }, pace(900));
     swapRevealedCardForFresh(actor,reqCard); bcastState();
@@ -4326,6 +4478,8 @@ function handleChallenge(actorId,challId,reqCard,at,tid) {
     },{autoDrop:willBeDoubleLoss}),pace(3400));
   } else {
     addEv(`<span class="ev-name">${esc(actor.displayName||actor.name)}</span> cannot prove ${reqCard} — bluff called!`,'challenge');
+    recordChallengeAttempt(challId, true);
+    recordBluffAttempt(actorId, false);
     if (actor.caughtBluffing&&reqCard in actor.caughtBluffing) actor.caughtBluffing[reqCard]=true;
     setTimeout(()=>{ revealBanner(actor.displayName||actor.name,reqCard,false,actor.id===ME); const spicy=SETTINGS.spicy?'fucking ':''; speak(t('v_bluff_called',{who:actor.id===ME?t('you_word_lower'):(actor.displayName||actor.name),does_not:actor.id===ME?(t('do_aux')+' '+t('not_aux')).trim():(t('does_aux')+' '+t('not_aux')).trim(),spicy,role:t(reqCard)})); }, pace(900));
     setTimeout(()=>loseInfluence(actorId,'Bluff called — challenge succeeded',()=>nextTurn()),pace(3400));
@@ -4431,6 +4585,7 @@ function handleBlock(actorId,blockerId,blockChar,at,tid) {
        {label:t('accept_block_btn'),cls:'ghost',fn:()=>{
         blkChalPending.delete(ME);
         if(blkChalPending.size===0){
+          blkChalDone=true; // prevent delayed guest challenge from firing after acceptance
           cancelBlkChTimer();
           if(G.blockedActionCount&&at in G.blockedActionCount) G.blockedActionCount[at]++;
           noteContessaBlock(blockerId, blockChar);
@@ -4703,11 +4858,11 @@ function _resolveAction(at,actorId,targetId,opts={}) {
   if (!opts.costAlreadyPaid && at !== 'assassinate') actor.coins=Math.max(0,actor.coins-act.cost);
   const linger=(fn)=>setTimeout(fn,pace(900));
   switch(at) {
-    case 'income':     actor.coins+=1; addEv(`<span class="ev-name">${esc(actor.displayName||actor.name)}</span> takes Income → 🪙${actor.coins}`,'action'); bcastState(); linger(nextTurn); break;
-    case 'foreignAid': actor.coins+=2; addEv(`<span class="ev-name">${esc(actor.displayName||actor.name)}</span> takes Foreign Aid → 🪙${actor.coins}`,'action'); bcastState(); linger(nextTurn); break;
-    case 'tax':        actor.coins+=3; addEv(`<span class="ev-name">${esc(actor.displayName||actor.name)}</span> collects Tax → 🪙${actor.coins}`,'action'); bcastState(); linger(nextTurn); break;
+    case 'income':     actor.coins+=1; addEv(`<span class="ev-name">${esc(actor.displayName||actor.name)}</span> takes Income → 🪙${actor.coins}`,'action'); animateCoinTransfer('__treasury__',actorId,1); bcastState(); linger(nextTurn); break;
+    case 'foreignAid': actor.coins+=2; addEv(`<span class="ev-name">${esc(actor.displayName||actor.name)}</span> takes Foreign Aid → 🪙${actor.coins}`,'action'); animateCoinTransfer('__treasury__',actorId,2); bcastState(); linger(nextTurn); break;
+    case 'tax':        actor.coins+=3; addEv(`<span class="ev-name">${esc(actor.displayName||actor.name)}</span> collects Tax → 🪙${actor.coins}`,'action'); animateCoinTransfer('__treasury__',actorId,3); bcastState(); linger(nextTurn); break;
     case 'steal':
-      if (target){const s=Math.min(2,target.coins);target.coins-=s;actor.coins+=s;addEv(`<span class="ev-name">${esc(actor.displayName||actor.name)}</span> steals 🪙${s} from <span class="ev-tgt">${esc(target.displayName||target.name)}</span>`,'action');flashBanner(`${actor.displayName||actor.name} steals 🪙${s} from ${target.displayName||target.name}`,'coin-flash');speak(t('v_steal_msg',{who:actor.id===ME?t('you_word_lower'):(actor.displayName||actor.name),steals:actor.id===ME?t('steal_base'):t('steals_s'),n:s,coins_word:s===1?t('coin_word'):t('coins_word'),tgt:target.id===ME?t('you_word_lower'):(target.displayName||target.name)}));}
+      if (target){const s=Math.min(2,target.coins);target.coins-=s;actor.coins+=s;addEv(`<span class="ev-name">${esc(actor.displayName||actor.name)}</span> steals 🪙${s} from <span class="ev-tgt">${esc(target.displayName||target.name)}</span>`,'action');flashBanner(`${actor.displayName||actor.name} steals 🪙${s} from ${target.displayName||target.name}`,'coin-flash');animateCoinTransfer(targetId,actorId,s);speak(t('v_steal_msg',{who:actor.id===ME?t('you_word_lower'):(actor.displayName||actor.name),steals:actor.id===ME?t('steal_base'):t('steals_s'),n:s,coins_word:s===1?t('coin_word'):t('coins_word'),tgt:target.id===ME?t('you_word_lower'):(target.displayName||target.name)}));}
       bcastState(); linger(nextTurn); break;
     case 'assassinate':
       if (target&&!target.eliminated){addEv(`<span class="ev-name">${esc(actor.displayName||actor.name)}</span> assassinates <span class="ev-tgt">${esc(target.displayName||target.name)}</span>!`,'death');linger(()=>loseInfluence(targetId,'Assassinated',()=>nextTurn()));}
@@ -4809,9 +4964,15 @@ function doExchange(actorId) {
   fbToGuest(actorId, {type:'ask_exch',pool,needed});
 }
 function applyExchKeep(pid,keep) {
-  const {actor}=afterExchangeCB||{}; afterExchangeCB=null;
+  const {actor,pool}=afterExchangeCB||{}; afterExchangeCB=null;
   const p=actor||G.players.find(pp=>pp.id===pid); if(!p){nextTurn();return;}
   let ki=0; p.cards=p.cards.map(c=>c.alive?{role:keep[ki++],alive:true}:c);
+  // Return unkept drawn cards to deck (pool = alive cards + 2 drawn; keep = what player kept)
+  if (pool) {
+    const ret=[...pool];
+    keep.forEach(r=>{ const i=ret.indexOf(r); if(i!==-1) ret.splice(i,1); });
+    returnCardsToDeck(ret);
+  }
   addEv(`<span class="ev-name">${esc(p.displayName||p.name)}</span> exchanges cards`,'action'); nextTurn();
 }
 function showExchangeUI(pool,needed,actor) {
@@ -4934,7 +5095,13 @@ function showWinner(name, winnerId) {
     }).join('');
     stats.innerHTML=`<div style="font-family:'Cinzel',serif;font-size:0.62rem;letter-spacing:0.2em;color:var(--gold-dim);margin-bottom:0.4rem;">${t('final_standings')}</div><div style="background:var(--surface);border:1px solid var(--border);border-radius:6px;padding:0.4rem 0;">${rows}</div><div style="margin-top:0.6rem;font-style:italic;color:var(--text-faint);text-align:center;">${t('round_n_turns',{round:roundNum,turns:G.turnsTaken||0})}</div>`;
   }
-  showScr('winner'); spawnConfetti();
+  // Show reveal screen first (host/solo sees it; guests skip straight to winner)
+  if (isHost || isSolo) {
+    showRevealScreen(name);
+  } else {
+    showScr('winner');
+  }
+  spawnConfetti();
   flashBanner(t('win_banner',{name}), 'win-flash');
   speak(t('v_x_win',{name}));
   if(!isSolo) broadcastAll({type:'game_over',winnerName:name});
@@ -5507,13 +5674,17 @@ function setDifficulty(d,el){SETTINGS.cpuDifficulty=d;saveSettings();el.parentEl
 function switchRulesTab(mode) {
   const std = document.getElementById('rules-standard');
   const dc  = document.getElementById('rules-dc');
+  const blitz = document.getElementById('rules-blitz');
   const tStd = document.getElementById('tab-standard');
   const tDc  = document.getElementById('tab-dc');
+  const tBlitz = document.getElementById('tab-blitz');
   if (!std) return;
-  std.style.display = mode === 'standard' ? '' : 'none';
-  dc.style.display  = mode === 'dc'       ? '' : 'none';
+  std.style.display   = mode === 'standard' ? '' : 'none';
+  dc.style.display    = mode === 'dc'       ? '' : 'none';
+  if (blitz) blitz.style.display = mode === 'blitz' ? '' : 'none';
   tStd.classList.toggle('active', mode === 'standard');
   tDc.classList.toggle('active', mode === 'dc');
+  if (tBlitz) tBlitz.classList.toggle('active', mode === 'blitz');
 }
 
 function openRules() {
@@ -5636,6 +5807,279 @@ function confirmSeats() {
   closeSeatModal();
   showHostWaitingRoom();
 }
+
+// ════════════════════════════════════════
+// SCREEN BORDER PULSE (Challenge flash - Option E)
+// ════════════════════════════════════════
+function pulseScreenBorder() {
+  const el = document.getElementById('screen-border-flash');
+  if (!el) return;
+  el.classList.remove('border-pulse-anim');
+  void el.offsetWidth; // force reflow
+  el.classList.add('border-pulse-anim');
+  setTimeout(() => el.classList.remove('border-pulse-anim'), 1300);
+}
+
+// ════════════════════════════════════════
+// VERDICT STAMP (Card reveal - Option C)
+// ════════════════════════════════════════
+function showVerdictStamp(isTrue) {
+  let stamp = document.getElementById('verdict-stamp-el');
+  if (!stamp) {
+    stamp = document.createElement('div');
+    stamp.id = 'verdict-stamp-el';
+    stamp.className = 'verdict-stamp';
+    document.body.appendChild(stamp);
+  }
+  stamp.className = 'verdict-stamp ' + (isTrue ? 'honest' : 'bluff');
+  stamp.textContent = isTrue ? 'HONEST' : 'BLUFF CALLED';
+  void stamp.offsetWidth;
+  stamp.classList.add('show');
+  setTimeout(() => { stamp.classList.remove('show'); stamp.className = 'verdict-stamp'; }, 2300);
+}
+
+// ════════════════════════════════════════
+// COIN ANIMATION (Option G+H: tick-up + flying arc)
+// ════════════════════════════════════════
+function animateCoinTransfer(fromPlayerId, toPlayerId, amount) {
+  if (!amount || amount <= 0) return;
+  // Tick up the target player's coin display
+  const fromEl = _findPlayerCoinEl(fromPlayerId);
+  const toEl   = _findPlayerCoinEl(toPlayerId);
+  // Spawn flying coin emoji arcing from source to target
+  if (fromEl && toEl) {
+    const fr = fromEl.getBoundingClientRect();
+    const tr = toEl.getBoundingClientRect();
+    for (let i = 0; i < Math.min(amount, 5); i++) {
+      setTimeout(() => _spawnFlyingCoin(fr, tr), i * 120);
+    }
+  }
+  // Tick up coin counter on target
+  if (toEl) _tickCoinEl(toEl, amount);
+  if (fromEl) _tickCoinEl(fromEl, -amount);
+}
+function _findPlayerCoinEl(pid) {
+  // Try finding the coin display in the player seat
+  const seats = document.querySelectorAll('.player-seat,[data-pid]');
+  for (const s of seats) {
+    if (s.dataset && s.dataset.pid === pid) {
+      return s.querySelector('.seat-coins') || s.querySelector('.opp-coins') || null;
+    }
+  }
+  if (pid === ME) return document.getElementById('my-coins-lbl') || document.querySelector('.my-coins');
+  return null;
+}
+function _spawnFlyingCoin(fromRect, toRect) {
+  const coin = document.createElement('div');
+  coin.className = 'flying-coin';
+  coin.textContent = '🪙';
+  const sx = fromRect.left + fromRect.width/2;
+  const sy = fromRect.top  + fromRect.height/2;
+  coin.style.left = sx + 'px';
+  coin.style.top  = sy + 'px';
+  const dx = (toRect.left + toRect.width/2) - sx;
+  const dy = (toRect.top  + toRect.height/2) - sy;
+  const arcY = Math.min(-80, -Math.abs(dy)*0.6);
+  coin.style.setProperty('--cx', dx + 'px');
+  coin.style.setProperty('--cy-mid', (dy/2 + arcY) + 'px');
+  coin.style.setProperty('--cx-end', dx + 'px');
+  coin.style.setProperty('--cy-end', dy + 'px');
+  coin.style.animation = 'flyArcUp 0.7s ease-in-out forwards';
+  document.body.appendChild(coin);
+  setTimeout(() => coin.remove(), 750);
+}
+function _tickCoinEl(el, delta) {
+  const cur = parseInt(el.textContent.replace(/[^0-9-]/g,'')) || 0;
+  const target = cur + delta;
+  let val = cur;
+  const step = delta > 0 ? 1 : -1;
+  const steps = Math.abs(delta);
+  let i = 0;
+  const iv = setInterval(() => {
+    i++;
+    val += step;
+    el.textContent = el.textContent.replace(/\d+/, val);
+    el.classList.add('coin-pulse');
+    setTimeout(() => el.classList.remove('coin-pulse'), 300);
+    if (i >= steps) clearInterval(iv);
+  }, 120);
+}
+
+// ════════════════════════════════════════
+// PUSH NOTIFICATIONS — "Your turn"
+// ════════════════════════════════════════
+let _notifPermission = 'default';
+function requestNotifPermission() {
+  if (!('Notification' in window)) return;
+  if (Notification.permission === 'granted') { _notifPermission = 'granted'; return; }
+  if (Notification.permission !== 'denied') {
+    Notification.requestPermission().then(p => { _notifPermission = p; });
+  }
+}
+function sendTurnNotification(name) {
+  if (!('Notification' in window)) return;
+  if (Notification.permission !== 'granted') return;
+  if (!document.hidden) return; // only notify when tab is backgrounded
+  try {
+    new Notification('COUP — Your Turn', {
+      body: name ? `It's your turn, ${name}!` : "It's your turn!",
+      icon: 'data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><text y=".9em" font-size="90">⚔️</text></svg>',
+      tag: 'coup-turn',
+      silent: false
+    });
+  } catch(e) {}
+}
+
+// ════════════════════════════════════════
+// RIGHT-CLICK CONTEXT MENU
+// ════════════════════════════════════════
+let _ctxTargetPid = null;
+function showCtxMenu(e, pid) {
+  e.preventDefault();
+  if (!G || G.phase !== 'action') return;
+  const myIdx = G.players.findIndex(p => p.id === ME);
+  if (G.currentTurn !== myIdx) return; // only on my turn
+  const me = G.players[myIdx];
+  if (!me || me.eliminated) return;
+  _ctxTargetPid = pid;
+  const menu = document.getElementById('ctx-menu');
+  if (!menu) return;
+  const canSteal = me.coins < 10 && !ACTS.steal.cost > me.coins;
+  const canAssassinate = me.coins >= 3 && me.coins < 10;
+  const canCoup = me.coins >= 7;
+  document.getElementById('ctx-steal').className = 'ctx-item' + (me.coins >= 10 ? ' ctx-disabled' : '');
+  document.getElementById('ctx-assassinate').className = 'ctx-item' + (me.coins < 3 || me.coins >= 10 ? ' ctx-disabled' : '');
+  document.getElementById('ctx-coup').className = 'ctx-item ctx-danger' + (me.coins < 7 ? ' ctx-disabled' : '');
+  menu.style.display = 'block';
+  const x = Math.min(e.clientX, window.innerWidth - 160);
+  const y = Math.min(e.clientY, window.innerHeight - 130);
+  menu.style.left = x + 'px';
+  menu.style.top  = y + 'px';
+}
+function hideCtxMenu() {
+  const menu = document.getElementById('ctx-menu');
+  if (menu) menu.style.display = 'none';
+  _ctxTargetPid = null;
+}
+function ctxAction(at) {
+  hideCtxMenu();
+  if (!_ctxTargetPid) return;
+  onMyAction(at, G.players.find(p => p.id === ME), _ctxTargetPid);
+}
+document.addEventListener('click', hideCtxMenu);
+document.addEventListener('contextmenu', e => {
+  // Only suppress default if we didn't hit a seat
+  if (!e.target.closest('[data-pid]')) hideCtxMenu();
+});
+
+// ════════════════════════════════════════
+// POST-GAME REVEAL + STATS
+// ════════════════════════════════════════
+// Track each player's starting hand (set at game start)
+let _startingHands = {}; // pid -> [role, role]
+// Track bluff attempts: { pid: { attempted: N, succeeded: N } }
+let _bluffStats = {};    // pid -> { attempted, succeeded }
+let _gameStartTime = 0;
+let _challengeStats = {}; // pid -> { attempted, correct }
+
+function initRoundTracking() {
+  _startingHands = {};
+  _bluffStats = {};
+  _challengeStats = {};
+  _gameStartTime = Date.now();
+  if (!G) return;
+  G.players.forEach(p => {
+    _startingHands[p.id] = p.cards.map(c => c.role);
+    _bluffStats[p.id] = { attempted: 0, succeeded: 0 };
+    _challengeStats[p.id] = { attempted: 0, correct: 0 };
+  });
+}
+
+function recordBluffAttempt(pid, succeeded) {
+  if (!_bluffStats[pid]) _bluffStats[pid] = { attempted: 0, succeeded: 0 };
+  _bluffStats[pid].attempted++;
+  if (succeeded) _bluffStats[pid].succeeded++;
+}
+function recordChallengeAttempt(pid, correct) {
+  if (!_challengeStats[pid]) _challengeStats[pid] = { attempted: 0, correct: 0 };
+  _challengeStats[pid].attempted++;
+  if (correct) _challengeStats[pid].correct++;
+}
+
+function showRevealScreen(winnerName) {
+  if (!G) return;
+  const elapsed = Math.round((Date.now() - _gameStartTime) / 1000);
+  const mins = Math.floor(elapsed / 60), secs = elapsed % 60;
+  const durationStr = `${mins}:${String(secs).padStart(2,'0')}`;
+
+  // Winner banner
+  document.getElementById('reveal-winner-banner').textContent = `👑 ${winnerName} wins!`;
+
+  // Player cards grid
+  const grid = document.getElementById('reveal-grid');
+  const isWinner = p => (p.displayName||p.name) === winnerName;
+  grid.innerHTML = G.players.map(p => {
+    const startRoles = _startingHands[p.id] || p.cards.map(c => c.role);
+    const startChips = startRoles.map(r => {
+      const d = CD[r]||{}; return `<span class="reveal-role-chip starting">${d.emoji||''} ${d.name||r}</span>`;
+    }).join('');
+    const currentChips = p.cards.map(c => {
+      const d = CD[c.role]||{};
+      const cls = !c.alive ? 'dead' : 'alive';
+      return `<span class="reveal-role-chip ${cls}">${d.emoji||''} ${d.name||c.role}</span>`;
+    }).join('');
+    const bs = _bluffStats[p.id]||{attempted:0,succeeded:0};
+    const bluffLine = bs.attempted > 0 ? `<div class="reveal-bluff-line">🎭 ${bs.succeeded}/${bs.attempted} bluffs successful</div>` : '';
+    const wClass = isWinner(p) ? ' winner-card' : '';
+    const crown = isWinner(p) ? '<span style="color:var(--gold);margin-right:4px">👑</span>' : '';
+    return `<div class="reveal-card${wClass}">
+      <div class="reveal-player-name">${crown}${esc(p.displayName||p.name)}${p.isCPU?' (CPU)':''}</div>
+      <div style="font-size:0.55rem;color:var(--text-faint);margin-bottom:2px">Starting hand:</div>
+      <div class="reveal-cards-row">${startChips}</div>
+      <div style="font-size:0.55rem;color:var(--text-faint);margin-bottom:2px">Final hand:</div>
+      <div class="reveal-cards-row">${currentChips}</div>
+      ${bluffLine}
+      <div style="font-size:0.62rem;color:var(--text-dim);margin-top:4px">🪙 ${p.coins} coins · ${p.eliminated?'eliminated':'alive'}</div>
+    </div>`;
+  }).join('');
+
+  // Bluff bars
+  const bars = document.getElementById('reveal-bluff-bars');
+  bars.innerHTML = G.players.map(p => {
+    const bs = _bluffStats[p.id]||{attempted:0,succeeded:0};
+    const pct = bs.attempted > 0 ? Math.round(bs.succeeded/bs.attempted*100) : 0;
+    return `<div class="bluff-bar-row">
+      <div class="bluff-bar-label"><span>${esc(p.displayName||p.name)}</span><span>${bs.succeeded}/${bs.attempted} (${pct}%)</span></div>
+      <div class="bluff-bar-track"><div class="bluff-bar-fill" style="width:${pct}%"></div></div>
+    </div>`;
+  }).join('');
+
+  // Stats
+  const totalChallenges = Object.values(_challengeStats).reduce((a,v)=>a+v.attempted,0);
+  const correctChallenges = Object.values(_challengeStats).reduce((a,v)=>a+v.correct,0);
+  const chalPct = totalChallenges > 0 ? Math.round(correctChallenges/totalChallenges*100) : 0;
+  const statsGrid = document.getElementById('reveal-stats-grid');
+  statsGrid.innerHTML = `
+    <div class="reveal-stat-box"><div class="reveal-stat-num">${G.turnsTaken||0}</div><div class="reveal-stat-lbl">Turns played</div></div>
+    <div class="reveal-stat-box"><div class="reveal-stat-num">${durationStr}</div><div class="reveal-stat-lbl">Duration</div></div>
+    <div class="reveal-stat-box"><div class="reveal-stat-num">${chalPct}%</div><div class="reveal-stat-lbl">Challenge accuracy</div></div>
+    <div class="reveal-stat-box"><div class="reveal-stat-num">${Object.values(_bluffStats).reduce((a,v)=>a+v.succeeded,0)}</div><div class="reveal-stat-lbl">Bluffs that worked</div></div>
+  `;
+
+  showScr('reveal');
+}
+
+function revealToWinner() {
+  showScr('winner');
+}
+
+// ════════════════════════════════════════
+// INITIALISE NEW FEATURES ON GAME START
+// ════════════════════════════════════════
+// Wrap the existing initRound / startGame to hook in tracking and notif permission
+const _origStartTurn = startTurn;
+// Hook into showWinner to show reveal screen first
+// (done by patching showWinner below)
 </script>
 <!-- ══ SEAT ARRANGEMENT MODAL ══ -->
 <div id="seat-modal-overlay" onclick="if(event.target===this)closeSeatModal()">
