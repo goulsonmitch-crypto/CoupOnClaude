@@ -881,14 +881,14 @@ html, body { height: 100%; background: var(--bg); color: var(--text); font-famil
 
         <!-- BLITZ RULES -->
         <div class="lr-body lr-body-std" id="rules-blitz" style="display:none">
-          <p><strong>⚡ Blitz Mode</strong> — all timers cut in half. Same rules as Standard. Pure instinct, no waiting.</p>
+          <p><strong>⚡ Blitz Mode</strong> — same rules as Standard, but all timers are cut in half. No DC rules. Pure instinct, no waiting.</p>
           <ul>
             <li>⏱ <strong>Your turn:</strong> 10 seconds</li>
             <li>⏱ <strong>Respond to actions:</strong> 8 seconds</li>
-            <li>⏱ <strong>DC holder turn:</strong> 6 seconds</li>
+            <li>⏱ <strong>Choose card to lose:</strong> 10 seconds</li>
           </ul>
           <div class="rules-section-head">PRESSURE</div>
-          <p>Time out on your turn → auto-Income. Time out on a response → auto-Pass. All bluffing, challenges and blocks work exactly as in Standard.</p>
+          <p>Time out on your turn → auto-Income. Time out on a response → auto-Pass. Time out on card drop → random card lost. All bluffing, challenges and blocks work exactly as in Standard.</p>
         </div>
 
         <!-- STANDARD RULES -->
@@ -935,7 +935,7 @@ html, body { height: 100%; background: var(--bg); color: var(--text); font-famil
     <div class="landing-center">
       <div>
         <div class="logo-main">COUP</div>
-        <div class="logo-tagline">VERSION 55</div>
+        <div class="logo-tagline">VERSION 56</div>
         <div class="card-showcase">
           <div class="showcase-card duke">👑<span class="sc-name">Duke</span></div>
           <div class="showcase-card assassin">🗡️<span class="sc-name">Assassin</span></div>
@@ -988,11 +988,11 @@ html, body { height: 100%; background: var(--bg); color: var(--text); font-famil
         <p><strong>Double loss:</strong> Fail a challenge against the Assassin <em>or</em> lose a Contessa bluff while being assassinated — you lose both influences at once.</p>
       </div>
       <div class="lr-body lr-body-std" id="ov-rules-blitz" style="display:none">
-        <p><strong>⚡ Blitz Mode</strong> — same rules as Standard, but all timers are cut in half. No analysis paralysis. No waiting. Pure instinct.</p>
+        <p><strong>⚡ Blitz Mode</strong> — same rules as Standard, but all timers are cut in half. No DC rules. No analysis paralysis. No waiting. Pure instinct.</p>
         <ul>
           <li>⏱ <strong>Your turn timer:</strong> 10 seconds (down from 20)</li>
           <li>⏱ <strong>Response timer:</strong> 8 seconds (down from 15)</li>
-          <li>⏱ <strong>DC holder timer:</strong> 6 seconds (down from 12)</li>
+          <li>⏱ <strong>Card drop timer:</strong> 10 seconds (down from 20)</li>
         </ul>
         <div class="rules-section-head">STRATEGY</div>
         <p>If you don't act in time, the game auto-plays Income for you. If you fail to respond to another player's action in time, you auto-pass. Slow players get punished.</p>
@@ -1142,7 +1142,7 @@ html, body { height: 100%; background: var(--bg); color: var(--text); font-famil
 </div>
 
 <!-- POST-GAME REVEAL SCREEN -->
-<div id="screen-reveal" class="screen" style="display:none;flex-direction:column;align-items:center;justify-content:flex-start;padding:1.5rem 1rem;overflow-y:auto;gap:1rem;">
+<div id="screen-reveal" class="screen">
   <div class="reveal-title">⚔ THE DUST SETTLES</div>
   <div id="reveal-winner-banner" style="font-family:'Cinzel',serif;font-size:clamp(1rem,3vw,1.4rem);color:var(--gold-light);text-align:center;"></div>
   <div class="reveal-grid" id="reveal-grid"></div>
@@ -1152,6 +1152,8 @@ html, body { height: 100%; background: var(--bg); color: var(--text); font-famil
   <div class="reveal-stats-grid" id="reveal-stats-grid"></div>
   <div style="display:flex;gap:0.6rem;margin-top:0.8rem;flex-wrap:wrap;justify-content:center;">
     <button class="btn primary" onclick="revealToWinner()">Continue →</button>
+    <button class="btn" onclick="revealToWinner();setTimeout(()=>backToWaitingRoom(),50)">⬅ Waiting Room</button>
+    <button class="btn ghost" onclick="revealToWinner();setTimeout(()=>rematch(),50)">Rematch</button>
   </div>
 </div>
 
@@ -3316,6 +3318,20 @@ function onHostMsg(d) {
     // Process all buffered log entries from host (sent in order before inline logHtml)
     if (d.pendingLog && d.pendingLog.length) d.pendingLog.forEach(e => addEv(e.html, e.cls||''));
     if (d.logHtml) addEv(d.logHtml, d.logCls||'');
+    // Sync visual timer for guests (host is the source of truth; guest shows countdown but can't expire)
+    if (d.timerLeft > 0 && d.timerMax > 0) {
+      stopTimer();
+      timerLeft = d.timerLeft; timerMax = d.timerMax;
+      if (d.timerLabel) document.getElementById('timer-label').textContent = d.timerLabel;
+      updateTimerUI();
+      timerIv = setInterval(() => {
+        if (G && G.paused) return;
+        timerLeft--; updateTimerUI();
+        if (timerLeft <= 0) stopTimer();
+      }, 1000);
+    } else if (d.timerMax === 0) {
+      stopTimer();
+    }
     return;
   }
   if (d.type === 'start_turn') {
@@ -3519,8 +3535,11 @@ function bcastState(logHtml=null, logCls='') {
   const pendingLog = [..._pendingLogEntries];
   _pendingLogEntries = [];
   // Send masked state + all pending log entries to each guest
+  const _tLeft = timerLeft > 0 ? timerLeft : 0;
+  const _tMax = timerMax > 0 ? timerMax : 0;
+  const _tLabel = document.getElementById('timer-label')?.textContent || '';
   G.players.filter(p => !p.isCPU && p.id !== hostPid).forEach(p => {
-    fbToGuest(p.id, { type: 'state', state: masked(p.id), logHtml, logCls, pendingLog });
+    fbToGuest(p.id, { type: 'state', state: masked(p.id), logHtml, logCls, pendingLog, timerLeft: _tLeft, timerMax: _tMax, timerLabel: _tLabel });
   });
   renderGame();
   // Suppress buffer push for the inline logHtml (it's already in the guest payload above)
@@ -4910,9 +4929,10 @@ function showLoseModalLocal(p,reason,cb) {
   afterLoseCB=cb;
   const alive=p.cards.filter(c=>c.alive);
   const list=alive.map(c=>{const d=CD[c.role]||{};return `<div class="tgt-item" onclick="cancelLoseTimer();closeModal();submitLoseCard('${p.id}','${c.role}')"><span>${d.emoji} ${t(c.role)}</span><span style="color:var(--text-faint);font-size:0.7rem">${d.ability||''}</span></div>`;}).join('');
-  openModal(t('lose_modal_title'),`<strong>${reason}</strong><br>${t('lose_modal_choose')}<div style="font-size:0.7rem;color:var(--red-bright);margin-top:0.3rem">${t('auto_drop_in',{n:'<span id="lose-countdown">20</span>'})}</div><div class="tgt-list">${list}</div>`,[]);
+  const _loseSec = isBlitzMode() ? 10 : 20;
+  openModal(t('lose_modal_title'),`<strong>${reason}</strong><br>${t('lose_modal_choose')}<div style="font-size:0.7rem;color:var(--red-bright);margin-top:0.3rem">${t('auto_drop_in',{n:`<span id="lose-countdown">${_loseSec}</span>`})}</div><div class="tgt-list">${list}</div>`,[]);
   speak(t('v_pick_to_lose')); flashBanner(t('lose_influence'),'death-flash');
-  startLoseTimer(20,()=>{
+  startLoseTimer(_loseSec,()=>{
     const stillAlive=G.players.find(pp=>pp.id===p.id)?.cards.filter(c=>c.alive)||[];
     if(!stillAlive.length){closeModal();return;}
     const pick=stillAlive[Math.floor(Math.random()*stillAlive.length)];
@@ -5097,7 +5117,7 @@ function showWinner(name, winnerId) {
   }
   // Show reveal screen first (host/solo sees it; guests skip straight to winner)
   if (isHost || isSolo) {
-    showRevealScreen(name);
+    try { showRevealScreen(name); } catch(e) { console.error('showRevealScreen error:', e); showScr('winner'); }
   } else {
     showScr('winner');
   }
@@ -5341,8 +5361,9 @@ function cpuResp(cpuId) {
     if(type==='foreignAid')return{r:'block',ch:'duke'};
   }
   if(targetId===cpuId){
+    // Accepting assassination with 1 card = instant death → always bluff Contessa
+    if(type==='assassinate'&&aliveCount===1)return{r:'block',ch:'contessa'};
     if(type==='assassinate'&&cards.includes('contessa')&&Math.random()<0.88)return{r:'block',ch:'contessa'};
-    if(type==='assassinate'&&aliveCount===1&&Math.random()<0.55)return{r:'block',ch:'contessa'};
     if(type==='steal'){if(cards.includes('captain')&&Math.random()<0.72)return{r:'block',ch:'captain'};if(cards.includes('ambassador')&&Math.random()<0.55)return{r:'block',ch:'ambassador'};}
   }
   // FIXED: was 55% — if you have a Duke, blocking foreign aid is almost always correct
@@ -5490,9 +5511,13 @@ function doHostHandoff(newPid) {
   db.ref(`rooms/${G.roomCode}/meta/hostOnline`).onDisconnect().cancel();
   db.ref(`rooms/${G.roomCode}/meta/hostElection`).onDisconnect().cancel();
 
-  // Write full state snapshot for new host to read
+  // Write full state snapshot for new host to read; tell them AFTER write completes to avoid race
   const snapshot = { ...G, _pAction: pAction||null, _pResponders: pResponders||[], _pResponses: pResponses||{} };
-  db.ref(`rooms/${G.roomCode}/fullState`).set(snapshot);
+  db.ref(`rooms/${G.roomCode}/fullState`).set(snapshot).then(() => {
+    fbToGuest(newPid, {type:'you_are_now_host'});
+  }).catch(() => {
+    fbToGuest(newPid, {type:'you_are_now_host'}); // attempt even on error
+  });
 
   // Announce to all guests BEFORE we step down
   const myName = G.players.find(p=>p.id===ME)?.displayName || G.players.find(p=>p.id===ME)?.name || 'Host';
@@ -5503,9 +5528,6 @@ function doHostHandoff(newPid) {
   // Update Firebase with new host
   db.ref(`rooms/${G.roomCode}/meta/hostPid`).set(newPid);
 
-  // Tell new host directly
-  fbToGuest(newPid, {type:'you_are_now_host'});
-
   // Step down: stop listening to host inbox
   if (hostInboxRef && hostInboxCb) {
     hostInboxRef.off('child_added', hostInboxCb);
@@ -5513,6 +5535,13 @@ function doHostHandoff(newPid) {
   }
   isHost = false;
   hostPid = newPid;
+
+  // As a former host we never had a guest inbox — set one up now so we can receive future host_changed / you_are_now_host messages
+  if (db && G && G.roomCode && ME) {
+    fbListenInbox(`rooms/${G.roomCode}/in/${ME}`, (msg) => {
+      onHostMsg(msg);
+    });
+  }
 }
 
 function openSettings() {
@@ -5551,7 +5580,7 @@ function openSettings() {
 function captureFrozenState() {
   return {
     timestamp: new Date().toISOString(),
-    version: 'v52',
+    version: 'v56',
     phase: G?.phase,
     currentTurn: G?.currentTurn,
     pAction: pAction ? JSON.parse(JSON.stringify(pAction)) : null,
