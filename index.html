@@ -855,6 +855,75 @@ html, body { height: 100%; background: var(--bg); color: var(--text); font-famil
 @keyframes swapBadgePulse { from { transform: translateX(-50%) scale(1); } to { transform: translateX(-50%) scale(1.1); } }
 .my-card.just-swapped { animation: justSwappedFlash 0.6s ease 2; }
 @keyframes justSwappedFlash { 0%,100% { box-shadow: inherit; } 50% { box-shadow: 0 0 28px rgba(88,214,141,0.9); transform: scale(1.04); } }
+
+/* ── AUCTION HOUSE ── */
+#screen-auction {
+  flex-direction: column; align-items: center; justify-content: center;
+  background: radial-gradient(ellipse at 50% 30%, rgba(212,168,67,0.07) 0%, transparent 60%), var(--bg);
+  padding: 1rem; gap: 0;
+  overflow: hidden;
+}
+.auction-header { font-family: 'Cinzel', serif; font-size: 0.72rem; letter-spacing: 0.25em; color: var(--gold-dim); margin-bottom: 0.2rem; }
+.auction-counter { font-size: 0.68rem; color: var(--text-dim); margin-bottom: 0.9rem; min-height: 1em; }
+.auction-card-face {
+  width: 110px; height: 155px; border-radius: 10px;
+  background: linear-gradient(160deg, #1e1830 0%, #12101c 100%);
+  border: 1.5px solid var(--border-gold);
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  gap: 6px; color: var(--text); font-family: 'Cinzel', serif;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.5);
+  transition: transform 0.4s ease, opacity 0.3s ease;
+}
+.auction-card-face.entering { animation: auctionCardIn 0.5s cubic-bezier(0.22,1,0.36,1) both; }
+@keyframes auctionCardIn { from { transform: translateY(-30px) scale(0.85); opacity: 0; } to { transform: none; opacity: 1; } }
+.auction-card-face.exiting { animation: auctionCardOut 0.35s ease both; }
+@keyframes auctionCardOut { to { transform: translateY(20px) scale(0.9); opacity: 0; } }
+.auction-card-emoji { font-size: 2.6rem; line-height: 1; }
+.auction-card-name { font-size: 0.78rem; letter-spacing: 0.1em; color: var(--gold-light); }
+.auction-card-back {
+  width: 110px; height: 155px; border-radius: 10px;
+  background: repeating-linear-gradient(45deg, #1a1628, #1a1628 5px, #201c30 5px, #201c30 10px);
+  border: 1.5px solid var(--border); box-shadow: 0 8px 32px rgba(0,0,0,0.5);
+}
+.auction-timer-wrap { position: relative; width: 76px; height: 76px; margin: 0.8rem 0 0.6rem; }
+.auction-timer-wrap svg { position: absolute; top: 0; left: 0; transform: rotate(-90deg); }
+.auction-timer-num { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; font-family: 'Cinzel', serif; font-size: 1.4rem; color: var(--gold); }
+.auction-bid-info { text-align: center; font-size: 0.72rem; color: var(--text-dim); margin-bottom: 0.6rem; min-height: 2.2em; line-height: 1.5; }
+.auction-bid-info .bid-high { color: var(--gold-light); font-weight: 600; }
+.auction-tokens-wrap { display: flex; gap: 5px; flex-wrap: wrap; justify-content: center; margin-bottom: 0.7rem; max-width: 180px; }
+.auction-pip { width: 16px; height: 16px; border-radius: 50%; background: var(--gold); border: 1.5px solid var(--gold-dim); transition: all 0.3s; }
+.auction-pip.spent { background: var(--surface2); border-color: var(--border); }
+.auction-bid-btn {
+  background: linear-gradient(135deg, var(--gold), var(--gold-dim));
+  color: var(--bg); font-family: 'Cinzel', serif; font-size: 0.82rem; letter-spacing: 0.1em;
+  border: none; border-radius: 6px; padding: 0.55rem 2.2rem; cursor: pointer;
+  transition: all 0.15s; box-shadow: 0 4px 16px rgba(212,168,67,0.3);
+}
+.auction-bid-btn:hover:not(:disabled) { transform: translateY(-1px); box-shadow: 0 6px 20px rgba(212,168,67,0.45); }
+.auction-bid-btn:disabled { opacity: 0.35; cursor: not-allowed; transform: none; box-shadow: none; }
+.auction-status { font-size: 0.65rem; color: var(--text-faint); margin-top: 0.5rem; text-align: center; min-height: 1.2em; }
+.auction-no-bid-notice { font-size: 0.72rem; color: var(--text-dim); text-align: center; padding: 0.4rem 1rem; border: 1px solid var(--border); border-radius: 6px; background: var(--surface); animation: auctionCardIn 0.3s ease both; }
+.auction-flip-overlay {
+  position: fixed; inset: 0; background: rgba(0,0,0,0.88);
+  display: flex; align-items: center; justify-content: center;
+  z-index: 800; animation: fadeIn 0.25s ease;
+}
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+.auction-flip-box {
+  background: linear-gradient(160deg, #1e1830, #12101c);
+  border: 1px solid var(--border-gold); border-radius: 14px;
+  padding: 2rem 2.5rem; text-align: center; max-width: 280px;
+  animation: auctionCardIn 0.4s cubic-bezier(0.22,1,0.36,1) both;
+}
+.auction-confetti-row { display: flex; gap: 4px; justify-content: center; margin-bottom: 0.8rem; }
+.auction-conf { width: 9px; height: 9px; border-radius: 2px; }
+.auction-announce-box {
+  background: linear-gradient(160deg, #1e1830, #12101c);
+  border: 1px solid rgba(46,204,113,0.4); border-radius: 14px;
+  padding: 2rem 2.5rem; text-align: center; max-width: 300px;
+  animation: auctionCardIn 0.4s cubic-bezier(0.22,1,0.36,1) both;
+}
+.mode-btn.auction-active { background: linear-gradient(135deg,rgba(212,168,67,0.22),rgba(212,168,67,0.07)); border-color: var(--gold); color: var(--gold-light); box-shadow: 0 0 16px rgba(212,168,67,0.18); }
 </style>
 </head>
 <body>
@@ -935,7 +1004,7 @@ html, body { height: 100%; background: var(--bg); color: var(--text); font-famil
     <div class="landing-center">
       <div>
         <div class="logo-main">COUP</div>
-        <div class="logo-tagline">VERSION 57</div>
+        <div class="logo-tagline">VERSION 58</div>
         <div class="card-showcase">
           <div class="showcase-card duke">👑<span class="sc-name">Duke</span></div>
           <div class="showcase-card assassin">🗡️<span class="sc-name">Assassin</span></div>
@@ -1142,6 +1211,24 @@ html, body { height: 100%; background: var(--bg); color: var(--text); font-famil
 </div>
 
 <!-- POST-GAME REVEAL SCREEN -->
+<div id="screen-auction" class="screen">
+  <div class="auction-header">AUCTION HOUSE</div>
+  <div class="auction-counter" id="auction-counter"></div>
+  <div id="auction-card-area"></div>
+  <div class="auction-timer-wrap" id="auction-timer-wrap">
+    <svg width="76" height="76" viewBox="0 0 76 76">
+      <circle cx="38" cy="38" r="31" fill="none" stroke="var(--surface3)" stroke-width="5"/>
+      <circle id="auction-ring" cx="38" cy="38" r="31" fill="none" stroke="var(--gold)" stroke-width="5"
+        stroke-dasharray="194.8" stroke-dashoffset="0" style="transition:stroke-dashoffset 0.9s linear,stroke 0.3s"/>
+    </svg>
+    <div class="auction-timer-num" id="auction-timer-num">8</div>
+  </div>
+  <div class="auction-bid-info" id="auction-bid-info"></div>
+  <div class="auction-tokens-wrap" id="auction-tokens"></div>
+  <button class="auction-bid-btn" id="auction-bid-btn" onclick="submitAuctionBid()">Bid +1</button>
+  <div class="auction-status" id="auction-status"></div>
+</div>
+
 <div id="screen-reveal" class="screen">
   <div class="reveal-title">⚔ THE DUST SETTLES</div>
   <div id="reveal-winner-banner" style="font-family:'Cinzel',serif;font-size:clamp(1rem,3vw,1.4rem);color:var(--gold-light);text-align:center;"></div>
@@ -1565,8 +1652,9 @@ function randomUnusedCharacter(taken) {
 // ════════════════════════════════════════
 // GAME MODE HELPERS
 // ════════════════════════════════════════
-function isDCMode()    { return (G ? G.mode : selectedGameMode) === 'doubleContessa'; }
-function isBlitzMode() { return (G ? G.mode : selectedGameMode) === 'blitz'; }
+function isDCMode()      { return (G ? G.mode : selectedGameMode) === 'doubleContessa'; }
+function isBlitzMode()   { return (G ? G.mode : selectedGameMode) === 'blitz'; }
+function isAuctionMode() { return selectedGameMode === 'auction'; }
 
 // Does this player hold a "double Contessa"? (Both alive cards are Contessa.)
 function hasDoubleContessa(p) {
@@ -1646,13 +1734,15 @@ function applyDCTheme(active) {
 function modeSelectHtml() {
   const isDC = selectedGameMode === 'doubleContessa';
   const isBlitz = selectedGameMode === 'blitz';
-  const isStd = !isDC && !isBlitz;
+  const isAuction = selectedGameMode === 'auction';
+  const isStd = !isDC && !isBlitz && !isAuction;
   return `<div class="mode-select">
     <div class="mode-select-label">GAME MODE</div>
     <div class="mode-btns">
       <button class="mode-btn${isStd?' active':''}" data-mode="standard" onclick="setGameMode('standard')">Standard</button>
       <button class="mode-btn${isDC?' dc-active-btn':''}" data-mode="doubleContessa" onclick="setGameMode('doubleContessa')">🌹🌹 Double Contessa</button>
       <button class="mode-btn${isBlitz?' active':''}" data-mode="blitz" onclick="setGameMode('blitz')" style="${isBlitz?'border-color:#ff9944;color:#ff9944;background:rgba(255,153,68,0.12);':''}">⚡ Blitz</button>
+      <button class="mode-btn${isAuction?' auction-active':''}" data-mode="auction" onclick="setGameMode('auction')">🏺 Auction House</button>
     </div>
   </div>`;
 }
@@ -1864,6 +1954,11 @@ function electNewHost() {
 // STATE
 // ════════════════════════════════════════
 let G = null, ME = null;
+// ── Auction House state (host-authoritative) ──
+let auctionState = null;
+let auctionTimerIv = null;
+let _auctionYouAreHigh = false; // local player is current high bidder
+let _auctionYourTokens = 6;    // local player's remaining tokens
 let isSolo = false, isHost = false;
 let hostPid = 'p0'; // tracks current host's player ID — updated on transfer
 let watchdogIv = null; // detects stuck "resolving" phase
@@ -2562,6 +2657,18 @@ function startSoloFromWaiting() {
     const rv = resolveCharacterVariant(cpu.key, existing);
     players.push(mkP('cpu'+i, rv.displayName, true, cpu.key, rv.characterVariant, rv.displayName));
   });
+  if (selectedGameMode === 'auction') {
+    // Auction House — set up G shell then run auction
+    G = { players, deck: [], discardPile: [], roomCode: null, mode: 'auction', started: true };
+    ME = 'p0'; isSolo = true; isHost = true;
+    setupAuctionState(players);
+    const _evLogS = document.getElementById('event-log-list'); if(_evLogS) _evLogS.innerHTML = '';
+    const _mobLogS = document.getElementById('mobile-log'); if(_mobLogS) _mobLogS.innerHTML = '';
+    document.getElementById('tb-room').textContent = 'Solo · 🏺 Auction';
+    showScr('auction');
+    auctionNextCard();
+    return;
+  }
   initGame(players, null);
 }
 
@@ -2989,6 +3096,22 @@ function hostStart() {
       const res = dcDeal(G.players, firstTurn);
       G.deck = res.deck;
       dcPlayerIdx = res.dcPlayerIdx;
+    } else if (mode === 'auction') {
+      // Auction House — deal handled by pre-game auction phase
+      dealCards(); // sets up deck; cards/coins overwritten after auction
+      setupAuctionState(G.players);
+      fbBroadcastAll({ type: 'auction_start', roomCode: G.roomCode });
+      G.players.filter(p => !p.isCPU && p.id !== hostPid).forEach(p => {
+        fbToGuest(p.id, { type: 'auction_init', pid: p.id });
+      });
+      if (db && G.roomCode) db.ref(`rooms/${G.roomCode}/meta/started`).set(true);
+      document.getElementById('tb-room').textContent = 'Room: ' + G.roomCode + ' · 🏺 Auction';
+      const _evLogH = document.getElementById('event-log-list'); if(_evLogH) _evLogH.innerHTML = '';
+      const _mobLogH = document.getElementById('mobile-log'); if(_mobLogH) _mobLogH.innerHTML = '';
+      _pendingLogEntries = [];
+      showScr('auction');
+      auctionNextCard();
+      return;
     } else {
       dealCards();
     }
@@ -3273,6 +3396,34 @@ function onHostMsg(d) {
     banner.textContent = 'You were removed by the host';
     document.body.appendChild(banner);
     setTimeout(() => { banner.remove(); goHome(); }, 3000);
+    return;
+  }
+  if (d.type === 'auction_start') {
+    document.getElementById('tb-room').textContent = 'Room: ' + (d.roomCode||'') + ' · 🏺 Auction';
+    const _evLogAG = document.getElementById('event-log-list'); if(_evLogAG) _evLogAG.innerHTML = '';
+    const _mobLogAG = document.getElementById('mobile-log'); if(_mobLogAG) _mobLogAG.innerHTML = '';
+    turnActionTaken = false; pAction = null; pResponders = [];
+    showScr('auction');
+    return;
+  }
+  if (d.type === 'auction_init') {
+    ME = d.pid; guestMode = true;
+    _auctionYourTokens = 6; _auctionYouAreHigh = false;
+    return;
+  }
+  if (d.type === 'auction_state') {
+    _auctionYouAreHigh = !!d.youAreHighBidder;
+    _auctionYourTokens = d.yourTokens !== undefined ? d.yourTokens : _auctionYourTokens;
+    _renderAuctionScreen(d.currentCard, d.currentBid, d.bidCount, d.timerLeft, d.phase,
+      d.totalCards, d.awardedCount, d.queueLength, _auctionYouAreHigh, _auctionYourTokens, d.event);
+    return;
+  }
+  if (d.type === 'auction_you_won') {
+    showAuctionFlipModal(d.card, d.cost);
+    return;
+  }
+  if (d.type === 'auction_free_cards') {
+    showAuctionAnnouncementModal(d.cards);
     return;
   }
   if (d.type === 'game_start') {
@@ -3562,6 +3713,7 @@ function masked(pid) {
   return {...G, players: G.players.map(p=>({...p,cards:p.cards.map(c=>({...c,role:(p.id===pid||!c.alive)?c.role:'?'}))}))};
 }
 function handleGuestAction(d, gid) {
+  if      (d.sub==='auction_bid') { hostReceiveBid(gid); return; }
   if      (d.sub==='do_action') { if(G.players[G.currentTurn]?.id!==gid) return; if(turnActionTaken) return; turnActionTaken=true; doAction(d.at,gid,d.tid); }
   else if (d.sub==='response')  { recordResp(gid,d.r,d.ch||null); }
   else if (d.sub==='lose_card') { applyLose(gid,d.role); }
@@ -3742,6 +3894,426 @@ function dealCards() {
   G.players.forEach(p=>{p.cards=[{role:deck.pop(),alive:true},{role:deck.pop(),alive:true}];p.coins=2;p.eliminated=false;});
   initRoundTracking();
   requestNotifPermission();
+}
+
+// ════════════════════════════════════════
+// AUCTION HOUSE
+// ════════════════════════════════════════
+function setupAuctionState(players) {
+  const cardCount = players.length * 2;
+  const deck = shuffle([...FULL_DECK]);
+  const auctionCards = deck.splice(0, cardCount);
+  if (G) G.deck = deck; // remaining deck for the actual game
+  auctionState = {
+    queue: auctionCards,
+    currentCard: null,
+    currentBid: 0,
+    bidCount: 0,
+    highBidderId: null,
+    tokens: {},
+    wonCards: {},
+    cardsNeeded: {},
+    phase: 'idle',
+    totalCards: cardCount,
+    awardedCount: 0,
+  };
+  players.forEach(p => {
+    auctionState.tokens[p.id] = 6;
+    auctionState.wonCards[p.id] = [];
+    auctionState.cardsNeeded[p.id] = 2;
+  });
+}
+
+function auctionNextCard() {
+  clearInterval(auctionTimerIv);
+  if (!auctionState) return;
+
+  // Check if only one player still needs cards → give them all remaining for free
+  const needers = G.players.filter(p => !p.isCPU && auctionState.cardsNeeded[p.id] > 0)
+    .concat(G.players.filter(p => p.isCPU && auctionState.cardsNeeded[p.id] > 0));
+  const allNeeders = G.players.filter(p => auctionState.cardsNeeded[p.id] > 0);
+  if (allNeeders.length === 1) {
+    auctionGiveFreeCards(allNeeders[0].id);
+    return;
+  }
+  if (auctionState.queue.length === 0) {
+    auctionComplete();
+    return;
+  }
+
+  // Advance to next card
+  auctionState.currentCard = auctionState.queue.shift();
+  auctionState.currentBid = 0;
+  auctionState.bidCount = 0;
+  auctionState.highBidderId = null;
+  auctionState.phase = 'bidding';
+  auctionState.timerLeft = 8;
+
+  auctionBroadcast(null);
+  renderAuctionUI();
+
+  // Schedule CPU bids for solo
+  if (isSolo) scheduleCPUBids();
+
+  // Start countdown
+  auctionTimerIv = setInterval(() => {
+    if (!auctionState || auctionState.phase !== 'bidding') { clearInterval(auctionTimerIv); return; }
+    auctionState.timerLeft--;
+    auctionBroadcast(null);
+    renderAuctionUI();
+    if (auctionState.timerLeft <= 0) {
+      clearInterval(auctionTimerIv);
+      hostResolveAuction();
+    }
+  }, 1000);
+}
+
+function hostResolveAuction() {
+  if (!auctionState) return;
+  auctionState.phase = 'transition';
+
+  if (!auctionState.highBidderId) {
+    // No bids — card goes to back of queue
+    auctionState.queue.push(auctionState.currentCard);
+    auctionBroadcast('noBid');
+    renderAuctionUI('noBid');
+    setTimeout(() => auctionNextCard(), 2000);
+    return;
+  }
+
+  // Award card to high bidder
+  const winnerId = auctionState.highBidderId;
+  const card = auctionState.currentCard;
+  const cost = auctionState.currentBid;
+  auctionState.tokens[winnerId] -= cost;
+  auctionState.wonCards[winnerId].push(card);
+  auctionState.cardsNeeded[winnerId]--;
+  auctionState.awardedCount++;
+
+  // Broadcast "card won" — anonymous, no winner name
+  auctionBroadcast('won');
+  renderAuctionUI('won');
+
+  // Show Flip modal to winner only
+  if (winnerId === ME) {
+    showAuctionFlipModal(card, cost);
+  } else if (!isSolo) {
+    fbToGuest(winnerId, { type: 'auction_you_won', card, cost });
+  }
+
+  setTimeout(() => auctionNextCard(), 3200);
+}
+
+function auctionGiveFreeCards(pid) {
+  const freeCards = auctionState.queue.splice(0, auctionState.cardsNeeded[pid]);
+  freeCards.forEach(c => auctionState.wonCards[pid].push(c));
+  auctionState.cardsNeeded[pid] = 0;
+  auctionState.awardedCount += freeCards.length;
+
+  // Everyone sees: final card(s) dealt with no auction (no name revealed)
+  auctionBroadcast('free');
+  renderAuctionUI('free');
+
+  // Recipient sees announcement; others see generic notice
+  if (pid === ME) {
+    showAuctionAnnouncementModal(freeCards);
+  } else if (!isSolo) {
+    fbToGuest(pid, { type: 'auction_free_cards', cards: freeCards });
+  }
+
+  setTimeout(() => auctionComplete(), pid === ME ? 4500 : 2500);
+}
+
+function hostReceiveBid(pid) {
+  if (!auctionState || auctionState.phase !== 'bidding') return;
+  if (pid === auctionState.highBidderId) return; // already holds the bid
+  const newBid = auctionState.currentBid + 1;
+  const tokens = auctionState.tokens[pid];
+  if (tokens === undefined || tokens < newBid) return; // not enough tokens
+  if (auctionState.cardsNeeded[pid] === 0) return; // already has both cards
+  auctionState.currentBid = newBid;
+  auctionState.highBidderId = pid;
+  auctionState.bidCount++;
+  auctionBroadcast(null);
+  renderAuctionUI();
+}
+
+function submitAuctionBid() {
+  if (isHost || isSolo) {
+    hostReceiveBid(ME);
+  } else {
+    if (!G || !G.roomCode) return;
+    fbToHost({ type: 'action_msg', sub: 'auction_bid' });
+  }
+}
+
+function auctionBroadcast(event) {
+  if (!auctionState) return;
+  if (isSolo) return; // solo renders locally only
+  const publicState = {
+    currentCard: auctionState.currentCard,
+    currentBid: auctionState.currentBid,
+    bidCount: auctionState.bidCount,
+    timerLeft: auctionState.timerLeft,
+    phase: auctionState.phase,
+    totalCards: auctionState.totalCards,
+    awardedCount: auctionState.awardedCount,
+    queueLength: auctionState.queue.length,
+    event: event || null,
+  };
+  G.players.filter(p => !p.isCPU && p.id !== hostPid).forEach(p => {
+    fbToGuest(p.id, {
+      type: 'auction_state',
+      ...publicState,
+      youAreHighBidder: p.id === auctionState.highBidderId,
+      yourTokens: auctionState.tokens[p.id] !== undefined ? auctionState.tokens[p.id] : 6,
+    });
+  });
+}
+
+function renderAuctionUI(event) {
+  if (!auctionState) return;
+  const isHighBidder = auctionState.highBidderId === ME;
+  const yourTokens = auctionState.tokens[ME] !== undefined ? auctionState.tokens[ME] : 6;
+  _renderAuctionScreen(auctionState.currentCard, auctionState.currentBid, auctionState.bidCount,
+    auctionState.timerLeft, auctionState.phase, auctionState.totalCards,
+    auctionState.awardedCount, auctionState.queue.length, isHighBidder, yourTokens, event);
+}
+
+function _renderAuctionScreen(card, currentBid, bidCount, timerLeft, phase, totalCards, awardedCount, queueLength, youAreHighBidder, yourTokens, event) {
+  // Card area
+  const cardArea = document.getElementById('auction-card-area');
+  if (cardArea && card) {
+    const d = CD[card] || {};
+    const entering = cardArea.dataset.card !== card;
+    if (entering) {
+      cardArea.dataset.card = card;
+      cardArea.innerHTML = `<div class="auction-card-face entering"><div class="auction-card-emoji">${d.emoji||'?'}</div><div class="auction-card-name">${d.name||card}</div></div>`;
+    }
+  } else if (cardArea && !card) {
+    cardArea.innerHTML = `<div class="auction-card-back"></div>`;
+  }
+
+  // Counter
+  const counter = document.getElementById('auction-counter');
+  if (counter) {
+    const cardNum = awardedCount + 1;
+    const showing = Math.min(cardNum, totalCards);
+    counter.textContent = phase === 'complete' ? 'Auction complete' : `Card ${showing} of ${totalCards}`;
+  }
+
+  // Timer ring
+  const ringEl = document.getElementById('auction-ring');
+  const numEl = document.getElementById('auction-timer-num');
+  const timerWrap = document.getElementById('auction-timer-wrap');
+  const CIRC = 194.8;
+  if (ringEl && phase === 'bidding') {
+    const frac = timerLeft / 8;
+    ringEl.style.strokeDashoffset = String(CIRC * (1 - frac));
+    ringEl.style.stroke = timerLeft <= 3 ? 'var(--red-bright)' : 'var(--gold)';
+    if (timerWrap) timerWrap.style.display = '';
+    if (numEl) numEl.textContent = String(Math.max(0, timerLeft));
+  } else if (timerWrap) {
+    timerWrap.style.display = 'none';
+  }
+
+  // Bid info
+  const bidInfo = document.getElementById('auction-bid-info');
+  if (bidInfo) {
+    if (event === 'noBid') {
+      bidInfo.innerHTML = `<span style="color:var(--text-dim)">No bids — card returned to the deck</span>`;
+    } else if (event === 'won') {
+      bidInfo.innerHTML = `<span style="color:var(--green-light)">Card won ✓</span>`;
+    } else if (event === 'free') {
+      bidInfo.innerHTML = `<span style="color:var(--gold)">Final card dealt — no auction needed</span>`;
+    } else if (phase === 'bidding') {
+      if (bidCount === 0) {
+        bidInfo.innerHTML = `<span>No bids yet</span>`;
+      } else {
+        bidInfo.innerHTML = `<span class="bid-high">${bidCount} bid${bidCount!==1?'s':''} placed</span><br><span>Current high: ${currentBid} token${currentBid!==1?'s':''}</span>`;
+      }
+    } else {
+      bidInfo.innerHTML = '';
+    }
+  }
+
+  // Token pips
+  const toksEl = document.getElementById('auction-tokens');
+  if (toksEl) {
+    let html = '';
+    for (let i = 0; i < 6; i++) {
+      html += `<div class="auction-pip${i < yourTokens ? '' : ' spent'}"></div>`;
+    }
+    toksEl.innerHTML = html;
+  }
+
+  // Bid button
+  const bidBtn = document.getElementById('auction-bid-btn');
+  if (bidBtn) {
+    const canBid = phase === 'bidding' && !youAreHighBidder && yourTokens > currentBid;
+    bidBtn.disabled = !canBid;
+    bidBtn.textContent = currentBid === 0 ? 'Bid 1 token' : `Bid ${currentBid + 1} tokens`;
+    bidBtn.style.display = '';
+    if (event === 'noBid' || event === 'won' || event === 'free') bidBtn.style.display = 'none';
+  }
+
+  // Status
+  const statusEl = document.getElementById('auction-status');
+  if (statusEl) {
+    if (youAreHighBidder && phase === 'bidding') {
+      statusEl.textContent = 'You hold the high bid — waiting…';
+    } else if (phase === 'bidding' && yourTokens <= currentBid) {
+      statusEl.textContent = 'Not enough tokens to raise';
+    } else if (event === 'noBid') {
+      statusEl.textContent = `${queueLength} card${queueLength!==1?'s':''} remain in the queue`;
+    } else {
+      statusEl.textContent = `${yourTokens} token${yourTokens!==1?'s':''} remaining`;
+    }
+  }
+}
+
+// CPU bidding logic (solo mode)
+function scheduleCPUBids() {
+  if (!isSolo || !auctionState) return;
+  const cardBudgets = { duke: 5, assassin: 4, captain: 3, contessa: 3, ambassador: 2 };
+  const card = auctionState.currentCard;
+  G.players.filter(p => p.isCPU).forEach(cpu => {
+    if (auctionState.cardsNeeded[cpu.id] === 0) return; // already done
+    const baseVal = cardBudgets[card] || 3;
+    // Random budget ±1 variation, plus personality spread
+    const budget = Math.max(1, baseVal + Math.floor(Math.random() * 3) - 1);
+    const reserve = Math.max(0, auctionState.cardsNeeded[cpu.id] - 1); // save 1 token per future card needed
+    const maxSpend = Math.min(budget, (auctionState.tokens[cpu.id] || 0) - reserve);
+    if (maxSpend < 1) return;
+
+    // Spread bids across the 8 seconds
+    [1.2, 2.5, 3.8, 5.1, 6.4].forEach(delay => {
+      setTimeout(() => {
+        if (!auctionState || auctionState.phase !== 'bidding') return;
+        if (auctionState.highBidderId === cpu.id) return;
+        if (auctionState.cardsNeeded[cpu.id] === 0) return;
+        if (auctionState.currentBid >= maxSpend) return;
+        if ((auctionState.tokens[cpu.id] || 0) <= auctionState.currentBid) return;
+        if (Math.random() < 0.55) hostReceiveBid(cpu.id);
+      }, delay * 1000);
+    });
+  });
+}
+
+function showAuctionFlipModal(card, cost) {
+  const d = CD[card] || {};
+  const confetti = ['#d4a843','#e74c3c','#2ecc71','#3498db','#9b59b6','#e67e22'].map(c =>
+    `<div class="auction-conf" style="background:${c}"></div>`).join('');
+  const html = `<div class="auction-flip-overlay" id="auction-flip-overlay" onclick="document.getElementById('auction-flip-overlay')?.remove()">
+    <div class="auction-flip-box">
+      <div class="auction-confetti-row">${confetti}</div>
+      <div class="auction-card-face" style="margin:0 auto 1rem;width:100px;height:140px;box-shadow:0 0 28px rgba(212,168,67,0.4)">
+        <div class="auction-card-emoji">${d.emoji||'?'}</div>
+        <div class="auction-card-name">${d.name||card}</div>
+      </div>
+      <div style="font-family:'Cinzel',serif;font-size:1rem;color:var(--gold-light);margin-bottom:0.3rem">Card secured!</div>
+      <div style="font-size:0.72rem;color:var(--text-dim);margin-bottom:0.4rem">Cost: ${cost} token${cost!==1?'s':''}</div>
+      <div style="font-size:0.65rem;color:var(--text-faint)">Tucked into your hand — hidden from others</div>
+      <div style="margin-top:1rem;font-size:0.65rem;color:var(--text-faint)">Tap to dismiss</div>
+    </div>
+  </div>`;
+  const el = document.createElement('div');
+  el.innerHTML = html;
+  document.body.appendChild(el.firstElementChild);
+  setTimeout(() => document.getElementById('auction-flip-overlay')?.remove(), 3000);
+}
+
+function showAuctionAnnouncementModal(cards) {
+  const names = cards.map(c => (CD[c]||{}).name||c).join(' & ');
+  const emojis = cards.map(c => (CD[c]||{}).emoji||'?').join(' ');
+  const html = `<div class="auction-flip-overlay" id="auction-announce-overlay" onclick="document.getElementById('auction-announce-overlay')?.remove()">
+    <div class="auction-announce-box">
+      <div style="font-size:2.2rem;margin-bottom:0.6rem">🎁</div>
+      <div style="font-family:'Cinzel',serif;font-size:1rem;color:var(--gold-light);margin-bottom:0.5rem">Lucky last!</div>
+      <div style="font-size:0.75rem;color:var(--text-dim);margin-bottom:1rem">The final card${cards.length>1?'s':''} go to you — no auction needed.</div>
+      <div style="display:flex;gap:0.8rem;justify-content:center;margin-bottom:1rem">
+        ${cards.map(c => {const d=CD[c]||{};return `<div class="auction-card-face" style="width:80px;height:112px;font-size:0.7rem"><div class="auction-card-emoji">${d.emoji||'?'}</div><div class="auction-card-name">${d.name||c}</div></div>`;}).join('')}
+      </div>
+      <div style="font-size:0.7rem;color:var(--gold-dim)">Your remaining tokens become starting coins</div>
+      <div style="margin-top:1rem;font-size:0.65rem;color:var(--text-faint)">Tap to dismiss</div>
+    </div>
+  </div>`;
+  const el = document.createElement('div');
+  el.innerHTML = html;
+  document.body.appendChild(el.firstElementChild);
+  setTimeout(() => document.getElementById('auction-announce-overlay')?.remove(), 4000);
+}
+
+function auctionComplete() {
+  if (!auctionState) return;
+  clearInterval(auctionTimerIv);
+  auctionState.phase = 'complete';
+
+  // Apply won cards and leftover tokens as starting coins to G.players
+  G.players.forEach(p => {
+    const won = auctionState.wonCards[p.id] || [];
+    // Fill any missing cards with random from remaining deck (shouldn't happen, safety net)
+    while (won.length < 2 && G.deck && G.deck.length > 0) won.push(G.deck.pop());
+    p.cards = won.map(r => ({ role: r, alive: true }));
+    p.coins = auctionState.tokens[p.id] !== undefined ? auctionState.tokens[p.id] : 2;
+    p.eliminated = false;
+    p.caughtBluffing = { duke:false, captain:false, ambassador:false, assassin:false, contessa:false };
+  });
+
+  // Determine first turn (winner goes first if applicable)
+  const N = G.players.length;
+  let firstTurn;
+  if (lastWinnerId) {
+    const idx = G.players.findIndex(p => p.id === lastWinnerId);
+    firstTurn = idx >= 0 ? idx : Math.floor(Math.random() * N);
+    lastWinnerId = null;
+  } else {
+    firstTurn = Math.floor(Math.random() * N);
+  }
+  G.currentTurn = firstTurn;
+
+  G.phase = 'action';
+  G.discardPile = G.discardPile || [];
+  G.started = true;
+  G.dealing = true;
+  G.turnsTaken = 0;
+  G.paused = false;
+  G.killLog = [];
+  G.blockedActionCount = { foreignAid:0, tax:0, steal:0, exchange:0, assassinate:0 };
+  G.contessaBlockHistory = {};
+  G.dcPlayerIdx = -1;
+  G.mode = 'standard'; // game itself runs as standard
+  auctionState = null;
+
+  _gameOverFired = false;
+  initRoundTracking();
+
+  // Multiplayer: broadcast game start with pre-dealt state
+  if (!isSolo) {
+    const _modeLabel = 'standard';
+    fbBroadcastAll({ type: 'game_start', roomCode: G.roomCode, mode: _modeLabel });
+    G.players.filter(p => !p.isCPU && p.id !== hostPid).forEach(p => {
+      fbToGuest(p.id, { type: 'your_state', pid: p.id, state: masked(p.id), isGameStart: true });
+    });
+    document.getElementById('tb-room').textContent = 'Room: ' + (G.roomCode || '');
+  } else {
+    document.getElementById('tb-room').textContent = 'Solo';
+  }
+  document.getElementById('tb-round').textContent = 'Round 1';
+
+  const _evLogA = document.getElementById('event-log-list'); if(_evLogA) _evLogA.innerHTML = '';
+  const _mobLogA = document.getElementById('mobile-log'); if(_mobLogA) _mobLogA.innerHTML = '';
+  _pendingLogEntries = [];
+
+  showScr('game');
+  renderGame();
+  setTimeout(() => animateInitialDeal(G.currentTurn, () => {
+    G.dealing = false; renderGame();
+    const first = G.players[G.currentTurn];
+    const isMeFirst = first && first.id === ME;
+    flashBanner(isMeFirst ? 'YOU GO FIRST!' : esc((first&&(first.displayName||first.name))||'?').toUpperCase() + ' GOES FIRST!', isMeFirst ? 'turn-self' : 'turn-other', { duration: 2400 });
+    setTimeout(() => { if (G.turnsTaken === 0) startTurn(); }, pace(2000));
+  }), 600);
 }
 
 // ════════════════════════════════════════
