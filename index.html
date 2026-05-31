@@ -102,8 +102,9 @@ html, body { height: 100%; background: var(--bg); color: var(--text); font-famil
   overflow: hidden;
 }
 .lr-tabs {
-  display: flex;
-  gap: 0.55rem;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.4rem;
   margin-bottom: 1rem;
 }
 .lr-tab {
@@ -925,6 +926,28 @@ html, body { height: 100%; background: var(--bg); color: var(--text); font-famil
   animation: auctionCardIn 0.4s cubic-bezier(0.22,1,0.36,1) both;
 }
 .mode-btn.auction-active { background: linear-gradient(135deg,rgba(212,168,67,0.22),rgba(212,168,67,0.07)); border-color: var(--gold); color: var(--gold-light); box-shadow: 0 0 16px rgba(212,168,67,0.18); }
+/* Auction desktop 3-column */
+#auction-layout { display:flex; width:100%; height:100%; align-items:stretch; }
+#auction-center { flex:1; display:flex; flex-direction:column; align-items:center; justify-content:center; padding:1rem; gap:0; }
+.auction-side-panel { width:120px; flex-shrink:0; padding:0.9rem 0.5rem; display:flex; flex-direction:column; gap:5px; overflow-y:auto; }
+#auction-hist-panel { border-right:1px solid rgba(212,168,67,0.1); background:rgba(255,255,255,0.015); }
+#auction-myhand-panel { border-left:1px solid rgba(212,168,67,0.1); background:rgba(255,255,255,0.015); }
+.auction-side-label { font-family:'Cinzel',serif; font-size:0.5rem; letter-spacing:0.2em; color:var(--gold-dim); text-align:center; margin-bottom:0.3rem; }
+.hist-label { font-size:0.55rem; color:var(--text-dim); display:block; text-align:center; }
+.hand-card-name { font-size:0.55rem; color:var(--gold-dim); margin-top:0.1rem; text-align:center; }
+.auction-hist-slot { border-radius:6px; padding:5px 3px; display:flex; flex-direction:column; align-items:center; gap:1px; font-size:0.55rem; letter-spacing:0.05em; text-align:center; }
+.auction-hist-slot.won { background:rgba(30,24,48,0.9); border:1px solid rgba(212,168,67,0.25); color:var(--gold); }
+.auction-hist-slot.returned { background:rgba(16,12,22,0.7); border:1px dashed rgba(100,90,100,0.2); color:var(--text-faint); }
+.auction-hist-slot.live { border:1px solid rgba(212,168,67,0.65); background:rgba(212,168,67,0.07); color:var(--gold-light); }
+.auction-hist-slot.empty-slot { border:1px dashed rgba(40,35,50,0.6); background:transparent; min-height:42px; }
+.auction-hist-emoji { font-size:1.1rem; line-height:1; }
+.auction-hist-name { font-size:0.47rem; letter-spacing:0.06em; }
+.auction-hist-tag { font-size:0.42rem; color:var(--text-faint); }
+.auction-hand-card { border-radius:7px; padding:7px 3px; display:flex; flex-direction:column; align-items:center; gap:2px; background:linear-gradient(160deg,#1e1830,#12101c); border:1px solid rgba(212,168,67,0.35); }
+.auction-hand-card .ahc-emoji { font-size:1.3rem; line-height:1; }
+.auction-hand-card .ahc-name { font-size:0.48rem; letter-spacing:0.06em; color:var(--gold); }
+.auction-hand-empty { border:1px dashed rgba(212,168,67,0.12); border-radius:7px; min-height:56px; background:rgba(212,168,67,0.02); }
+@media (max-width:640px) { .auction-side-panel { display:none !important; } }
 </style>
 </head>
 <body>
@@ -1021,7 +1044,7 @@ html, body { height: 100%; background: var(--bg); color: var(--text); font-famil
     <div class="landing-center">
       <div>
         <div class="logo-main">COUP</div>
-        <div class="logo-tagline">VERSION 58</div>
+        <div class="logo-tagline">VERSION 59</div>
         <div class="card-showcase">
           <div class="showcase-card duke">👑<span class="sc-name">Duke</span></div>
           <div class="showcase-card assassin">🗡️<span class="sc-name">Assassin</span></div>
@@ -1253,21 +1276,36 @@ html, body { height: 100%; background: var(--bg); color: var(--text); font-famil
 
 <!-- POST-GAME REVEAL SCREEN -->
 <div id="screen-auction" class="screen">
-  <div class="auction-header">AUCTION HOUSE</div>
-  <div class="auction-counter" id="auction-counter"></div>
-  <div id="auction-card-area"></div>
-  <div class="auction-timer-wrap" id="auction-timer-wrap">
-    <svg width="76" height="76" viewBox="0 0 76 76">
-      <circle cx="38" cy="38" r="31" fill="none" stroke="var(--surface3)" stroke-width="5"/>
-      <circle id="auction-ring" cx="38" cy="38" r="31" fill="none" stroke="var(--gold)" stroke-width="5"
-        stroke-dasharray="194.8" stroke-dashoffset="0" style="transition:stroke-dashoffset 0.9s linear,stroke 0.3s"/>
-    </svg>
-    <div class="auction-timer-num" id="auction-timer-num">8</div>
+  <div id="auction-layout">
+    <!-- Left: auction history -->
+    <div class="auction-side-panel" id="auction-hist-panel">
+      <div class="auction-side-label">Auctioned</div>
+      <div id="auction-hist-list"></div>
+    </div>
+    <!-- Center: spotlight -->
+    <div id="auction-center">
+      <div class="auction-header">AUCTION HOUSE</div>
+      <div class="auction-counter" id="auction-counter"></div>
+      <div id="auction-card-area"></div>
+      <div class="auction-timer-wrap" id="auction-timer-wrap">
+        <svg width="76" height="76" viewBox="0 0 76 76">
+          <circle cx="38" cy="38" r="31" fill="none" stroke="var(--surface3)" stroke-width="5"/>
+          <circle id="auction-ring" cx="38" cy="38" r="31" fill="none" stroke="var(--gold)" stroke-width="5"
+            stroke-dasharray="194.8" stroke-dashoffset="0" style="transition:stroke-dashoffset 0.9s linear,stroke 0.3s"/>
+        </svg>
+        <div class="auction-timer-num" id="auction-timer-num">8</div>
+      </div>
+      <div class="auction-bid-info" id="auction-bid-info"></div>
+      <div class="auction-tokens-wrap" id="auction-tokens"></div>
+      <button class="auction-bid-btn" id="auction-bid-btn" onclick="submitAuctionBid()">Bid +1</button>
+      <div class="auction-status" id="auction-status"></div>
+    </div>
+    <!-- Right: your won cards -->
+    <div class="auction-side-panel" id="auction-myhand-panel">
+      <div class="auction-side-label">Your Cards</div>
+      <div id="auction-myhand-list"></div>
+    </div>
   </div>
-  <div class="auction-bid-info" id="auction-bid-info"></div>
-  <div class="auction-tokens-wrap" id="auction-tokens"></div>
-  <button class="auction-bid-btn" id="auction-bid-btn" onclick="submitAuctionBid()">Bid +1</button>
-  <div class="auction-status" id="auction-status"></div>
 </div>
 
 <div id="screen-reveal" class="screen">
@@ -1998,8 +2036,11 @@ let G = null, ME = null;
 // ── Auction House state (host-authoritative) ──
 let auctionState = null;
 let auctionTimerIv = null;
-let _auctionYouAreHigh = false; // local player is current high bidder
-let _auctionYourTokens = 6;    // local player's remaining tokens
+let _auctionYouAreHigh = false;   // local player is current high bidder
+let _auctionYourTokens = 6;      // local player's remaining tokens
+let _auctionMyWonCards = [];      // cards won so far (guest-side)
+let _auctionMyCardsNeeded = 2;   // how many more cards needed (guest-side)
+let _auctionHistory = [];         // public history of card outcomes (guest-side)
 let isSolo = false, isHost = false;
 let hostPid = 'p0'; // tracks current host's player ID — updated on transfer
 let watchdogIv = null; // detects stuck "resolving" phase
@@ -3450,20 +3491,29 @@ function onHostMsg(d) {
   if (d.type === 'auction_init') {
     ME = d.pid; guestMode = true;
     _auctionYourTokens = 6; _auctionYouAreHigh = false;
+    _auctionMyWonCards = []; _auctionMyCardsNeeded = 2; _auctionHistory = [];
     return;
   }
   if (d.type === 'auction_state') {
     _auctionYouAreHigh = !!d.youAreHighBidder;
     _auctionYourTokens = d.yourTokens !== undefined ? d.yourTokens : _auctionYourTokens;
+    _auctionMyCardsNeeded = d.yourCardsNeeded !== undefined ? d.yourCardsNeeded : _auctionMyCardsNeeded;
+    if (d.yourWonCards) _auctionMyWonCards = d.yourWonCards;
+    if (d.history) _auctionHistory = d.history;
     _renderAuctionScreen(d.currentCard, d.currentBid, d.bidCount, d.timerLeft, d.phase,
-      d.totalCards, d.awardedCount, d.queueLength, _auctionYouAreHigh, _auctionYourTokens, d.event);
+      d.totalCards, d.awardedCount, d.queueLength, _auctionYouAreHigh, _auctionYourTokens, d.event,
+      _auctionMyCardsNeeded, _auctionHistory, _auctionMyWonCards);
     return;
   }
   if (d.type === 'auction_you_won') {
+    _auctionMyWonCards.push(d.card);
+    _auctionMyCardsNeeded = Math.max(0, _auctionMyCardsNeeded - 1);
     showAuctionFlipModal(d.card, d.cost);
     return;
   }
   if (d.type === 'auction_free_cards') {
+    d.cards.forEach(c => _auctionMyWonCards.push(c));
+    _auctionMyCardsNeeded = 0;
     showAuctionAnnouncementModal(d.cards);
     return;
   }
@@ -3957,6 +4007,7 @@ function setupAuctionState(players) {
     phase: 'idle',
     totalCards: cardCount,
     awardedCount: 0,
+    history: [],
   };
   players.forEach(p => {
     auctionState.tokens[p.id] = 6;
@@ -4015,6 +4066,7 @@ function hostResolveAuction() {
 
   if (!auctionState.highBidderId) {
     // No bids — card goes to back of queue
+    auctionState.history.push({ card: auctionState.currentCard, result: 'returned' });
     auctionState.queue.push(auctionState.currentCard);
     auctionBroadcast('noBid');
     renderAuctionUI('noBid');
@@ -4030,6 +4082,7 @@ function hostResolveAuction() {
   auctionState.wonCards[winnerId].push(card);
   auctionState.cardsNeeded[winnerId]--;
   auctionState.awardedCount++;
+  auctionState.history.push({ card, result: 'won', cost, isYou: winnerId === ME });
 
   // Broadcast "card won" — anonymous, no winner name
   auctionBroadcast('won');
@@ -4047,7 +4100,10 @@ function hostResolveAuction() {
 
 function auctionGiveFreeCards(pid) {
   const freeCards = auctionState.queue.splice(0, auctionState.cardsNeeded[pid]);
-  freeCards.forEach(c => auctionState.wonCards[pid].push(c));
+  freeCards.forEach(c => {
+    auctionState.wonCards[pid].push(c);
+    auctionState.history.push({ card: c, result: 'free', isYou: pid === ME });
+  });
   auctionState.cardsNeeded[pid] = 0;
   auctionState.awardedCount += freeCards.length;
 
@@ -4108,6 +4164,9 @@ function auctionBroadcast(event) {
       ...publicState,
       youAreHighBidder: p.id === auctionState.highBidderId,
       yourTokens: auctionState.tokens[p.id] !== undefined ? auctionState.tokens[p.id] : 6,
+      yourCardsNeeded: auctionState.cardsNeeded[p.id] !== undefined ? auctionState.cardsNeeded[p.id] : 2,
+      yourWonCards: (auctionState.wonCards[p.id] || []).slice(),
+      history: (auctionState.history || []).slice(),
     });
   });
 }
@@ -4116,12 +4175,18 @@ function renderAuctionUI(event) {
   if (!auctionState) return;
   const isHighBidder = auctionState.highBidderId === ME;
   const yourTokens = auctionState.tokens[ME] !== undefined ? auctionState.tokens[ME] : 6;
+  const yourCardsNeeded = auctionState.cardsNeeded[ME] !== undefined ? auctionState.cardsNeeded[ME] : 2;
+  const myWonCards = auctionState.wonCards[ME] || [];
   _renderAuctionScreen(auctionState.currentCard, auctionState.currentBid, auctionState.bidCount,
     auctionState.timerLeft, auctionState.phase, auctionState.totalCards,
-    auctionState.awardedCount, auctionState.queue.length, isHighBidder, yourTokens, event);
+    auctionState.awardedCount, auctionState.queue.length, isHighBidder, yourTokens, event,
+    yourCardsNeeded, auctionState.history || [], myWonCards);
 }
 
-function _renderAuctionScreen(card, currentBid, bidCount, timerLeft, phase, totalCards, awardedCount, queueLength, youAreHighBidder, yourTokens, event) {
+function _renderAuctionScreen(card, currentBid, bidCount, timerLeft, phase, totalCards, awardedCount, queueLength, youAreHighBidder, yourTokens, event, yourCardsNeeded, history, myWonCards) {
+  yourCardsNeeded = yourCardsNeeded !== undefined ? yourCardsNeeded : 2;
+  history = history || [];
+  myWonCards = myWonCards || [];
   // Card area
   const cardArea = document.getElementById('auction-card-area');
   if (cardArea && card) {
@@ -4191,7 +4256,7 @@ function _renderAuctionScreen(card, currentBid, bidCount, timerLeft, phase, tota
   // Bid button
   const bidBtn = document.getElementById('auction-bid-btn');
   if (bidBtn) {
-    const canBid = phase === 'bidding' && !youAreHighBidder && yourTokens > currentBid;
+    const canBid = phase === 'bidding' && !youAreHighBidder && yourTokens > currentBid && yourCardsNeeded > 0;
     bidBtn.disabled = !canBid;
     bidBtn.textContent = currentBid === 0 ? 'Bid 1 token' : `Bid ${currentBid + 1} tokens`;
     bidBtn.style.display = '';
@@ -4201,7 +4266,9 @@ function _renderAuctionScreen(card, currentBid, bidCount, timerLeft, phase, tota
   // Status
   const statusEl = document.getElementById('auction-status');
   if (statusEl) {
-    if (youAreHighBidder && phase === 'bidding') {
+    if (yourCardsNeeded === 0 && phase === 'bidding') {
+      statusEl.textContent = 'You have your cards — watching the auction';
+    } else if (youAreHighBidder && phase === 'bidding') {
       statusEl.textContent = 'You hold the high bid — waiting…';
     } else if (phase === 'bidding' && yourTokens <= currentBid) {
       statusEl.textContent = 'Not enough tokens to raise';
@@ -4209,6 +4276,39 @@ function _renderAuctionScreen(card, currentBid, bidCount, timerLeft, phase, tota
       statusEl.textContent = `${queueLength} card${queueLength!==1?'s':''} remain in the queue`;
     } else {
       statusEl.textContent = `${yourTokens} token${yourTokens!==1?'s':''} remaining`;
+    }
+  }
+
+  // Left panel: auction history
+  const histList = document.getElementById('auction-hist-list');
+  if (histList) {
+    if (history.length === 0) {
+      histList.innerHTML = '<div class="auction-hist-slot empty-slot">—</div>';
+    } else {
+      histList.innerHTML = history.map(h => {
+        const d = CD[h.card] || {};
+        if (h.result === 'returned') {
+          return `<div class="auction-hist-slot returned" title="${d.name||h.card} — no bids">${d.emoji||'?'} <span class="hist-label">↩</span></div>`;
+        } else if (h.result === 'free') {
+          return `<div class="auction-hist-slot free" title="${d.name||h.card} — dealt free">${d.emoji||'?'} <span class="hist-label">🎁</span></div>`;
+        } else {
+          const costLabel = h.cost > 0 ? `${h.cost}t` : '';
+          return `<div class="auction-hist-slot won" title="${d.name||h.card} — won for ${h.cost} token${h.cost!==1?'s':''}">${d.emoji||'?'} <span class="hist-label">${costLabel}</span></div>`;
+        }
+      }).join('');
+    }
+  }
+
+  // Right panel: your won cards
+  const handList = document.getElementById('auction-myhand-list');
+  if (handList) {
+    if (myWonCards.length === 0) {
+      handList.innerHTML = '<div class="auction-hand-card empty-slot">—</div>';
+    } else {
+      handList.innerHTML = myWonCards.map(c => {
+        const d = CD[c] || {};
+        return `<div class="auction-hand-card" title="${d.name||c}">${d.emoji||'?'}<div class="hand-card-name">${d.name||c}</div></div>`;
+      }).join('');
     }
   }
 }
@@ -6202,10 +6302,11 @@ function openSettings() {
 // Remove this entire section when the game is stable
 // ════════════════════════════════════════
 function captureFrozenState() {
+  const inAuction = !!auctionState;
   return {
     timestamp: new Date().toISOString(),
-    version: 'v56',
-    phase: G?.phase,
+    version: 'v59',
+    phase: inAuction ? 'auction' : G?.phase,
     currentTurn: G?.currentTurn,
     pAction: pAction ? JSON.parse(JSON.stringify(pAction)) : null,
     pResponders: [...pResponders],
@@ -6224,6 +6325,22 @@ function captureFrozenState() {
     G_started: G?.started,
     G_lockedRoom: G?.lockedRoom,
     eventLog: Array.from(document.querySelectorAll('#event-log-list .ev')).map(el => el.innerText).join('\n'),
+    // Auction House pre-game state (null if not in auction phase)
+    auctionSnapshot: inAuction ? {
+      currentCard: auctionState.currentCard,
+      currentBid: auctionState.currentBid,
+      bidCount: auctionState.bidCount,
+      timerLeft: auctionState.timerLeft,
+      phase: auctionState.phase,
+      totalCards: auctionState.totalCards,
+      awardedCount: auctionState.awardedCount,
+      queueLength: auctionState.queue?.length,
+      queueCards: [...(auctionState.queue||[])],
+      history: [...(auctionState.history||[])],
+      tokens: {...(auctionState.tokens||{})},
+      wonCards: JSON.parse(JSON.stringify(auctionState.wonCards||{})),
+      cardsNeeded: {...(auctionState.cardsNeeded||{})},
+    } : null,
   };
 }
 
