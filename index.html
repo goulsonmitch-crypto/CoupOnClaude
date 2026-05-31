@@ -952,26 +952,17 @@ html, body { height: 100%; background: var(--bg); color: var(--text); font-famil
 
         <!-- AUCTION HOUSE RULES -->
         <div class="lr-body lr-body-std" id="rules-auction" style="display:none">
-          <p><strong>🏺 Auction House</strong> — before the game begins, every card is auctioned one at a time. You bid tokens to claim the cards you want.</p>
-          <div class="rules-section-head">SETUP</div>
+          <p><strong>🏺 Auction House</strong> — before the game, every card is auctioned one at a time. Bid tokens to claim the cards you want.</p>
           <ul>
-            <li>🪙 Each player starts with <strong>6 tokens</strong> to spend at auction</li>
-            <li>Cards equal to <strong>2× the player count</strong> are drawn from the deck and auctioned one by one</li>
-            <li>Leftover tokens after the auction become your <strong>starting coins</strong> in the game</li>
+            <li>🪙 Each player gets <strong>6 tokens</strong> to spend</li>
+            <li>Bids go up <strong>+1 at a time</strong> — first bid is always 1</li>
+            <li>Once you hold the high bid, you <strong>cannot rebid</strong> until outbid</li>
+            <li>Nobody sees <strong>who</strong> bids or wins — only the amount</li>
+            <li>No bids in 8s → card goes to the <strong>back of the queue</strong></li>
+            <li>Last player needing cards gets them <strong>free</strong>, instantly</li>
+            <li>Unspent tokens become your <strong>starting coins</strong></li>
           </ul>
-          <div class="rules-section-head">BIDDING</div>
-          <ul>
-            <li>Each card gets <strong>8 seconds</strong> of bidding time</li>
-            <li>Bids always go up by exactly <strong>+1 token</strong> — the first bid is always 1</li>
-            <li>Once you hold the high bid, you <strong>cannot bid again</strong> until someone outbids you</li>
-            <li>Nobody can see <strong>who</strong> is bidding or who wins — only the current high amount and bid count are shown</li>
-          </ul>
-          <div class="rules-section-head">NO BIDS</div>
-          <p>If a card receives <strong>no bids</strong> in 8 seconds, it goes to the back of the queue and the next card comes up. Everyone sees that it went unbid.</p>
-          <div class="rules-section-head">LAST PLAYER</div>
-          <p>When only one player still needs card(s), the remaining cards are handed to them <strong>immediately — free of charge</strong>, with no auction. Others see the final card(s) were dealt but not to whom.</p>
-          <div class="rules-section-head">THEN PLAY</div>
-          <p>Once all cards are dealt, the game runs as <strong>Standard Coup</strong>. Your starting coins equal whatever tokens you didn't spend.</p>
+          <p>After the auction, the game runs as <strong>Standard Coup</strong>.</p>
         </div>
 
         <!-- BLITZ RULES -->
