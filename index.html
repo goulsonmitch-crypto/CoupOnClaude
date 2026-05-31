@@ -17,11 +17,12 @@ function closeRulesOverlay() {
   document.body.style.overflow = '';
 }
 function switchOverlayTab(tab) {
-  ['std','dc','blitz'].forEach(t => {
+  ['std','dc','blitz','auction'].forEach(t => {
     const btn = document.getElementById('ov-tab-'+t);
-    const body = document.getElementById('ov-rules-'+(t==='std'?'std':t));
-    if (btn) btn.classList.toggle('active', tab === (t==='std'?'standard':t));
-    if (body) body.style.display = tab === (t==='std'?'standard':t) ? '' : 'none';
+    const key = t==='std'?'standard':t;
+    const body = document.getElementById('ov-rules-'+t);
+    if (btn) btn.classList.toggle('active', tab === key);
+    if (body) body.style.display = tab === key ? '' : 'none';
   });
 }
 </script>
@@ -946,6 +947,31 @@ html, body { height: 100%; background: var(--bg); color: var(--text); font-famil
           <button class="lr-tab active" id="tab-standard" onclick="switchRulesTab('standard')">Standard</button>
           <button class="lr-tab" id="tab-dc" onclick="switchRulesTab('dc')">🌹 Double Contessa</button>
           <button class="lr-tab" id="tab-blitz" onclick="switchRulesTab('blitz')">⚡ Blitz</button>
+          <button class="lr-tab" id="tab-auction" onclick="switchRulesTab('auction')">🏺 Auction House</button>
+        </div>
+
+        <!-- AUCTION HOUSE RULES -->
+        <div class="lr-body lr-body-std" id="rules-auction" style="display:none">
+          <p><strong>🏺 Auction House</strong> — before the game begins, every card is auctioned one at a time. You bid tokens to claim the cards you want.</p>
+          <div class="rules-section-head">SETUP</div>
+          <ul>
+            <li>🪙 Each player starts with <strong>6 tokens</strong> to spend at auction</li>
+            <li>Cards equal to <strong>2× the player count</strong> are drawn from the deck and auctioned one by one</li>
+            <li>Leftover tokens after the auction become your <strong>starting coins</strong> in the game</li>
+          </ul>
+          <div class="rules-section-head">BIDDING</div>
+          <ul>
+            <li>Each card gets <strong>8 seconds</strong> of bidding time</li>
+            <li>Bids always go up by exactly <strong>+1 token</strong> — the first bid is always 1</li>
+            <li>Once you hold the high bid, you <strong>cannot bid again</strong> until someone outbids you</li>
+            <li>Nobody can see <strong>who</strong> is bidding or who wins — only the current high amount and bid count are shown</li>
+          </ul>
+          <div class="rules-section-head">NO BIDS</div>
+          <p>If a card receives <strong>no bids</strong> in 8 seconds, it goes to the back of the queue and the next card comes up. Everyone sees that it went unbid.</p>
+          <div class="rules-section-head">LAST PLAYER</div>
+          <p>When only one player still needs card(s), the remaining cards are handed to them <strong>immediately — free of charge</strong>, with no auction. Others see the final card(s) were dealt but not to whom.</p>
+          <div class="rules-section-head">THEN PLAY</div>
+          <p>Once all cards are dealt, the game runs as <strong>Standard Coup</strong>. Your starting coins equal whatever tokens you didn't spend.</p>
         </div>
 
         <!-- BLITZ RULES -->
@@ -1035,6 +1061,7 @@ html, body { height: 100%; background: var(--bg); color: var(--text); font-famil
       <button class="lr-tab active" id="ov-tab-std" onclick="switchOverlayTab('standard')">Standard</button>
       <button class="lr-tab" id="ov-tab-dc" onclick="switchOverlayTab('dc')">🌹 Double Contessa</button>
       <button class="lr-tab" id="ov-tab-blitz" onclick="switchOverlayTab('blitz')">⚡ Blitz</button>
+      <button class="lr-tab" id="ov-tab-auction" onclick="switchOverlayTab('auction')">🏺 Auction House</button>
     </div>
     <div class="rules-overlay-body">
       <div class="lr-body lr-body-std" id="ov-rules-std">
@@ -1083,6 +1110,29 @@ html, body { height: 100%; background: var(--bg); color: var(--text); font-famil
         </ul>
         <div class="rules-section-head">TURN PRESSURE</div>
         <p>Holding Double Contessa <strong>shortens your turn timer</strong>. If the timer runs out, you will automatically declare <strong>Duke</strong>.</p>
+      </div>
+      <div class="lr-body lr-body-std" id="ov-rules-auction" style="display:none">
+        <p><strong>🏺 Auction House</strong> — before the game begins, every card is auctioned one at a time. You bid tokens to claim the cards you want.</p>
+        <div class="rules-section-head">SETUP</div>
+        <ul>
+          <li>🪙 Each player starts with <strong>6 tokens</strong> to spend at auction</li>
+          <li>Cards equal to <strong>2× the player count</strong> are drawn and auctioned one by one</li>
+          <li>Leftover tokens after auction become your <strong>starting coins</strong></li>
+        </ul>
+        <div class="rules-section-head">BIDDING</div>
+        <ul>
+          <li>Each card gets <strong>8 seconds</strong> of bidding time</li>
+          <li>Bids always go up by <strong>+1 token</strong> — first bid is always 1</li>
+          <li>Once you hold the high bid you <strong>cannot rebid</strong> until someone outbids you</li>
+          <li>Nobody sees <strong>who</strong> is bidding — only the amount and bid count</li>
+        </ul>
+        <div class="rules-section-head">NO BIDS / LAST PLAYER</div>
+        <ul>
+          <li>No bids in 8s → card goes to <strong>back of the queue</strong></li>
+          <li>One player left needing cards → they get all remaining cards <strong>free</strong>, no timer</li>
+        </ul>
+        <div class="rules-section-head">THEN PLAY</div>
+        <p>Once all cards are dealt the game runs as <strong>Standard Coup</strong>. Starting coins = unspent tokens.</p>
       </div>
     </div>
   </div>
@@ -6284,19 +6334,12 @@ function setTempo(t,el){SETTINGS.tempo=t;saveSettings();el.parentElement.querySe
 function setDifficulty(d,el){SETTINGS.cpuDifficulty=d;saveSettings();el.parentElement.querySelectorAll('button').forEach(b=>b.classList.remove('active-tempo'));el.classList.add('active-tempo');toast('CPU Difficulty: '+(d==='hard'?'Hard':'Easy'));}
 
 function switchRulesTab(mode) {
-  const std = document.getElementById('rules-standard');
-  const dc  = document.getElementById('rules-dc');
-  const blitz = document.getElementById('rules-blitz');
-  const tStd = document.getElementById('tab-standard');
-  const tDc  = document.getElementById('tab-dc');
-  const tBlitz = document.getElementById('tab-blitz');
-  if (!std) return;
-  std.style.display   = mode === 'standard' ? '' : 'none';
-  dc.style.display    = mode === 'dc'       ? '' : 'none';
-  if (blitz) blitz.style.display = mode === 'blitz' ? '' : 'none';
-  tStd.classList.toggle('active', mode === 'standard');
-  tDc.classList.toggle('active', mode === 'dc');
-  if (tBlitz) tBlitz.classList.toggle('active', mode === 'blitz');
+  ['standard','dc','blitz','auction'].forEach(m => {
+    const body = document.getElementById('rules-' + m);
+    const btn  = document.getElementById('tab-' + m);
+    if (body) body.style.display = mode === m ? '' : 'none';
+    if (btn)  btn.classList.toggle('active', mode === m);
+  });
 }
 
 function openRules() {
