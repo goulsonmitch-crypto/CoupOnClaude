@@ -935,7 +935,7 @@ html, body { height: 100%; background: var(--bg); color: var(--text); font-famil
     <div class="landing-center">
       <div>
         <div class="logo-main">COUP</div>
-        <div class="logo-tagline">VERSION 56</div>
+        <div class="logo-tagline">VERSION 57</div>
         <div class="card-showcase">
           <div class="showcase-card duke">👑<span class="sc-name">Duke</span></div>
           <div class="showcase-card assassin">🗡️<span class="sc-name">Assassin</span></div>
@@ -3718,6 +3718,8 @@ function initGame(players, roomCode) {
   const _dcSuffix = selectedGameMode === 'doubleContessa' ? ' · 🌹🌹 DC' : '';
   document.getElementById('tb-room').textContent = (roomCode ? 'Room: '+roomCode : 'Solo') + _dcSuffix;
   document.getElementById('tb-round').textContent = 'Round 1';
+  _gameOverFired = false; // reset winner guard for new game
+  initRoundTracking(); // always reset timer + stats at game start (solo & multiplayer)
   showScr('game');
   renderGame();
   setTimeout(() => animateInitialDeal(G.currentTurn, () => {
@@ -4876,6 +4878,12 @@ function _resolveAction(at,actorId,targetId,opts={}) {
   // Assassinate cost is charged upfront in doAction; DC coup cost charged in doAction too
   if (!opts.costAlreadyPaid && at !== 'assassinate') actor.coins=Math.max(0,actor.coins-act.cost);
   const linger=(fn)=>setTimeout(fn,pace(900));
+  // Track unchallenged bluffs: if actor claimed a role but doesn't actually have it, count as successful bluff
+  const _claimedRole = ACTS[at]?.char;
+  if (_claimedRole && at !== 'income' && at !== 'foreignAid' && at !== 'coup') {
+    const _hasRole = actor.cards.some(c => c.alive && c.role === _claimedRole);
+    if (!_hasRole) recordBluffAttempt(actorId, true); // succeeded (went unchallenged)
+  }
   switch(at) {
     case 'income':     actor.coins+=1; addEv(`<span class="ev-name">${esc(actor.displayName||actor.name)}</span> takes Income → 🪙${actor.coins}`,'action'); animateCoinTransfer('__treasury__',actorId,1); bcastState(); linger(nextTurn); break;
     case 'foreignAid': actor.coins+=2; addEv(`<span class="ev-name">${esc(actor.displayName||actor.name)}</span> takes Foreign Aid → 🪙${actor.coins}`,'action'); animateCoinTransfer('__treasury__',actorId,2); bcastState(); linger(nextTurn); break;
@@ -5099,7 +5107,10 @@ function checkWinner(cb) {
   if(cb)cb();
 }
 let lastWinnerId=null;
+let _gameOverFired=false; // guard: showWinner only fires once per game
 function showWinner(name, winnerId) {
+  if (_gameOverFired) return; // already announced — ignore duplicate calls
+  _gameOverFired = true;
   lastWinnerId = winnerId || (G&&G.players?G.players.find(p=>(p.displayName===name||p.name===name)&&!p.eliminated)?.id:null) || null;
   document.getElementById('winner-name').textContent=name;
   document.getElementById('winner-title').textContent=t('victory');
@@ -6052,21 +6063,24 @@ function showRevealScreen(winnerName) {
     const startChips = startRoles.map(r => {
       const d = CD[r]||{}; return `<span class="reveal-role-chip starting">${d.emoji||''} ${d.name||r}</span>`;
     }).join('');
-    const currentChips = p.cards.map(c => {
-      const d = CD[c.role]||{};
-      const cls = !c.alive ? 'dead' : 'alive';
-      return `<span class="reveal-role-chip ${cls}">${d.emoji||''} ${d.name||c.role}</span>`;
-    }).join('');
     const bs = _bluffStats[p.id]||{attempted:0,succeeded:0};
-    const bluffLine = bs.attempted > 0 ? `<div class="reveal-bluff-line">🎭 ${bs.succeeded}/${bs.attempted} bluffs successful</div>` : '';
+    const bluffLine = bs.attempted > 0 ? `<div class="reveal-bluff-line">🎭 ${bs.succeeded}/${bs.attempted} bluffs pulled off</div>` : '';
     const wClass = isWinner(p) ? ' winner-card' : '';
     const crown = isWinner(p) ? '<span style="color:var(--gold);margin-right:4px">👑</span>' : '';
+    // Show final hand for winner; non-winners just show starting hand + status
+    const finalHandHtml = isWinner(p) ? (() => {
+      const currentChips = p.cards.map(c => {
+        const d = CD[c.role]||{};
+        const cls = !c.alive ? 'dead' : 'alive';
+        return `<span class="reveal-role-chip ${cls}">${d.emoji||''} ${d.name||c.role}</span>`;
+      }).join('');
+      return `<div style="font-size:0.55rem;color:var(--text-faint);margin-bottom:2px">Final hand:</div><div class="reveal-cards-row">${currentChips}</div>`;
+    })() : '';
     return `<div class="reveal-card${wClass}">
       <div class="reveal-player-name">${crown}${esc(p.displayName||p.name)}${p.isCPU?' (CPU)':''}</div>
       <div style="font-size:0.55rem;color:var(--text-faint);margin-bottom:2px">Starting hand:</div>
       <div class="reveal-cards-row">${startChips}</div>
-      <div style="font-size:0.55rem;color:var(--text-faint);margin-bottom:2px">Final hand:</div>
-      <div class="reveal-cards-row">${currentChips}</div>
+      ${finalHandHtml}
       ${bluffLine}
       <div style="font-size:0.62rem;color:var(--text-dim);margin-top:4px">🪙 ${p.coins} coins · ${p.eliminated?'eliminated':'alive'}</div>
     </div>`;
