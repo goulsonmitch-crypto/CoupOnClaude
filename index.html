@@ -1106,7 +1106,7 @@ html, body { height: 100%; background: var(--bg); color: var(--text); font-famil
     <div class="landing-center">
       <div>
         <div class="logo-main">COUP</div>
-        <div class="logo-tagline">VERSION 62</div>
+        <div class="logo-tagline">VERSION 63</div>
         <div class="card-showcase">
           <div class="showcase-card duke">👑<span class="sc-name">Duke</span></div>
           <div class="showcase-card assassin">🗡️<span class="sc-name">Assassin</span></div>
@@ -4237,7 +4237,7 @@ function auctionNextCard() {
     auctionState.phase = 'bidding';
     auctionBroadcast(null);
     renderAuctionUI();
-    if (isSolo) scheduleCPUBids();
+    if (isSolo || isHost) scheduleCPUBids();
     // Start countdown
     auctionTimerIv = setInterval(() => {
       if (!auctionState || auctionState.phase !== 'bidding') { clearInterval(auctionTimerIv); return; }
@@ -4567,9 +4567,10 @@ function _renderAuctionScreen(card, currentBid, bidCount, timerLeft, phase, tota
   const histList = document.getElementById('auction-hist-list');
   if (histList) {
     let slots = '';
-    const liveIdx = (phase === 'dealing' || phase === 'bidding') ? history.length : -1;
-    // Won/free cards fill slots; returned cards are skipped (not shown in history strip)
+    // Won/free cards fill slots; returned cards are skipped entirely
     const displayHistory = history.filter(h => h.result !== 'returned');
+    // Live slot is the next empty slot AFTER all awarded cards
+    const liveIdx = (phase === 'dealing' || phase === 'bidding') ? displayHistory.length : -1;
     for (let i = 0; i < totalCards; i++) {
       const h = displayHistory[i];
       if (i === liveIdx && h === undefined) {
@@ -4619,7 +4620,8 @@ function _renderAuctionScreen(card, currentBid, bidCount, timerLeft, phase, tota
   const phoneHist = document.getElementById('auction-phone-hist');
   if (phoneHist) {
     const displayHistory2 = history.filter(h => h.result !== 'returned');
-    const tileSize = totalCards > 6 ? 30 : 40; // shrink on more cards
+    const tileSize = totalCards > 6 ? 30 : 40;
+    // Live slot comes right after the last awarded card (returned cards don't take a slot)
     const liveIdx2 = (phase === 'dealing' || phase === 'bidding') ? displayHistory2.length : -1;
     let tiles = '';
     for (let i = 0; i < totalCards; i++) {
@@ -4661,7 +4663,7 @@ function _renderAuctionScreen(card, currentBid, bidCount, timerLeft, phase, tota
 
 // CPU bidding logic (solo mode)
 function scheduleCPUBids() {
-  if (!isSolo || !auctionState) return;
+  if ((!isSolo && !isHost) || !auctionState) return;
   const cardBudgets = { duke: 5, assassin: 4, captain: 3, contessa: 3, ambassador: 2 };
   const card = auctionState.currentCard;
   G.players.filter(p => p.isCPU).forEach(cpu => {
@@ -6673,7 +6675,7 @@ function captureFrozenState() {
   const inAuction = !!auctionState;
   return {
     timestamp: new Date().toISOString(),
-    version: 'v62',
+    version: 'v63',
     phase: inAuction ? 'auction' : G?.phase,
     currentTurn: G?.currentTurn,
     pAction: pAction ? JSON.parse(JSON.stringify(pAction)) : null,
