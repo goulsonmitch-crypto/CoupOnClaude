@@ -933,7 +933,11 @@ html, body { height: 100%; background: var(--bg); color: var(--text); font-famil
 #auction-hist-panel { border-right:1px solid rgba(212,168,67,0.12); background:rgba(14,11,16,0.9); }
 #auction-myhand-panel { border-left:1px solid rgba(212,168,67,0.12); background:rgba(14,11,16,0.9); }
 .auction-side-label { font-family:'Cinzel',serif; font-size:0.6rem; letter-spacing:0.2em; color:var(--gold-dim); text-align:center; margin-bottom:6px; flex-shrink:0; }
-.auction-slots-wrap { display:flex; flex-direction:column; flex:1; gap:3px; }
+/* These wrappers MUST be flex:1 so their inner slots-wrap can also stretch to full panel height */
+#auction-hist-list { flex:1; display:flex; flex-direction:column; min-height:0; }
+#auction-myhand-list { flex:1; display:flex; flex-direction:column; min-height:0; }
+.auction-slots-wrap { display:flex; flex-direction:column; flex:1; gap:3px; min-height:0; }
+.auction-hand-slots-wrap { display:flex; flex-direction:column; flex:1; gap:6px; min-height:0; }
 .auction-hist-slot { border-radius:5px; display:flex; flex-direction:row; align-items:center; justify-content:flex-start; gap:6px; flex:1; min-height:0; overflow:hidden; padding:0 6px; }
 .auction-hist-slot.won { background:rgba(30,24,48,0.9); border:1px solid rgba(212,168,67,0.28); }
 .auction-hist-slot.returned { background:rgba(14,11,18,0.8); border:1px dashed rgba(100,80,120,0.2); }
@@ -944,7 +948,6 @@ html, body { height: 100%; background: var(--bg); color: var(--text); font-famil
 .auction-hist-emoji { font-size:1.15rem; line-height:1; flex-shrink:0; }
 .auction-hist-name { font-size:0.6rem; letter-spacing:0.02em; color:var(--gold-dim); flex:1; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
 .auction-hist-tag { font-size:0.58rem; color:var(--text-faint); flex-shrink:0; }
-.auction-hand-slots-wrap { display:flex; flex-direction:column; flex:1; gap:6px; }
 .auction-hand-card { flex:1; min-height:0; border-radius:8px; display:flex; flex-direction:column; align-items:center; justify-content:center; overflow:hidden; background:linear-gradient(160deg,#1e1830,#12101c); border:1px solid rgba(212,168,67,0.35); gap:4px; }
 .auction-hand-card.empty-slot { background:transparent; border:1px dashed rgba(212,168,67,0.12); }
 .auction-hand-card .ahc-emoji { font-size:2rem; line-height:1; }
@@ -1343,21 +1346,8 @@ html, body { height: 100%; background: var(--bg); color: var(--text); font-famil
   </div>
 </div>
 <div id="screen-auction" class="screen" style="position:relative;">
-  <!-- Settings button -->
-  <button id="auction-settings-btn" onclick="openAuctionSettings()">⚙</button>
-  <!-- Settings panel -->
-  <div id="auction-settings-panel">
-    <div class="asp-title">AUCTION SETTINGS</div>
-    <div class="asp-row">
-      <span>Sound</span>
-      <button id="auction-sound-toggle" class="asp-toggle on" onclick="toggleAuctionSound()">ON</button>
-    </div>
-    <div class="asp-row" id="auction-pause-row" style="display:none">
-      <span>Pause Auction</span>
-      <button class="asp-action" onclick="pauseAuction()">Pause</button>
-    </div>
-    <button class="asp-close" onclick="closeAuctionSettings()">Close</button>
-  </div>
+  <!-- Settings button — reuses the existing in-game settings modal -->
+  <button id="auction-settings-btn" onclick="openSettings()">⚙</button>
   <div id="auction-layout">
     <!-- Left: auction history -->
     <div class="auction-side-panel" id="auction-hist-panel">
@@ -6642,6 +6632,7 @@ function doHostHandoff(newPid) {
 
 function openSettings() {
   const inGame=G&&G.started&&document.getElementById('screen-game')?.classList.contains('active');
+  const inAuction=!!auctionState;
   const allCpuOpps=G&&G.players&&G.players.filter(p=>p.id!==ME&&!p.eliminated).every(p=>p.isCPU);
   const html=`
     <div class="settings-row"><span>🔊 Voice announcements</span><div class="toggle ${SETTINGS.voice?'on':''}" onclick="toggleSetting('voice',this)"></div></div>
@@ -6655,6 +6646,11 @@ function openSettings() {
       <button class="settings-btn ${SETTINGS.tempo==='normal'?'active-tempo':''}" onclick="setTempo('normal',this)">Normal</button>
       <button class="settings-btn ${SETTINGS.tempo==='fast'?'active-tempo':''}" onclick="setTempo('fast',this)">Fast</button>
     </div></div>
+    ${inAuction?`<div style="margin-top:0.9rem;display:flex;gap:0.5rem;flex-wrap:wrap;">
+      ${(isHost||isSolo)?`<button class="btn" style="flex:1;" onclick="closeModal();pauseAuction()">${_auctionPaused?'▶ Resume Auction':'⏸ Pause Auction'}</button>`:''}
+      <button class="btn" style="flex:1;" onclick="closeModal();openRules()">Rules</button>
+      <button class="btn danger" style="flex:1;" onclick="closeModal();confirmQuit()">Quit →</button>
+    </div>`:''}
     ${inGame?`<div style="margin-top:0.9rem;display:flex;gap:0.5rem;flex-wrap:wrap;">
       ${isHost?`<button class="btn" style="flex:1;" onclick="closeModal();togglePause()">${G.paused?'▶ Resume':'⏸ Pause'} Game</button>`:''}
       ${(isHost&&!isSolo)?`<button class="btn" style="flex:1;" onclick="closeModal();openHostHandoff()">🎲 Hand Off Host</button>`:''}
@@ -6677,7 +6673,7 @@ function captureFrozenState() {
   const inAuction = !!auctionState;
   return {
     timestamp: new Date().toISOString(),
-    version: 'v59',
+    version: 'v62',
     phase: inAuction ? 'auction' : G?.phase,
     currentTurn: G?.currentTurn,
     pAction: pAction ? JSON.parse(JSON.stringify(pAction)) : null,
