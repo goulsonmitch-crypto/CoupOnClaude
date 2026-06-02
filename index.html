@@ -73,15 +73,35 @@ html, body { height: 100%; background: var(--bg); color: var(--text); font-famil
 }
 .landing-grid {
   display: grid;
-  grid-template-columns: minmax(280px, 360px) 1fr;
+  grid-template-columns: minmax(280px, 360px) 1fr minmax(260px, 300px);
   gap: 2rem;
   align-items: center;
   justify-items: center;
-  max-width: 1100px;
+  max-width: 1500px;
   margin: 0 auto;
   width: 100%;
 }
+@media (max-width: 1100px) {
+  .landing-grid { grid-template-columns: minmax(280px, 360px) 1fr; }
+  .landing-timing-outer { display: none !important; }
+}
 .landing-rules-outer { display: flex; flex-direction: column; gap: 0; }
+.landing-timing-outer { display:flex; flex-direction:column; align-items:center; justify-content:center; width:100%; }
+.timing-panel { background:rgba(13,10,16,0.85); border:1px solid rgba(212,168,67,0.28); border-radius:12px; padding:24px 26px; width:100%; font-family:'Crimson Pro',serif; color:var(--text); }
+.timing-panel-title { font-family:'Cinzel',serif; font-size:0.58rem; letter-spacing:0.22em; color:var(--gold-dim); text-transform:uppercase; text-align:center; margin-bottom:22px; }
+.timing-mode-label { font-family:'Cinzel',serif; font-size:0.68rem; letter-spacing:0.12em; margin-bottom:12px; }
+.timing-row { display:flex; align-items:center; justify-content:space-between; margin-bottom:6px; }
+.timing-slider-label { font-size:0.7rem; color:var(--text-dim); }
+.timing-slider-wrap { display:flex; align-items:center; gap:10px; flex:1; margin-left:12px; }
+.timing-slider { flex:1; -webkit-appearance:none; appearance:none; height:3px; border-radius:2px; outline:none; cursor:pointer; }
+.timing-slider::-webkit-slider-thumb { -webkit-appearance:none; width:15px; height:15px; border-radius:50%; cursor:pointer; border:2px solid var(--bg); }
+.timing-slider::-moz-range-thumb { width:15px; height:15px; border-radius:50%; cursor:pointer; border:2px solid var(--bg); }
+.timing-val { font-size:0.95rem; min-width:30px; text-align:right; font-family:'Cinzel',serif; }
+.timing-range-hint { display:flex; justify-content:space-between; font-size:0.56rem; color:var(--text-faint); margin-bottom:14px; }
+.timing-dc-sub { background:rgba(20,8,30,0.7); border:1px solid rgba(187,143,206,0.18); border-radius:7px; padding:9px 13px; display:flex; align-items:center; justify-content:space-between; margin-top:10px; }
+.timing-dc-sub-label { font-size:0.62rem; color:#8a6aaa; }
+.timing-dc-sub-val { font-size:1.2rem; color:#bb8fce; font-family:'Cinzel',serif; }
+.timing-note { font-size:0.58rem; color:var(--text-faint); margin-top:18px; text-align:center; line-height:1.65; border-top:1px solid rgba(212,168,67,0.08); padding-top:13px; }
 .lr-label {
   font-family: 'Cinzel', serif;
   font-size: 0.72rem;
@@ -1037,6 +1057,7 @@ html, body { height: 100%; background: var(--bg); color: var(--text); font-famil
 
         <!-- AUCTION HOUSE RULES -->
         <div class="lr-body lr-body-std" id="rules-auction" style="display:none">
+          <p style="font-size:0.7rem;color:var(--gold-dim);margin-bottom:0.6rem;">⏱ 10 seconds per action after the auction <em style="color:var(--text-faint)">(can be adjusted)</em></p>
           <p><strong>🏺 Auction House</strong> — before the game, every card is auctioned one at a time. Bid tokens to claim the cards you want.</p>
           <ul>
             <li>🪙 Each player gets <strong>6 tokens</strong> to spend</li>
@@ -1052,18 +1073,16 @@ html, body { height: 100%; background: var(--bg); color: var(--text); font-famil
 
         <!-- BLITZ RULES -->
         <div class="lr-body lr-body-std" id="rules-blitz" style="display:none">
-          <p><strong>⚡ Blitz Mode</strong> — same rules as Standard, but all timers are cut in half. No DC rules. Pure instinct, no waiting.</p>
+          <p><strong>⚡ Blitz Mode</strong> — same rules as Standard, but every timer is cut to 5 seconds. Pure instinct, no waiting.</p>
+          <p style="font-size:0.7rem;color:#ff9944;margin-bottom:0.6rem;">⏱ 5 seconds per action <em style="color:var(--text-faint)">(can be adjusted)</em></p>
           <ul>
-            <li>⏱ <strong>Your turn:</strong> 10 seconds</li>
-            <li>⏱ <strong>Respond to actions:</strong> 8 seconds</li>
-            <li>⏱ <strong>Choose card to lose:</strong> 10 seconds</li>
-          </ul>
           <div class="rules-section-head">PRESSURE</div>
           <p>Time out on your turn → auto-Income. Time out on a response → auto-Pass. Time out on card drop → random card lost. All bluffing, challenges and blocks work exactly as in Standard.</p>
         </div>
 
         <!-- STANDARD RULES -->
         <div class="lr-body lr-body-std" id="rules-standard">
+          <p style="font-size:0.7rem;color:var(--gold-dim);margin-bottom:0.6rem;">⏱ 10 seconds per action <em style="color:var(--text-faint)">(can be adjusted)</em></p>
           <p><strong>Goal:</strong> Last player with influence (cards) standing wins.</p>
           <ul>
             <li>💰 <strong>Income</strong> — +1 coin</li>
@@ -1085,6 +1104,7 @@ html, body { height: 100%; background: var(--bg); color: var(--text); font-famil
 
         <!-- DOUBLE CONTESSA RULES -->
         <div class="lr-body lr-body-dc" id="rules-dc" style="display:none">
+          <p style="font-size:0.7rem;color:var(--gold-dim);margin-bottom:0.6rem;">⏱ 10 seconds per action · DC holder: 8s <em style="color:var(--text-faint)">(can be adjusted)</em></p>
           <p>Most standard rules apply, with two twists:</p>
           <ol>
             <li>At the start of every DC Mode game, one random player is secretly dealt two Contessas as their starting hand. <strong>Double Contessa</strong> can block a Coup.</li>
@@ -1106,7 +1126,7 @@ html, body { height: 100%; background: var(--bg); color: var(--text); font-famil
     <div class="landing-center">
       <div>
         <div class="logo-main">COUP</div>
-        <div class="logo-tagline">VERSION 63</div>
+        <div class="logo-tagline">VERSION 64</div>
         <div class="card-showcase">
           <div class="showcase-card duke">👑<span class="sc-name">Duke</span></div>
           <div class="showcase-card assassin">🗡️<span class="sc-name">Assassin</span></div>
@@ -1125,7 +1145,11 @@ html, body { height: 100%; background: var(--bg); color: var(--text); font-famil
       </div>
       <button class="mobile-rules-btn" onclick="openRulesOverlay()">📖 How to Play</button>
     </div>
+  <!-- Timing panel — desktop right column (3rd grid column) -->
+  <div class="landing-timing-outer" id="landing-timing-outer">
+    <div class="timing-panel" id="timing-panel"></div>
   </div>
+</div><!-- /landing-grid -->
 
   <!-- Mobile rules full-screen overlay -->
   <div id="rules-overlay" class="rules-overlay">
@@ -1836,8 +1860,52 @@ function returnCardsToDeck(roles) {
   }
 }
 
+function renderTimingPanel(mode) {
+  const panel = document.getElementById('timing-panel');
+  if (!panel) return;
+  const modeKey = mode === 'doubleContessa' ? 'doubleContessa' : mode === 'blitz' ? 'blitz' : mode === 'auction' ? 'auction' : 'standard';
+  const isBlitz = modeKey === 'blitz';
+  const isDC = modeKey === 'doubleContessa';
+  const mn = isBlitz ? 3 : 10, mx = isBlitz ? 7 : 20;
+  const def = isBlitz ? 5 : 10;
+  GAME_TIMERS[modeKey] = def; // reset on mode switch
+  const col = isBlitz ? '#ff9944' : isDC ? '#bb8fce' : '#d4a843';
+  const titleLabel = isBlitz ? '⚡ Blitz' : isDC ? '🌹 DC Mode' : mode === 'auction' ? '🏺 Auction House' : 'Standard';
+  const pct = ((def - mn) / (mx - mn)) * 100;
+  panel.innerHTML = `
+    <div class="timing-panel-title">Game Timing</div>
+    <div class="timing-mode-label" style="color:${col}">${titleLabel}</div>
+    <div class="timing-row">
+      <span class="timing-slider-label">Seconds per action</span>
+      <div class="timing-slider-wrap">
+        <input type="range" class="timing-slider" id="timing-slider-main"
+          min="${mn}" max="${mx}" value="${def}" step="1"
+          style="background:linear-gradient(to right,${col} ${pct}%,var(--surface3,#221d30) ${pct}%)"
+          oninput="onTimingSlider(this,'${modeKey}','${col}',${mn},${mx})">
+        <span class="timing-val" id="timing-val-main" style="color:${col}">${def}s</span>
+      </div>
+    </div>
+    <div class="timing-range-hint"><span>${mn}s</span><span>${mx}s</span></div>
+    ${isDC ? `<div class="timing-dc-sub">
+      <span class="timing-dc-sub-label">🌹🌹 DC holder's turn</span>
+      <span class="timing-dc-sub-val" id="timing-dc-val">${def - 2}s</span>
+    </div>` : ''}
+    <div class="timing-note">Resets when you switch modes.<br>CPU games always use default timings.</div>`;
+}
+function onTimingSlider(el, modeKey, col, mn, mx) {
+  const v = Number(el.value);
+  GAME_TIMERS[modeKey] = v;
+  const pct = ((v - mn) / (mx - mn)) * 100;
+  el.style.background = `linear-gradient(to right,${col} ${pct}%,var(--surface3,#221d30) ${pct}%)`;
+  const valEl = document.getElementById('timing-val-main');
+  if (valEl) valEl.textContent = v + 's';
+  const dcEl = document.getElementById('timing-dc-val');
+  if (dcEl) dcEl.textContent = Math.max(3, v - 2) + 's';
+}
+
 function setGameMode(mode) {
   selectedGameMode = mode;
+  renderTimingPanel(mode);
   // Update mode button styles
   document.querySelectorAll('.mode-btn').forEach(b => {
     const isStd = b.dataset.mode === 'standard';
@@ -2122,6 +2190,15 @@ let auctionTimerIv = null;
 let _auctionSoundEnabled = true;
 let _auctionPaused = false;
 let _auctionDrawSoundPlayed = false;
+// ── Custom game timers (set from lobby timing panel) ──
+let GAME_TIMERS = { standard: 10, doubleContessa: 10, blitz: 5, auction: 10 };
+function getActionTimer() {
+  const mode = G ? G.mode : selectedGameMode;
+  if (mode === 'blitz') return GAME_TIMERS.blitz;
+  if (mode === 'doubleContessa') return GAME_TIMERS.doubleContessa;
+  if (mode === 'auction') return GAME_TIMERS.auction;
+  return GAME_TIMERS.standard;
+}
 let _auctionYouAreHigh = false;   // local player is current high bidder
 let _auctionYourTokens = 6;      // local player's remaining tokens
 let _auctionMyWonCards = [];      // cards won so far (guest-side)
@@ -2724,6 +2801,7 @@ function goHome() {
   hostInboxRef = null; hostInboxCb = null;
   const fa = document.getElementById('flash-area'); if (fa) fa.innerHTML = '';
   showScr('landing');
+  renderTimingPanel(selectedGameMode || 'standard');
 }
 function goLobby(mode) { showScr('lobby'); buildLobby(mode); }
 
@@ -4848,7 +4926,7 @@ const SEAT_LAYOUTS = {
   3: [{x:50, y:88}, {x:18, y:35}, {x:82, y:35}],
   4: [{x:50, y:88}, {x:8,  y:50}, {x:50, y:14}, {x:92, y:50}],
   5: [{x:50, y:88}, {x:8,  y:55}, {x:25, y:18}, {x:75, y:18}, {x:92, y:55}],
-  6: [{x:50, y:90}, {x:6,  y:62}, {x:18, y:22}, {x:50, y:12}, {x:82, y:22}, {x:94, y:62}],
+  6: [{x:50, y:90}, {x:18, y:78}, {x:18, y:22}, {x:50, y:12}, {x:82, y:22}, {x:82, y:78}],
 };
 
 // Portrait layouts (tall oval — positions follow ellipse with rx≈43%, ry≈44%)
@@ -4858,7 +4936,7 @@ const SEAT_LAYOUTS_PORTRAIT = {
   3: [{x:50, y:88}, {x:14, y:30}, {x:86, y:30}],
   4: [{x:50, y:88}, {x:9,  y:50}, {x:50, y:10}, {x:91, y:50}],
   5: [{x:50, y:88}, {x:10, y:65}, {x:22, y:18}, {x:78, y:18}, {x:90, y:65}],
-  6: [{x:50, y:90}, {x:13, y:72}, {x:14, y:28}, {x:50, y:10}, {x:86, y:28}, {x:87, y:72}],
+  6: [{x:50, y:90}, {x:14, y:72}, {x:14, y:28}, {x:50, y:10}, {x:86, y:28}, {x:86, y:72}],
 };
 
 function renderSeats() {
@@ -5142,7 +5220,8 @@ function startTurn() {
     startTimer(cpuThinkSec, `${cur.displayName||cur.name} thinking…`, ()=>{ try { doCPUTurn(cur); } catch(e) { console.error('doCPUTurn error:', e); nextTurn(); } });
   } else if (cur.id === ME) {
     const _blitz = isBlitzMode();
-    const turnSec = isDCHolder ? (_blitz?6:12) : (_blitz?10:20);
+    const _at = getActionTimer();
+    const turnSec = isDCHolder ? Math.max(3, _at - 2) : _at;
     startTimer(turnSec, isDCHolder ? '🌹🌹 Your turn (DC)' : (_blitz?'⚡ Your turn':' Your turn'), ()=>{
       if (turnActionTaken) return;
       turnActionTaken = true;
@@ -5156,7 +5235,8 @@ function startTurn() {
     });
   } else if (isHost) {
     const _blitz2 = isBlitzMode();
-    const turnSec = isDCHolder ? (_blitz2?6:12) : (_blitz2?10:20);
+    const _at2 = getActionTimer();
+    const turnSec = isDCHolder ? Math.max(3, _at2 - 2) : _at2;
     startTimer(turnSec,`${cur.displayName||cur.name}'s turn`,()=>{
       if (turnActionTaken) return;
       if (G.players[G.currentTurn]?.id !== cur.id) return;
@@ -5209,7 +5289,7 @@ function cancelTgtModal() {
   renderGame();
   const _curP = G && G.players ? G.players.find(p=>p.id===ME) : null;
   const _isDCH = _curP && isDCMode() && hasDoubleContessa(_curP);
-  startTimer(10, _isDCH ? '🌹🌹 Your turn (DC)' : 'Your turn', () => {
+  startTimer(_isDCH ? Math.max(3, getActionTimer()-2) : getActionTimer(), _isDCH ? '🌹🌹 Your turn (DC)' : 'Your turn', () => {
     if (!turnActionTaken) { turnActionTaken = true; doAction(_isDCH ? 'tax' : 'income', ME, null); }
   });
 }
@@ -5285,7 +5365,7 @@ function doAction(at, actorId, targetId) {
       setTimeout(()=>{ if(!pResponders.includes(cpuId)) return; const r=cpuResp(cpuId); recordResp(cpuId,r.r,r.ch||null); }, pace(SETTINGS.fastCPU?900:1800)+Math.random()*pace(800));
     });
     const humanR2=pResponders.filter(pid=>!G.players.find(p=>p.id===pid)?.isCPU);
-    if (humanR2.length>0) startTimer(isBlitzMode()?8:20,'Respond in',()=>{[...pResponders].forEach(pid=>{if(!G.players.find(p=>p.id===pid)?.isCPU)recordResp(pid,'pass');});});
+    if (humanR2.length>0) startTimer(getActionTimer(),'Respond in',()=>{[...pResponders].forEach(pid=>{if(!G.players.find(p=>p.id===pid)?.isCPU)recordResp(pid,'pass');});});
     // All-CPU fast-forward for dcCoupBlockable path (e.g. CPU is coup target with Double Contessa)
     if ((isHost||isSolo) && humanR2.length===0 && pResponders.length>0) {
       setTimeout(()=>{
@@ -5331,7 +5411,7 @@ function doAction(at, actorId, targetId) {
       });
       if (!isSolo) { G.players.filter(p=>!p.isCPU&&p.id!==hostPid&&pResponders.includes(p.id)).forEach(p=>{ fbToGuest(p.id,{type:'ask_resp',pAction,opts:getOpts(p.id)}); }); }
       const humansNow = pResponders.filter(pid=>!G.players.find(p=>p.id===pid)?.isCPU);
-      if (humansNow.length>0&&!timerIv) startTimer(isBlitzMode()?8:15,'Respond in',()=>{[...pResponders].forEach(pid=>{if(!G.players.find(p=>p.id===pid)?.isCPU){addEv(`<span class="ev-name">${esc(G.players.find(p=>p.id===pid)?.displayName||'?')}</span> timed out → passed`,'system');recordResp(pid,'pass');}});});
+      if (humansNow.length>0&&!timerIv) startTimer(getActionTimer(),'Respond in',()=>{[...pResponders].forEach(pid=>{if(!G.players.find(p=>p.id===pid)?.isCPU){addEv(`<span class="ev-name">${esc(G.players.find(p=>p.id===pid)?.displayName||'?')}</span> timed out → passed`,'system');recordResp(pid,'pass');}});});
       if (pResponders.length===0){stopTimer();resolveResps();}
       // All-CPU fast-forward for expanded responders (after priority window)
       if ((isHost||isSolo) && humansNow.length===0 && pResponders.length>0) {
@@ -5348,7 +5428,7 @@ function doAction(at, actorId, targetId) {
     setTimeout(()=>{ if(!pResponders.includes(cpuId)) return; const r=cpuResp(cpuId); recordResp(cpuId,r.r,r.ch||null); }, pace(baseDelay)+Math.random()*pace(SETTINGS.fastCPU?700:1300));
   });
   const humanR = pResponders.filter(pid=>!G.players.find(p=>p.id===pid)?.isCPU);
-  if (humanR.length>0) startTimer(isBlitzMode()?8:20,'Respond in',()=>{[...pResponders].forEach(pid=>{if(!G.players.find(p=>p.id===pid)?.isCPU){addEv(`<span class="ev-name">${esc(G.players.find(p=>p.id===pid)?.displayName||'?')}</span> timed out → passed`,'system');recordResp(pid,'pass');}});});
+  if (humanR.length>0) startTimer(getActionTimer(),'Respond in',()=>{[...pResponders].forEach(pid=>{if(!G.players.find(p=>p.id===pid)?.isCPU){addEv(`<span class="ev-name">${esc(G.players.find(p=>p.id===pid)?.displayName||'?')}</span> timed out → passed`,'system');recordResp(pid,'pass');}});});
   // All-CPU fast-forward: when there are no human responders (e.g. host is eliminated, or host is
   // the actor and all other players are CPUs), resolve CPUs immediately instead of waiting 3-5s for
   // their setTimeouts. This is the fix for the endgame freeze when the last human is eliminated.
@@ -5378,7 +5458,9 @@ function doAction(at, actorId, targetId) {
   // + 3s buffer, so the target's countdown runs to zero before auto-pass fires.
   if (isHost || isSolo) {
     if (_respWatchdog) clearTimeout(_respWatchdog);
-    const watchdogDelay = isTargetedAttack ? (pace(5000) + 18000) : 5000;
+    const _hasHumanR = pResponders.some(pid => !G.players.find(p=>p.id===pid)?.isCPU);
+    const _actionT = getActionTimer();
+    const watchdogDelay = isTargetedAttack ? (pace(5000) + (_actionT + 5) * 1000) : (_hasHumanR ? (_actionT + 3) * 1000 : 5000);
     _respWatchdog = setTimeout(() => {
       _respWatchdog = null;
       if (!pAction) return; // already resolved
@@ -5449,11 +5531,11 @@ function showGuestRespUI(action,opts) {
     const bn = blocker?.displayName||blocker?.name||'?';
     flashBanner(`🌹🌹 ${bn} blocks with Double Contessa!`,'block-flash');
     speak(`${bn} blocks with Double Contessa! Challenge or pass.`);
-    startTimer(15,'Challenge DC block in',()=>submitResp('pass'));
+    startTimer(getActionTimer(),'Challenge DC block in',()=>submitResp('pass'));
   } else {
     flashBanner(`Action: ${ACTS[action.type]?.label||action.type}`,'action-flash');
     speak(`${ACTS[action.type]?.label||action.type} declared.`);
-    startTimer(20,'Respond in',()=>submitResp('pass'));
+    startTimer(getActionTimer(),'Respond in',()=>submitResp('pass'));
   }
 }
 function showGuestBlockChalUI(d) {
@@ -5800,7 +5882,7 @@ function handleDoubleContessaBlock(coupActorId, blockerId, at, tid) {
     // Human responders get a timer
     const humanR = pResponders.filter(pid=>!G.players.find(p=>p.id===pid)?.isCPU);
     if (humanR.length>0) {
-      startTimer(15,'Challenge DC block in',()=>{
+      startTimer(getActionTimer(),'Challenge DC block in',()=>{
         [...pResponders].forEach(pid=>{
           if (!G.players.find(p=>p.id===pid)?.isCPU) recordResp(pid,'pass');
         });
@@ -6014,7 +6096,7 @@ function showLoseModalLocal(p,reason,cb) {
   afterLoseCB=cb;
   const alive=p.cards.filter(c=>c.alive);
   const list=alive.map(c=>{const d=CD[c.role]||{};return `<div class="tgt-item" onclick="cancelLoseTimer();closeModal();submitLoseCard('${p.id}','${c.role}')"><span>${d.emoji} ${t(c.role)}</span><span style="color:var(--text-faint);font-size:0.7rem">${d.ability||''}</span></div>`;}).join('');
-  const _loseSec = isBlitzMode() ? 10 : 20;
+  const _loseSec = getActionTimer();
   openModal(t('lose_modal_title'),`<strong>${reason}</strong><br>${t('lose_modal_choose')}<div style="font-size:0.7rem;color:var(--red-bright);margin-top:0.3rem">${t('auto_drop_in',{n:`<span id="lose-countdown">${_loseSec}</span>`})}</div><div class="tgt-list">${list}</div>`,[]);
   speak(t('v_pick_to_lose')); flashBanner(t('lose_influence'),'death-flash');
   startLoseTimer(_loseSec,()=>{
@@ -6138,7 +6220,7 @@ function showExchangeUI(pool,needed,actor) {
         if(keepIdxs.length!==needed)return;
         // DC mode: skip deck-ordering step (deck reshuffles anyway)
         if (isDCMode()) { cancelExchTimer(); finalize(); return; }
-        stage='order'; bottomIdx=null; cancelExchTimer(); startExchTimer(20,autoResolveExchange); updateUI();
+        stage='order'; bottomIdx=null; cancelExchTimer(); startExchTimer(getActionTimer(),autoResolveExchange); updateUI();
       };
     } else {
       if(title)title.textContent=t('exchange_modal_step2_title');
@@ -6153,7 +6235,7 @@ function showExchangeUI(pool,needed,actor) {
   openModal(t('exchange_modal_step1_title'),`<div id="modal-body-text" style="font-size:0.78rem;color:var(--text-dim);margin-bottom:0.5rem;line-height:1.6;"></div><div style="font-size:0.7rem;color:var(--red-bright);margin-top:0.3rem">${t('auto_resolve_in',{n:'<span id="exch-countdown">20</span>'})}</div>`,[]);
   document.getElementById('modal-body').appendChild(grid);
   document.getElementById('modal-actions').appendChild(conf);
-  updateUI(); speak(t('v_pick_to_keep')); startExchTimer(20,autoResolveExchange);
+  updateUI(); speak(t('v_pick_to_keep')); startExchTimer(getActionTimer(),autoResolveExchange);
 }
 let exchTimerIv=null;
 function startExchTimer(sec,onExpire){cancelExchTimer();let left=sec;const tick=()=>{const el=document.getElementById('exch-countdown');if(el)el.textContent=left;if(left<=0){cancelExchTimer();onExpire();return;}left--;};tick();exchTimerIv=setInterval(tick,1000);}
@@ -6654,7 +6736,7 @@ function openSettings() {
       <button class="btn danger" style="flex:1;" onclick="closeModal();confirmQuit()">Quit →</button>
     </div>`:''}
     ${inGame?`<div style="margin-top:0.9rem;display:flex;gap:0.5rem;flex-wrap:wrap;">
-      ${isHost?`<button class="btn" style="flex:1;" onclick="closeModal();togglePause()">${G.paused?'▶ Resume':'⏸ Pause'} Game</button>`:''}
+      ${isHost?`<button class="btn" style="flex:1;" onclick="closeModal();togglePause()">${G.paused?'Resume':'Pause'}</button>`:''}
       ${(isHost&&!isSolo)?`<button class="btn" style="flex:1;" onclick="closeModal();openHostHandoff()">🎲 Hand Off Host</button>`:''}
       <button class="btn" style="flex:1;" onclick="closeModal();openRules()">Rules</button>
       <button class="btn danger" style="flex:1;" onclick="closeModal();confirmQuit()">Quit Game →</button>
