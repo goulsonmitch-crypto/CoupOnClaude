@@ -73,35 +73,37 @@ html, body { height: 100%; background: var(--bg); color: var(--text); font-famil
 }
 .landing-grid {
   display: grid;
-  grid-template-columns: minmax(280px, 360px) 1fr minmax(260px, 300px);
+  grid-template-columns: minmax(280px, 360px) 1fr;
   gap: 2rem;
   align-items: center;
   justify-items: center;
-  max-width: 1500px;
+  max-width: 1100px;
   margin: 0 auto;
   width: 100%;
 }
-@media (max-width: 1100px) {
-  .landing-grid { grid-template-columns: minmax(280px, 360px) 1fr; }
-  .landing-timing-outer { display: none !important; }
-}
 .landing-rules-outer { display: flex; flex-direction: column; gap: 0; }
 .landing-timing-outer { display:flex; flex-direction:column; align-items:center; justify-content:center; width:100%; }
-.timing-panel { background:rgba(13,10,16,0.85); border:1px solid rgba(212,168,67,0.28); border-radius:12px; padding:24px 26px; width:100%; font-family:'Crimson Pro',serif; color:var(--text); }
-.timing-panel-title { font-family:'Cinzel',serif; font-size:0.58rem; letter-spacing:0.22em; color:var(--gold-dim); text-transform:uppercase; text-align:center; margin-bottom:22px; }
-.timing-mode-label { font-family:'Cinzel',serif; font-size:0.68rem; letter-spacing:0.12em; margin-bottom:12px; }
-.timing-row { display:flex; align-items:center; justify-content:space-between; margin-bottom:6px; }
-.timing-slider-label { font-size:0.7rem; color:var(--text-dim); }
-.timing-slider-wrap { display:flex; align-items:center; gap:10px; flex:1; margin-left:12px; }
-.timing-slider { flex:1; -webkit-appearance:none; appearance:none; height:3px; border-radius:2px; outline:none; cursor:pointer; }
-.timing-slider::-webkit-slider-thumb { -webkit-appearance:none; width:15px; height:15px; border-radius:50%; cursor:pointer; border:2px solid var(--bg); }
-.timing-slider::-moz-range-thumb { width:15px; height:15px; border-radius:50%; cursor:pointer; border:2px solid var(--bg); }
-.timing-val { font-size:0.95rem; min-width:30px; text-align:right; font-family:'Cinzel',serif; }
-.timing-range-hint { display:flex; justify-content:space-between; font-size:0.56rem; color:var(--text-faint); margin-bottom:14px; }
-.timing-dc-sub { background:rgba(20,8,30,0.7); border:1px solid rgba(187,143,206,0.18); border-radius:7px; padding:9px 13px; display:flex; align-items:center; justify-content:space-between; margin-top:10px; }
-.timing-dc-sub-label { font-size:0.62rem; color:#8a6aaa; }
-.timing-dc-sub-val { font-size:1.2rem; color:#bb8fce; font-family:'Cinzel',serif; }
+.timing-panel { background:rgba(13,10,16,0.85); border:1px solid rgba(212,168,67,0.28); border-radius:14px; padding:36px 36px 40px; width:100%; font-family:'Crimson Pro',serif; color:var(--text); box-sizing:border-box; }
+.timing-panel-title { font-family:'Cinzel',serif; font-size:0.65rem; letter-spacing:0.22em; color:var(--gold-dim); text-transform:uppercase; text-align:center; margin-bottom:30px; }
+.timing-mode-label { font-family:'Cinzel',serif; font-size:1rem; letter-spacing:0.12em; margin-bottom:22px; }
+.timing-row { display:flex; align-items:center; margin-bottom:10px; }
+.timing-slider-label { font-size:0.82rem; color:var(--text-dim); white-space:nowrap; flex-shrink:0; }
+.timing-slider-wrap { display:flex; align-items:center; gap:16px; flex:1; margin-left:18px; min-width:0; }
+.timing-slider { flex:1; min-width:0; -webkit-appearance:none; appearance:none; height:5px; border-radius:3px; outline:none; cursor:pointer; }
+.timing-slider::-webkit-slider-thumb { -webkit-appearance:none; width:24px; height:24px; border-radius:50%; cursor:pointer; border:3px solid #080608; box-shadow:0 0 0 2px rgba(212,168,67,0.5); flex-shrink:0; }
+.timing-slider::-moz-range-thumb { width:24px; height:24px; border-radius:50%; cursor:pointer; border:3px solid #080608; box-shadow:0 0 0 2px rgba(212,168,67,0.5); }
+.timing-val { font-size:1.4rem; min-width:48px; text-align:right; font-family:'Cinzel',serif; flex-shrink:0; }
+.timing-range-hint { display:flex; justify-content:space-between; font-size:0.62rem; color:var(--text-faint); margin-bottom:20px; padding:0 2px; }
+.timing-dc-sub { background:rgba(20,8,30,0.7); border:1px solid rgba(187,143,206,0.18); border-radius:8px; padding:14px 18px; display:flex; align-items:center; justify-content:space-between; margin-top:16px; }
+.timing-dc-sub-label { font-size:0.78rem; color:#8a6aaa; }
+.timing-dc-sub-val { font-size:1.5rem; color:#bb8fce; font-family:'Cinzel',serif; }
 .timing-note { font-size:0.58rem; color:var(--text-faint); margin-top:18px; text-align:center; line-height:1.65; border-top:1px solid rgba(212,168,67,0.08); padding-top:13px; }
+.timing-slider.gold::-webkit-slider-thumb { background:#d4a843; }
+.timing-slider.gold::-moz-range-thumb { background:#d4a843; }
+.timing-slider.purple::-webkit-slider-thumb { background:#bb8fce; }
+.timing-slider.purple::-moz-range-thumb { background:#bb8fce; }
+.timing-slider.orange::-webkit-slider-thumb { background:#ff9944; }
+.timing-slider.orange::-moz-range-thumb { background:#ff9944; }
 .lr-label {
   font-family: 'Cinzel', serif;
   font-size: 0.72rem;
@@ -114,7 +116,7 @@ html, body { height: 100%; background: var(--bg); color: var(--text); font-famil
   background: rgba(8,6,8,0.7);
   border: 1px solid var(--border-gold);
   border-radius: 10px;
-  padding: 1.1rem 1.2rem 1.3rem;
+  padding: 1.1rem 1.2rem 1.8rem;
   font-size: 0.72rem;
   line-height: 1.55;
   color: var(--text-dim);
@@ -298,6 +300,14 @@ html, body { height: 100%; background: var(--bg); color: var(--text); font-famil
 /* ── LOBBY ── */
 #screen-lobby { flex-direction:column; align-items:center; justify-content:center; padding:1.5rem; overflow-y:auto; gap:1.2rem; background:var(--bg); }
 .lobby-panel { width:100%; max-width:480px; }
+/* Desktop lobby: main panels + timing panel side by side */
+#lobby-row { display:flex; flex-direction:column; align-items:center; gap:1.2rem; width:100%; }
+#lobby-timing-wrap { display:none; }
+@media (min-width:900px) {
+  #lobby-row { flex-direction:row; align-items:stretch; justify-content:center; gap:2.5rem; }
+  #lobby-timing-wrap { display:flex; width:380px; flex-shrink:0; align-items:center; justify-content:center; }
+  #lobby-timing-wrap .timing-panel { width:100%; }
+}
 .panel { background:var(--surface); border:1px solid var(--border); border-radius:8px; padding:1.4rem; margin-bottom:1rem; }
 .panel-head { font-family:'Cinzel',serif; font-size:0.75rem; letter-spacing:0.2em; color:var(--gold-dim); margin-bottom:1.2rem; display:flex; align-items:center; gap:0.8rem; }
 .panel-head::after { content:''; flex:1; height:1px; background:linear-gradient(90deg,var(--border-gold),transparent); }
@@ -1126,7 +1136,7 @@ html, body { height: 100%; background: var(--bg); color: var(--text); font-famil
     <div class="landing-center">
       <div>
         <div class="logo-main">COUP</div>
-        <div class="logo-tagline">VERSION 64</div>
+        <div class="logo-tagline">VERSION 67</div>
         <div class="card-showcase">
           <div class="showcase-card duke">👑<span class="sc-name">Duke</span></div>
           <div class="showcase-card assassin">🗡️<span class="sc-name">Assassin</span></div>
@@ -1145,10 +1155,6 @@ html, body { height: 100%; background: var(--bg); color: var(--text); font-famil
       </div>
       <button class="mobile-rules-btn" onclick="openRulesOverlay()">📖 How to Play</button>
     </div>
-  <!-- Timing panel — desktop right column (3rd grid column) -->
-  <div class="landing-timing-outer" id="landing-timing-outer">
-    <div class="timing-panel" id="timing-panel"></div>
-  </div>
 </div><!-- /landing-grid -->
 
   <!-- Mobile rules full-screen overlay -->
@@ -1241,7 +1247,10 @@ html, body { height: 100%; background: var(--bg); color: var(--text); font-famil
 <!-- ══ LOBBY (host create / join / solo waiting) ══ -->
 <div id="screen-lobby" class="screen">
   <div class="dc-rose-bg" id="lobby-rose-bg"></div>
-  <div class="lobby-panel" id="lobby-inner" style="position:relative;z-index:1;"></div>
+  <div id="lobby-row" style="position:relative;z-index:1;">
+    <div class="lobby-panel" id="lobby-inner"></div>
+    <div id="lobby-timing-wrap"><div class="timing-panel" id="timing-panel"></div></div>
+  </div>
 </div>
 
 <!-- ══ CHARACTER PICK (solo + guest) ══ -->
@@ -1870,6 +1879,7 @@ function renderTimingPanel(mode) {
   const def = isBlitz ? 5 : 10;
   GAME_TIMERS[modeKey] = def; // reset on mode switch
   const col = isBlitz ? '#ff9944' : isDC ? '#bb8fce' : '#d4a843';
+  const thumbCls = isBlitz ? 'orange' : isDC ? 'purple' : 'gold';
   const titleLabel = isBlitz ? '⚡ Blitz' : isDC ? '🌹 DC Mode' : mode === 'auction' ? '🏺 Auction House' : 'Standard';
   const pct = ((def - mn) / (mx - mn)) * 100;
   panel.innerHTML = `
@@ -1878,9 +1888,9 @@ function renderTimingPanel(mode) {
     <div class="timing-row">
       <span class="timing-slider-label">Seconds per action</span>
       <div class="timing-slider-wrap">
-        <input type="range" class="timing-slider" id="timing-slider-main"
+        <input type="range" class="timing-slider ${thumbCls}" id="timing-slider-main"
           min="${mn}" max="${mx}" value="${def}" step="1"
-          style="background:linear-gradient(to right,${col} ${pct}%,var(--surface3,#221d30) ${pct}%)"
+          style="background:linear-gradient(to right,${col} ${pct}%,#221d30 ${pct}%)"
           oninput="onTimingSlider(this,'${modeKey}','${col}',${mn},${mx})">
         <span class="timing-val" id="timing-val-main" style="color:${col}">${def}s</span>
       </div>
@@ -1890,7 +1900,7 @@ function renderTimingPanel(mode) {
       <span class="timing-dc-sub-label">🌹🌹 DC holder's turn</span>
       <span class="timing-dc-sub-val" id="timing-dc-val">${def - 2}s</span>
     </div>` : ''}
-    <div class="timing-note">Resets when you switch modes.<br>CPU games always use default timings.</div>`;
+    `;
 }
 function onTimingSlider(el, modeKey, col, mn, mx) {
   const v = Number(el.value);
@@ -1922,7 +1932,7 @@ function setGameMode(mode) {
     G.mode = mode;
     fbBroadcastAll({ type: 'mode_change', mode });
     broadcastLobbyUpdate();
-    const modeLabel = mode === 'doubleContessa' ? '🌹🌹 Double Contessa Mode activated' : mode === 'blitz' ? '⚡ Blitz Mode activated' : '⚔️ Standard Mode activated';
+    const modeLabel = mode === 'doubleContessa' ? '🌹🌹 Double Contessa Mode activated' : mode === 'blitz' ? '⚡ Blitz Mode activated' : mode === 'auction' ? '🏺 Auction House selected' : '⚔️ Standard Mode activated';
     flashBanner(modeLabel, 'action-flash', { duration: 2000 });
   }
   // Re-render waiting room if visible
@@ -2809,6 +2819,8 @@ function goLobby(mode) { showScr('lobby'); buildLobby(mode); }
 // LOBBY BUILD
 // ════════════════════════════════════════
 function buildLobby(mode) {
+  const timingWrap = document.getElementById('lobby-timing-wrap');
+  if (timingWrap) timingWrap.style.display = 'none';
   const el = document.getElementById('lobby-inner');
   if (mode === 'create') {
     el.innerHTML = `<div class="panel">
@@ -2879,6 +2891,8 @@ function rebuildSoloCpuCharsIfNeeded() {
 
 function showSoloWaitingRoom() {
   applyDCTheme(selectedGameMode === 'doubleContessa');
+  const timingWrap = document.getElementById('lobby-timing-wrap');
+  if (timingWrap) timingWrap.style.display = 'none';
   const el = document.getElementById('lobby-inner');
   const playerCharHtml = soloWaitingChar ? (() => {
     const fs = soloWaitingChar ? variantFilter(null, soloWaitingChar) : '';
@@ -3275,6 +3289,12 @@ function showHostWaitingRoom() {
       </div>
     </div>`;
   renderHostPlayerList();
+  // Show timing panel only for multiplayer host lobbies (not solo/CPU-only)
+  const timingWrap = document.getElementById('lobby-timing-wrap');
+  if (timingWrap) {
+    timingWrap.style.display = '';
+    renderTimingPanel(selectedGameMode || 'standard');
+  }
 }
 
 function renderHostPlayerList() {
