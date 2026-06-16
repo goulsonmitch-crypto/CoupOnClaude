@@ -259,7 +259,11 @@ html, body { height: 100%; background: var(--bg); color: var(--text); font-famil
   display: flex; gap: 0.55rem;
   padding: 0.9rem 1.2rem 0.4rem;
   flex-shrink: 0;
+  overflow-x: auto; flex-wrap: nowrap;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
 }
+.rules-overlay-tabs::-webkit-scrollbar { display: none; }
 .rules-overlay-body {
   flex: 1;
   overflow-y: auto;
@@ -638,7 +642,9 @@ html, body { height: 100%; background: var(--bg); color: var(--text); font-famil
 /* ── MODE SELECTOR ── */
 .mode-select { display:flex; flex-direction:column; align-items:center; gap:0.4rem; margin:0.8rem 0; }
 .mode-select-label { font-family:'Cinzel',serif; font-size:0.6rem; letter-spacing:0.22em; color:var(--gold-dim); }
-.mode-btns { display:flex; gap:0.5rem; }
+.mode-btns { display:flex; gap:0.5rem; overflow-x:auto; flex-wrap:nowrap; -webkit-overflow-scrolling:touch; scrollbar-width:none; padding-bottom:2px; }
+.mode-btns::-webkit-scrollbar { display:none; }
+.mode-btn { flex-shrink:0; }
 .mode-btn { padding:0.5rem 1rem; border:1px solid var(--border-gold); background:var(--surface2); color:var(--text-dim); font-family:'Cinzel',serif; font-size:0.68rem; letter-spacing:0.08em; cursor:pointer; border-radius:4px; transition:all 0.16s; }
 .mode-btn:hover { color:var(--gold); border-color:var(--gold-dim); }
 .mode-btn.active { background:linear-gradient(135deg,rgba(212,168,67,0.22),rgba(212,168,67,0.07)); border-color:var(--gold); color:var(--gold-light); box-shadow:0 0 16px rgba(212,168,67,0.18); }
@@ -1355,7 +1361,6 @@ html, body { height: 100%; background: var(--bg); color: var(--text); font-famil
                 <div class="bank-coin"></div><div class="bank-coin"></div><div class="bank-coin"></div>
                 <div class="bank-coin"></div><div class="bank-coin"></div>
               </div>
-              <div class="bank-label">BANK</div>
             </div>
           </div>
         </div>
