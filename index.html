@@ -325,6 +325,21 @@ html, body { height: 100%; background: var(--bg); color: var(--text); font-famil
 .code-hint { font-size:0.65rem; color:var(--text-faint); text-align:center; margin-top:0.35rem; }
 .lobby-players { display:flex; flex-direction:column; gap:0.4rem; margin:0.8rem 0; }
 .lobby-player { display:flex; align-items:center; gap:0.65rem; padding:0.55rem 0.8rem; background:var(--surface2); border:1px solid var(--border); border-radius:4px; font-size:0.82rem; }
+.lobby-chat { display:flex; flex-direction:column; gap:0.4rem; }
+.lobby-chat-msgs { max-height:120px; overflow-y:auto; display:flex; flex-direction:column; gap:0.25rem; padding:0.4rem 0; scrollbar-width:none; }
+.lobby-chat-msgs::-webkit-scrollbar { display:none; }
+.lobby-chat-msg { font-size:0.75rem; color:var(--text-dim); line-height:1.35; }
+.lobby-chat-msg .chat-name { color:var(--gold-dim); font-weight:600; margin-right:0.3rem; }
+.lobby-chat-input-row { display:flex; gap:0.4rem; }
+.lobby-chat-input { flex:1; background:var(--surface2); border:1px solid var(--border); border-radius:4px; padding:0.35rem 0.6rem; font-size:0.78rem; color:var(--text); font-family:inherit; outline:none; }
+.lobby-chat-input:focus { border-color:var(--gold-dim); }
+.lobby-chat-send { background:transparent; border:1px solid var(--border-gold); border-radius:4px; color:var(--gold-dim); font-size:0.78rem; padding:0.3rem 0.7rem; cursor:pointer; font-family:inherit; }
+.lobby-chat-send:hover { background:rgba(212,168,67,0.08); }
+.conn-dot { display:inline-block; width:8px; height:8px; border-radius:50%; margin-right:5px; flex-shrink:0; }
+.conn-dot.green  { background:#4caf50; box-shadow:0 0 3px #4caf5066; }
+.conn-dot.yellow { background:#ffc107; box-shadow:0 0 3px #ffc10766; }
+.conn-dot.red    { background:#f44336; box-shadow:0 0 3px #f4433666; }
+.conn-dot.gray   { background:#555; }
 .lobby-avatar { width:32px; height:36px; border-radius: 6px; display:flex; align-items:center; justify-content:center; flex-shrink:0; overflow:hidden; background:rgba(0,0,0,0.3); }
 .lobby-avatar svg { width:100%; height:100%; }
 .lobby-avatar.choosing { background:var(--surface3); color:var(--text-faint); font-size:0.6rem; }
@@ -642,9 +657,8 @@ html, body { height: 100%; background: var(--bg); color: var(--text); font-famil
 /* ── MODE SELECTOR ── */
 .mode-select { display:flex; flex-direction:column; align-items:center; gap:0.4rem; margin:0.8rem 0; }
 .mode-select-label { font-family:'Cinzel',serif; font-size:0.6rem; letter-spacing:0.22em; color:var(--gold-dim); }
-.mode-btns { display:flex; gap:0.5rem; overflow-x:auto; flex-wrap:nowrap; -webkit-overflow-scrolling:touch; scrollbar-width:none; padding-bottom:2px; }
-.mode-btns::-webkit-scrollbar { display:none; }
-.mode-btn { flex-shrink:0; }
+.mode-btns { display:flex; gap:0.4rem; flex-wrap:wrap; }
+.mode-btn { flex:1 1 auto; min-width:0; text-align:center; }
 .mode-btn { padding:0.5rem 1rem; border:1px solid var(--border-gold); background:var(--surface2); color:var(--text-dim); font-family:'Cinzel',serif; font-size:0.68rem; letter-spacing:0.08em; cursor:pointer; border-radius:4px; transition:all 0.16s; }
 .mode-btn:hover { color:var(--gold); border-color:var(--gold-dim); }
 .mode-btn.active { background:linear-gradient(135deg,rgba(212,168,67,0.22),rgba(212,168,67,0.07)); border-color:var(--gold); color:var(--gold-light); box-shadow:0 0 16px rgba(212,168,67,0.18); }
@@ -1173,7 +1187,7 @@ html, body { height: 100%; background: var(--bg); color: var(--text); font-famil
     <div class="landing-center">
       <div>
         <div class="logo-main">COUP</div>
-        <div class="logo-tagline">VERSION 71</div>
+        <div class="logo-tagline">VERSION 73</div>
         <div class="card-showcase">
           <div class="showcase-card duke">👑<span class="sc-name">Duke</span></div>
           <div class="showcase-card assassin">🗡️<span class="sc-name">Assassin</span></div>
@@ -1184,7 +1198,7 @@ html, body { height: 100%; background: var(--bg); color: var(--text); font-famil
       </div>
       <div class="menu-btns">
         <button class="btn primary" onclick="goLobby('create')">Host a Game</button>
-        <button class="btn"         onclick="goLobby('join')">Join a Game</button>
+        <button class="btn"         onclick="goLobby('join')" id="btn-join-game">Join a Game</button>
         <button class="btn ghost"   onclick="goLobby('solo')">Play vs CPU</button>
       </div>
       <div style="font-size:0.62rem;color:var(--text-faint);text-align:center;line-height:1.9;max-width:240px;">
@@ -1324,6 +1338,16 @@ html, body { height: 100%; background: var(--bg); color: var(--text); font-famil
       <div class="lobby-players" id="waiting-plist"></div>
       <div id="waiting-change-char-row" style="margin-top:0.6rem;display:none;">
         <button class="wr-change-char-btn" onclick="guestRequestCharChange()">✏️ Change My Character</button>
+      </div>
+    </div>
+    <div class="waiting-panel" style="margin-top:0.75rem;">
+      <div class="panel-head">Chat</div>
+      <div class="lobby-chat">
+        <div class="lobby-chat-msgs" id="lobby-chat-msgs-guest"></div>
+        <div class="lobby-chat-input-row">
+          <input class="lobby-chat-input" id="lobby-chat-input-guest" placeholder="Message…" maxlength="120" onkeydown="if(event.key==='Enter')sendLobbyChat()"/>
+          <button class="lobby-chat-send" onclick="sendLobbyChat()">Send</button>
+        </div>
       </div>
     </div>
     <div id="waiting-action-row" class="wr-action-row" style="width:100%;max-width:480px;">
@@ -2077,7 +2101,6 @@ function modeSelectHtml() {
   const isExpansion = selectedGameMode === 'expansion';
   const isStd = !isDC && !isBlitz && !isAuction && !isExpansion;
   return `<div class="mode-select">
-    <div class="mode-select-label">GAME MODE</div>
     <div class="mode-btns">
       <button class="mode-btn${isStd?' active':''}" data-mode="standard" onclick="setGameMode('standard')">Standard</button>
       <button class="mode-btn${isDC?' dc-active-btn':''}" data-mode="doubleContessa" onclick="setGameMode('doubleContessa')">🌹🌹 Double Contessa</button>
@@ -2920,6 +2943,7 @@ function goHome() {
   fbCleanup(isHost); // remove room from Firebase if we're the host
   G=null; ME=null;
   isSolo=false; isHost=false; stopTimer(); closeModal();
+  _lobbyChatLog = []; ['lobby-chat-msgs','lobby-chat-msgs-guest'].forEach(id=>{const e=document.getElementById(id);if(e)e.innerHTML='';});
   pAction = null; pResponders = []; pResponses = {}; // clear any stale response state
   afterLoseCB = null;       // Bug 16 fix: prevent stale callback leaking into next game
   afterExchangeCB = null;   // Bug 17 fix: prevent stale exchange callback leaking into next game
@@ -2939,6 +2963,16 @@ function goHome() {
   renderTimingPanel(selectedGameMode || 'standard');
 }
 function goLobby(mode) { showScr('lobby'); buildLobby(mode); }
+(function(){
+  const _rp = new URLSearchParams(location.search).get('room');
+  if (_rp && _rp.length >= 4) {
+    history.replaceState(null,'',location.pathname);
+    window.addEventListener('DOMContentLoaded', function(){
+      const btn = document.getElementById('btn-join-game');
+      if (btn) btn.click();
+    }, {once:true});
+  }
+})();
 
 // ════════════════════════════════════════
 // LOBBY BUILD
@@ -3172,6 +3206,15 @@ function checkHostCreateReady() {
 }
 
 function copyCode()    { const c=document.getElementById('room-code-big')?.textContent; navigator.clipboard.writeText(c||'').catch(()=>{}); toast('Copied: '+c); }
+function shareInviteLink(code) {
+  const url = location.origin + location.pathname + '?room=' + (code||'').trim();
+  if (navigator.share) {
+    navigator.share({ title: 'Join my Coup game', text: 'Room code: ' + code, url }).catch(()=>{});
+  } else {
+    navigator.clipboard.writeText(url).catch(()=>{});
+    toast('Invite link copied!');
+  }
+}
 
 // ════════════════════════════════════════
 // SOLO
@@ -3227,6 +3270,15 @@ function showCharacterPick(takenMap={}) {
 function beginGameAfterCharacterPick() {
   if (!pickedCharacterKey) return;
   const charKey = pickedCharacterKey;
+  // #52 CPU char lock: when picking FOR a CPU, block human-taken chars
+  if (charPickTargetCpuIdx !== null) {
+    const _humanChars = (G ? G.players : []).filter(p => !p.isCPU).map(p => p.character).filter(Boolean);
+    const _soloHuman = typeof soloWaitingChar !== 'undefined' ? soloWaitingChar : null;
+    if (_humanChars.includes(charKey) || charKey === _soloHuman) {
+      toast('That character is already taken by a human player');
+      return;
+    }
+  }
 
   // ── charPickReturnCtx: new waiting-room-aware pick flow ──
   if (charPickReturnCtx === 'soloWaiting') {
@@ -3380,7 +3432,7 @@ function showHostWaitingRoom() {
         </button>
       </div>
       <div class="room-code-big" id="room-code-big" onclick="copyCode()">${roomCode}</div>
-      <div class="code-hint">Tap to copy · Share with friends</div>
+      <div class="code-hint" style="display:flex;align-items:center;justify-content:center;gap:0.75rem;">Tap to copy &middot; <button class="btn ghost" style="font-size:0.7rem;padding:0.2rem 0.65rem;" onclick="shareInviteLink('${roomCode}')">🔗 Invite Link</button></div>
     </div>
     <div class="panel">
       <div class="panel-head">Game Mode</div>
@@ -3411,6 +3463,16 @@ function showHostWaitingRoom() {
         <button class="btn primary" style="flex:2;min-width:120px;" id="start-btn" ${playerCount<2?'disabled':''} onclick="hostStart()">Start Game</button>
         <button class="arrange-seats-btn" title="Arrange seat order" onclick="openSeatArrangement()">⇄ Seats</button>
         <button class="btn ghost" onclick="goHome()">Leave</button>
+      </div>
+    </div>
+    <div class="panel">
+      <div class="panel-head">Chat</div>
+      <div class="lobby-chat">
+        <div class="lobby-chat-msgs" id="lobby-chat-msgs"></div>
+        <div class="lobby-chat-input-row">
+          <input class="lobby-chat-input" id="lobby-chat-input" placeholder="Message…" maxlength="120" onkeydown="if(event.key==='Enter')sendLobbyChat()"/>
+          <button class="lobby-chat-send" onclick="sendLobbyChat()">Send</button>
+        </div>
       </div>
     </div>`;
   renderHostPlayerList();
@@ -3444,6 +3506,7 @@ function renderHostPlayerList() {
     const _charLabel = _charDisplayName
       ? `<span style="font-weight:600">${esc(_charDisplayName)}</span> <span style="color:var(--text-faint);font-size:0.85em;">(${esc(_playerRealName)})</span>`
       : `<span style="font-weight:600">${esc(_playerRealName)}</span>`;
+    const _dot = p.isCPU ? '' : connDotHtml(p.latency);
     const nameLabel = isChoosing
       ? (i === 0
           ? `<div style="display:flex;flex-direction:column;gap:1px;"><span style="font-weight:600">${esc(_playerRealName)}</span><span style="color:var(--text-faint);font-size:0.68em;letter-spacing:0.05em;text-transform:uppercase;">TAP TO PICK CHARACTER</span></div>`
@@ -3478,7 +3541,7 @@ function renderHostPlayerList() {
     if (p.isCPU) {
       cpuChangeBtn = `<button class="cpu-char-btn" onclick="event.stopPropagation();hostChangeCpuChar(${i})" title="Change character">✏️</button>`;
     }
-    div.innerHTML = avatarHtml + `<span>${nameLabel}</span>${tag}${cpuChangeBtn}${kickBtn}`;
+    div.innerHTML = avatarHtml + `<span>${_dot}${nameLabel}</span>${tag}${cpuChangeBtn}${kickBtn}`;
     list.appendChild(div);
   });
   // Update count and start button
@@ -3655,6 +3718,17 @@ function broadcastLobbyUpdate() {
   if (db && G && G.roomCode) {
     db.ref(`rooms/${G.roomCode}/lobby`).set({ players: sanitizePlayers(), locked: G.lockedRoom, mode });
   }
+  if (isHost) pingAllGuests();
+}
+let _pingTimers = {};
+function pingAllGuests() {
+  if (!G || !isHost) return;
+  G.players.forEach(p => {
+    if (p.isCPU || !p.id || p.id === 'p0') return;
+    const _ts = Date.now();
+    _pingTimers[p.id] = _ts;
+    fbToGuest(p.id, { type: 'ping', ts: _ts });
+  });
 }
 
 // ════════════════════════════════════════
@@ -3848,6 +3922,8 @@ function onHostMsg(d) {
     showScr('waiting');
     return;
   }
+  if (d.type === 'lobby_chat') { appendLobbyChatMsg(d.name, d.text); return; }
+  if (d.type === 'ping') { fbToHost({ type: 'pong', ts: d.ts }); return; }
   if (d.type === 'lobby_update') {
     updateGuestWaitingRoom(d.players, d.locked, false, d.mode || null);
     return;
@@ -4167,11 +4243,55 @@ function onGuestMsg(d, gid) {
     showHostWaitingRoom();
   }
   else if (d.type === 'action_msg') handleGuestAction(d, gid);
+  else if (d.type === 'lobby_chat') {
+    const _cm = { type: 'lobby_chat', name: d.name||'?', text: d.text||'' };
+    broadcastAll(_cm);
+    appendLobbyChatMsg(_cm.name, _cm.text);
+  }
+  else if (d.type === 'pong') {
+    const _rtt = Math.round((Date.now() - (d.ts||0)) / 2);
+    const _pl = G?.players?.find(p => p.id === gid);
+    if (_pl) { _pl.latency = _rtt; renderHostPlayerList(); }
+  }
 }
 
 function broadcastAll(msg) {
   if (isSolo) return;
   fbBroadcastAll(msg);
+}
+function connDotHtml(latency) {
+  if (latency === undefined || latency === null) return '';
+  const cls = latency < 80 ? 'green' : latency < 250 ? 'yellow' : 'red';
+  return '<span class="conn-dot ' + cls + '" title="' + latency + 'ms"></span>';
+}
+let _lobbyChatLog = [];
+function appendLobbyChatMsg(name, text) {
+  if (!text) return;
+  ['lobby-chat-msgs','lobby-chat-msgs-guest'].forEach(id => {
+    const el = document.getElementById(id);
+    if (!el) return;
+    const d = document.createElement('div');
+    d.className = 'lobby-chat-msg';
+    d.innerHTML = '<span class="chat-name">' + esc(name) + '</span>' + esc(text);
+    el.appendChild(d);
+    el.scrollTop = el.scrollHeight;
+  });
+}
+function sendLobbyChat() {
+  const input = document.getElementById('lobby-chat-input') || document.getElementById('lobby-chat-input-guest');
+  const text = input?.value.trim();
+  if (!text) return;
+  input.value = '';
+  const myPlayer = G?.players?.find(p => p.id === ME) || G?.players?.[0];
+  const name = myPlayer?.displayName || myPlayer?.name || 'Player';
+  if (isHost) {
+    const _cm = { type: 'lobby_chat', name, text };
+    broadcastAll(_cm);
+    appendLobbyChatMsg(name, text);
+  } else {
+    fbToHost({ type: 'lobby_chat', name, text });
+    appendLobbyChatMsg(name, text);
+  }
 }
 
 function sendHost(msg) {
