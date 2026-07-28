@@ -190,9 +190,16 @@ html, body { height: 100%; background: var(--bg); color: var(--text); font-famil
   max-width:62px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
 
 @media (max-width: 720px) {
-  .landing-grid { padding: 0 1.2rem; min-height: 100svh; align-items: center; }
-  .landing-center { width: 100%; gap: 1.4rem; }
-  .home-chars { flex-wrap: wrap; }
+  #screen-landing { overflow-y: auto; justify-content: flex-start; padding: 1.6rem 1rem 2rem; }
+  .landing-grid { padding: 0 0.4rem; min-height: 0; align-items: center; }
+  .landing-center { width: 100%; gap: 1.05rem; }
+  .logo-main { font-size: clamp(3.4rem, 16vw, 5rem); }
+  .logo-tagline { font-size: 0.78rem; letter-spacing: 0.22em; }
+  .home-chars { flex-wrap: wrap; gap: 0.5rem; }
+  .home-char-frame { width: 48px; height: 55px; }
+  .home-char-name { font-size: 0.4rem; max-width: 52px; }
+  .menu-btns { gap: 0.55rem; }
+  .btn { padding: 0.8rem 1rem; }
   .logo-main { font-size: clamp(4rem,18vw,6rem); }
   .card-showcase { gap: 0.5rem; margin-top: 0.8rem; }
   .showcase-card { width: 48px; height: 72px; }
@@ -297,7 +304,8 @@ html, body { height: 100%; background: var(--bg); color: var(--text); font-famil
 #lobby-row { display:flex; flex-direction:column; align-items:center; gap:1.2rem; width:100%; }
 #lobby-timing-wrap { display:none; }
 #lobby-timing-wrap .timing-panel { width:100%; }
-.lobby-panel { max-width:none; width:100%; }
+.lobby-panel { width:100%; max-width:480px; }
+.lobby-panel.lobby-wide { max-width:none; }
 .panel { background:var(--surface); border:1px solid var(--border); border-radius:8px; padding:1.4rem; margin-bottom:1rem; }
 .panel-head { font-family:'Cinzel',serif; font-size:0.75rem; letter-spacing:0.2em; color:var(--gold-dim); margin-bottom:1.2rem; display:flex; align-items:center; gap:0.8rem; }
 .panel-head::after { content:''; flex:1; height:1px; background:linear-gradient(90deg,var(--border-gold),transparent); }
@@ -1174,16 +1182,44 @@ html, body { height: 100%; background: var(--bg); color: var(--text); font-famil
 /* ══ LOBBY REVAMP (v77) ══ */
 .lobby-grid { display:flex; flex-direction:column; gap:0; width:100%; max-width:520px; margin:0 auto; }
 .lg-col { min-width:0; }
-@media (min-width: 1160px) {
-  .lobby-grid { display:grid; grid-template-columns: 350px 370px 330px; gap:1rem; align-items:start; max-width:1180px; }
-  .lobby-grid .panel { margin-bottom:0.8rem; padding:1rem 1.1rem; }
-  .lobby-grid .room-code-big { font-size:2.3rem; padding:0.65rem; }
-  .lobby-grid .lobby-player { padding:0.4rem 0.7rem; }
-  .lobby-grid .lobby-avatar { width:44px; height:48px; }
-  .lobby-grid .timing-panel { padding:22px 26px 26px; }
-  .lobby-grid .timing-panel-title { margin-bottom:16px; }
-  .lobby-grid .cam-note { font-size:0.58rem; }
-  #screen-lobby { padding:0.9rem 1.5rem; }
+@media (min-width: 1000px) {
+  #screen-lobby:has(.lobby-wide) { padding:0.8rem 1.2rem; overflow:hidden; }
+  #screen-lobby:has(.lobby-wide) #lobby-row { margin:0; height:100%; width:100%; }
+  .lobby-panel.lobby-wide { height:100%; }
+  .lobby-wide .lobby-grid { display:grid; grid-template-columns: 1.05fr 1fr 0.95fr; gap:1rem;
+    align-items:stretch; max-width:none; width:100%; height:100%; }
+  .lobby-wide .lg-col { display:flex; flex-direction:column; min-height:0; overflow:hidden; }
+  .lobby-wide .panel { margin-bottom:0.8rem; padding:0.9rem 1rem; }
+  .lobby-wide .room-code-big { font-size:2.2rem; padding:0.6rem; letter-spacing:0.32em; }
+  .lobby-wide .lobby-player { padding:0.35rem 0.7rem; flex-shrink:0; }
+  .lobby-wide .lobby-avatar { width:42px; height:46px; }
+  .lobby-wide .timing-panel { padding:18px 22px 20px; }
+  .lobby-wide .timing-panel-title { margin-bottom:12px; }
+  .lobby-wide .timing-mode-label { margin-bottom:12px; }
+  .lobby-wide .cam-note { font-size:0.58rem; }
+  /* players panel fills its column; the LIST scrolls internally, never the page */
+  .lobby-wide .players-panel { flex:1 1 auto; min-height:0; display:flex; flex-direction:column; margin-bottom:0; }
+  .lobby-wide .players-panel .lobby-players { flex:1 1 auto; min-height:56px; overflow-y:auto; }
+  /* chat fills the right column */
+  .lobby-wide .chat-panel { flex:1 1 auto; min-height:0; display:flex; flex-direction:column; margin-bottom:0; }
+  .lobby-wide .chat-panel .lobby-chat { flex:1; display:flex; flex-direction:column; min-height:0; }
+  .lobby-wide .chat-panel .lobby-chat-msgs { flex:1; max-height:none; min-height:40px; }
+  .lobby-wide #timing-inline-slot { overflow-y:auto; min-height:0; }
+}
+@media (min-width: 1000px) and (max-height: 840px) {
+  .lobby-wide .panel { padding:0.7rem 0.9rem; margin-bottom:0.6rem; }
+  .lobby-wide .room-code-big { font-size:1.9rem; padding:0.5rem; }
+  .lobby-wide .panel-head { margin-bottom:0.7rem; font-size:0.68rem; }
+  .lobby-wide .mode-card { padding:0.42rem 0.7rem; }
+  .lobby-wide .mc-desc { font-size:0.55rem; }
+  .lobby-wide .invite-primary { padding:0.55rem 1rem; font-size:0.72rem; margin-top:0.45rem; }
+  .lobby-wide .code-hint { display:none; }
+  .lobby-wide .cpu-row { padding:0.3rem 0; }
+  .lobby-wide .timing-panel { padding:14px 18px 16px; }
+  .lobby-wide .timing-range-hint { margin-bottom:10px; }
+  .lobby-wide .cam-panel-btn { padding:0.6rem 1rem; font-size:0.7rem; }
+  .lobby-wide .cam-note { display:none; }
+  .lobby-wide .lobby-avatar { width:36px; height:40px; }
 }
 .room-hero { text-align:center; }
 .invite-primary { display:block; width:100%; margin-top:0.6rem; padding:0.75rem 1rem; font-size:0.8rem;
@@ -1304,7 +1340,7 @@ html, body { height: 100%; background: var(--bg); color: var(--text); font-famil
     <div class="landing-center">
       <div>
         <div class="logo-main">COUP</div>
-        <div class="logo-tagline">VERSION 77 · LIVE AT THE TABLE</div>
+        <div class="logo-tagline">VERSION 78 · LIVE AT THE TABLE</div>
         <div class="card-showcase">
           <div class="showcase-card duke">👑<span class="sc-name">Duke</span></div>
           <div class="showcase-card assassin">🗡️<span class="sc-name">Assassin</span></div>
@@ -3169,6 +3205,7 @@ function buildLobby(mode) {
   const timingWrap = document.getElementById('lobby-timing-wrap');
   if (timingWrap) timingWrap.style.display = 'none';
   const el = document.getElementById('lobby-inner');
+  el.classList.remove('lobby-wide');
   if (mode === 'create') {
     el.innerHTML = `<div class="panel">
       <div class="panel-head">Host a Game</div>
@@ -3237,6 +3274,8 @@ function rebuildSoloCpuCharsIfNeeded() {
 }
 
 function showSoloWaitingRoom() {
+  const _li = document.getElementById('lobby-inner');
+  if (_li) _li.classList.remove('lobby-wide');
   applyDCTheme(selectedGameMode === 'doubleContessa');
   const timingWrap = document.getElementById('lobby-timing-wrap');
   if (timingWrap) timingWrap.style.display = 'none';
@@ -3611,6 +3650,7 @@ function renumberCPUs() {
 function showHostWaitingRoom() {
   const el = document.getElementById('lobby-inner');
   if (!G) return;
+  el.classList.add('lobby-wide');
   // v77: detach the timing panel node so it survives the innerHTML wipe below
   const _tp = document.getElementById('timing-panel');
   if (_tp) _tp.remove();
@@ -3630,7 +3670,7 @@ function showHostWaitingRoom() {
         <button class="invite-primary" onclick="shareInviteLink('${roomCode}')">🔗 SHARE INVITE LINK</button>
         <div class="code-hint">or tap the code to copy it</div>
       </div>
-      <div class="panel">
+      <div class="panel players-panel">
         <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:0.8rem;">
           <div class="panel-head" style="margin-bottom:0">Players</div>
           <div class="player-count-badge">${playerCount} / ${maxP}</div>
@@ -3677,7 +3717,7 @@ function showHostWaitingRoom() {
         </div>
         <div class="cam-note">See your friends' faces while they lie to yours. <b>Totally optional</b> — playing in the same room? Skip it. You can also tap in mid-game from the 📷 button up top.</div>
       </div>
-      <div class="panel">
+      <div class="panel chat-panel">
         <div class="panel-head">Chat</div>
         <div class="lobby-chat">
           <div class="lobby-chat-msgs" id="lobby-chat-msgs"></div>
@@ -5801,7 +5841,7 @@ const SEAT_LAYOUTS_PORTRAIT = {
   7: [{x:50, y:90}, {x:12, y:74}, {x:12, y:42}, {x:26, y:14}, {x:74, y:14}, {x:88, y:42}, {x:88, y:74}],
 };
 
-const CHAR_NUDGE = { eddie: 'translate(-3%, 13%) scale(1.30)', yossi: 'translate(0, 15%) scale(1.24)' };
+const CHAR_NUDGE = { eddie: 'translate(-3%, 13%) scale(1.30)', yossi: 'translate(0, 15%) scale(1.24)', dov: 'translate(0, 5%) scale(1.24)' };
 function charImgHtml(p) {
   let fStyle = p.characterVariant ? variantFilter(p.characterVariant, p.character) : '';
   if (p.character && CHAR_NUDGE[p.character]) fStyle += (fStyle && !fStyle.endsWith(';') ? ';' : '') + 'transform:' + CHAR_NUDGE[p.character] + ';';
