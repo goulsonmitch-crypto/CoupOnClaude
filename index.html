@@ -1340,7 +1340,7 @@ html, body { height: 100%; background: var(--bg); color: var(--text); font-famil
     <div class="landing-center">
       <div>
         <div class="logo-main">COUP</div>
-        <div class="logo-tagline">VERSION 78 · LIVE AT THE TABLE</div>
+        <div class="logo-tagline">VERSION 79 · LIVE AT THE TABLE</div>
         <div class="card-showcase">
           <div class="showcase-card duke">👑<span class="sc-name">Duke</span></div>
           <div class="showcase-card assassin">🗡️<span class="sc-name">Assassin</span></div>
@@ -1455,7 +1455,7 @@ html, body { height: 100%; background: var(--bg); color: var(--text); font-famil
   <div class="dc-rose-bg" id="lobby-rose-bg"></div>
   <div id="lobby-row" style="position:relative;z-index:1;">
     <div class="lobby-panel" id="lobby-inner"></div>
-    <div id="lobby-timing-wrap"><div class="timing-panel" id="timing-panel"></div></div>
+
   </div>
 </div>
 
@@ -2224,16 +2224,17 @@ function onTimingSlider(el, modeKey, col, mn, mx) {
 function setGameMode(mode) {
   selectedGameMode = mode;
   renderTimingPanel(mode);
-  // Update mode button styles
-  document.querySelectorAll('.mode-btn').forEach(b => {
-    const isStd = b.dataset.mode === 'standard';
-    const isDC  = b.dataset.mode === 'doubleContessa';
-    b.classList.toggle('active', isStd && mode === 'standard');
-    b.classList.toggle('dc-active-btn', isDC && mode === 'doubleContessa');
-    b.classList.toggle('active', isDC && mode === 'doubleContessa' ? false : b.classList.contains('active'));
-    // simpler approach:
-    b.className = 'mode-btn' + (b.dataset.mode === mode ? (mode === 'doubleContessa' ? ' dc-active-btn' : ' active') : '');
-  });
+  // v79: re-render the mode cards in place (works in solo AND host lobbies)
+  document.querySelectorAll('.mode-cards').forEach(mc => { mc.outerHTML = modeSelectHtml(); });
+  // player-count cap follows the mode
+  const _pb = document.querySelector('.player-count-badge');
+  if (_pb && G && G.players) _pb.textContent = G.players.length + ' / ' + (mode === 'expansion' ? 7 : 6);
+  // solo: leaving Expansion must clamp CPUs back to the 6-player table
+  if ((!G || !G.roomCode) && mode !== 'expansion' && typeof soloCpuCount !== 'undefined' && soloCpuCount > 5) {
+    soloCpuCount = 5;
+    if (typeof soloWaitingCpuChars !== 'undefined') soloWaitingCpuChars = soloWaitingCpuChars.slice(0, 5);
+    const sv = document.getElementById('scpu-v'); if (sv) sv.textContent = soloCpuCount;
+  }
   applyDCTheme(mode === 'doubleContessa');
   // In multiplayer host waiting room — broadcast mode change
   if (G && G.roomCode && isHost && !isSolo) {
@@ -2243,9 +2244,6 @@ function setGameMode(mode) {
     const modeLabel = mode === 'doubleContessa' ? '🌹🌹 Double Contessa Mode activated' : mode === 'blitz' ? '⚡ Blitz Mode activated' : mode === 'auction' ? '🏺 Auction House selected' : mode === 'expansion' ? '🃏 Expansion Pack activated' : '⚔️ Standard Mode activated';
     flashBanner(modeLabel, 'action-flash', { duration: 2000 });
   }
-  // Re-render waiting room if visible
-  const active = document.querySelector('.screen.active');
-  if (active && active.id === 'screen-lobby' && G) showHostWaitingRoom();
 }
 
 function applyDCTheme(active) {
@@ -3605,6 +3603,7 @@ function beginGameAfterCharacterPick() {
 // ════════════════════════════════════════
 function hostCreate(name) {
   if (!firebaseAvailable()) return;
+  _lobbyChatLog = [];
   if (!name) { toast('Enter your name'); return; }
   isHost = true; ME = 'p0';
   const code = rndCode();
@@ -3651,9 +3650,6 @@ function showHostWaitingRoom() {
   const el = document.getElementById('lobby-inner');
   if (!G) return;
   el.classList.add('lobby-wide');
-  // v77: detach the timing panel node so it survives the innerHTML wipe below
-  const _tp = document.getElementById('timing-panel');
-  if (_tp) _tp.remove();
   applyDCTheme(selectedGameMode === 'doubleContessa');
   const playerCount = G.players.length;
   const roomCode = G.roomCode;
@@ -3704,7 +3700,7 @@ function showHostWaitingRoom() {
         <div class="panel-head">Game Mode</div>
         ${modeSelectHtml()}
       </div>
-      <div id="timing-inline-slot"></div>
+      <div id="timing-inline-slot"><div class="timing-panel" id="timing-panel"></div></div>
     </div>
     <div class="lg-col">
       <div class="panel">
@@ -3729,13 +3725,9 @@ function showHostWaitingRoom() {
       </div>
     </div>
   </div>`;
-  // timing panel lives INSIDE the grid now
-  const slot = document.getElementById('timing-inline-slot');
-  if (slot && _tp) slot.appendChild(_tp);
-  const _oldWrap = document.getElementById('lobby-timing-wrap');
-  if (_oldWrap) _oldWrap.style.display = 'none';
   renderHostPlayerList();
   renderTimingPanel(selectedGameMode || 'standard');
+  replayLobbyChat();
 }
 
 function renderHostPlayerList() {
@@ -4559,7 +4551,23 @@ function connDotHtml(latency) {
   return '<span class="conn-dot ' + cls + '" title="' + latency + 'ms"></span>';
 }
 let _lobbyChatLog = [];
+function replayLobbyChat() {
+  try {
+    const host = document.getElementById('lobby-chat-msgs');
+    if (host && !host.children.length && _lobbyChatLog.length) {
+      _lobbyChatLog.forEach(m => {
+        const d = document.createElement('div');
+        d.className = 'lobby-chat-msg';
+        d.innerHTML = `<span class="chat-name">${esc(m.name)}</span>${esc(m.text)}`;
+        host.appendChild(d);
+      });
+      host.scrollTop = host.scrollHeight;
+    }
+  } catch(e) {}
+}
 function appendLobbyChatMsg(name, text) {
+  _lobbyChatLog.push({ name, text });
+  if (_lobbyChatLog.length > 80) _lobbyChatLog.shift();
   if (!text) return;
   ['lobby-chat-msgs','lobby-chat-msgs-guest'].forEach(id => {
     const el = document.getElementById(id);
