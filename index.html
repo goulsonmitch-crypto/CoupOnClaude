@@ -1262,7 +1262,7 @@ html, body { height: 100%; background: var(--bg); color: var(--text); font-famil
     <div class="landing-center">
       <div>
         <div class="logo-main">COUP</div>
-        <div class="logo-tagline">VERSION 75 · LIVE AT THE TABLE</div>
+        <div class="logo-tagline">VERSION 76 · LIVE AT THE TABLE</div>
         <div class="card-showcase">
           <div class="showcase-card duke">👑<span class="sc-name">Duke</span></div>
           <div class="showcase-card assassin">🗡️<span class="sc-name">Assassin</span></div>
@@ -5660,8 +5660,10 @@ const SEAT_LAYOUTS_PORTRAIT = {
   7: [{x:50, y:90}, {x:12, y:74}, {x:12, y:42}, {x:26, y:14}, {x:74, y:14}, {x:88, y:42}, {x:88, y:74}],
 };
 
+const CHAR_NUDGE = { eddie: 'translate(-6%, 9%) scale(1.30)', yossi: 'translate(0, 12%) scale(1.24)' };
 function charImgHtml(p) {
-  const fStyle = p.characterVariant ? variantFilter(p.characterVariant, p.character) : '';
+  let fStyle = p.characterVariant ? variantFilter(p.characterVariant, p.character) : '';
+  if (p.character && CHAR_NUDGE[p.character]) fStyle += (fStyle && !fStyle.endsWith(';') ? ';' : '') + 'transform:' + CHAR_NUDGE[p.character] + ';';
   if (p.character && CHARACTER_IMAGES[p.character])
     return `<img src="${CHARACTER_IMAGES[p.character]}" style="${fStyle}" alt="">`;
   if (p.character && CHARACTERS[p.character])
