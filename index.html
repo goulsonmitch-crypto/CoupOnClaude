@@ -290,16 +290,14 @@ html, body { height: 100%; background: var(--bg); color: var(--text); font-famil
 .btn:disabled:hover { border-color:var(--border-gold); box-shadow:none; }
 
 /* ── LOBBY ── */
-#screen-lobby { flex-direction:column; align-items:center; justify-content:center; padding:1.5rem; overflow-y:auto; gap:1.2rem; background:var(--bg); }
+#screen-lobby { flex-direction:column; align-items:center; padding:1.5rem; overflow-y:auto; gap:1.2rem; background:var(--bg); }
+#lobby-row { margin: auto 0; }
 .lobby-panel { width:100%; max-width:480px; }
 /* Desktop lobby: main panels + timing panel side by side */
 #lobby-row { display:flex; flex-direction:column; align-items:center; gap:1.2rem; width:100%; }
 #lobby-timing-wrap { display:none; }
-@media (min-width:900px) {
-  #lobby-row { flex-direction:row; align-items:stretch; justify-content:center; gap:2.5rem; }
-  #lobby-timing-wrap { display:flex; width:380px; flex-shrink:0; align-items:center; justify-content:center; }
-  #lobby-timing-wrap .timing-panel { width:100%; }
-}
+#lobby-timing-wrap .timing-panel { width:100%; }
+.lobby-panel { max-width:none; width:100%; }
 .panel { background:var(--surface); border:1px solid var(--border); border-radius:8px; padding:1.4rem; margin-bottom:1rem; }
 .panel-head { font-family:'Cinzel',serif; font-size:0.75rem; letter-spacing:0.2em; color:var(--gold-dim); margin-bottom:1.2rem; display:flex; align-items:center; gap:0.8rem; }
 .panel-head::after { content:''; flex:1; height:1px; background:linear-gradient(90deg,var(--border-gold),transparent); }
@@ -1172,6 +1170,54 @@ html, body { height: 100%; background: var(--bg); color: var(--text); font-famil
 @keyframes winFrameIn { from { transform: scale(0.4) translateY(40px); opacity:0; } to { transform:none; opacity:1; } }
 
 
+
+/* ══ LOBBY REVAMP (v77) ══ */
+.lobby-grid { display:flex; flex-direction:column; gap:0; width:100%; max-width:520px; margin:0 auto; }
+.lg-col { min-width:0; }
+@media (min-width: 1160px) {
+  .lobby-grid { display:grid; grid-template-columns: 350px 370px 330px; gap:1rem; align-items:start; max-width:1180px; }
+  .lobby-grid .panel { margin-bottom:0.8rem; padding:1rem 1.1rem; }
+  .lobby-grid .room-code-big { font-size:2.3rem; padding:0.65rem; }
+  .lobby-grid .lobby-player { padding:0.4rem 0.7rem; }
+  .lobby-grid .lobby-avatar { width:44px; height:48px; }
+  .lobby-grid .timing-panel { padding:22px 26px 26px; }
+  .lobby-grid .timing-panel-title { margin-bottom:16px; }
+  .lobby-grid .cam-note { font-size:0.58rem; }
+  #screen-lobby { padding:0.9rem 1.5rem; }
+}
+.room-hero { text-align:center; }
+.invite-primary { display:block; width:100%; margin-top:0.6rem; padding:0.75rem 1rem; font-size:0.8rem;
+  background:linear-gradient(135deg,rgba(212,168,67,0.25),rgba(212,168,67,0.08)); border:1px solid var(--gold);
+  color:var(--gold-light); font-family:'Cinzel',serif; letter-spacing:0.12em; border-radius:6px; cursor:pointer; transition:all 0.15s; }
+.invite-primary:hover { box-shadow:0 0 20px rgba(212,168,67,0.25); }
+.mode-cards { display:flex; flex-direction:column; gap:0.45rem; }
+.mode-card { display:flex; align-items:center; gap:0.7rem; text-align:left; padding:0.55rem 0.8rem; border-radius:8px;
+  border:1px solid var(--border-gold); background:var(--surface2); cursor:pointer; transition:all 0.15s; width:100%; }
+.mode-card:hover { border-color:var(--gold-dim); background:var(--surface3); }
+.mode-card.active { background:linear-gradient(135deg,rgba(212,168,67,0.2),rgba(212,168,67,0.06)); border-color:var(--gold);
+  box-shadow:0 0 14px rgba(212,168,67,0.18); }
+.mode-card.dc-on { background:linear-gradient(135deg,rgba(192,57,43,0.22),rgba(192,57,43,0.07)); border-color:rgba(192,57,43,0.7); box-shadow:0 0 14px rgba(192,57,43,0.2); }
+.mode-card.blitz-on { border-color:#ff9944; box-shadow:0 0 14px rgba(255,153,68,0.22); background:rgba(255,153,68,0.1); }
+.mc-emoji2 { font-size:1.25rem; flex-shrink:0; width:1.7rem; text-align:center; }
+.mc-name2 { font-family:'Cinzel',serif; font-size:0.72rem; letter-spacing:0.08em; color:var(--text); }
+.mode-card.active .mc-name2, .mode-card.blitz-on .mc-name2 { color:var(--gold-light); }
+.mode-card.dc-on .mc-name2 { color:#e88; }
+.mc-desc { font-size:0.6rem; color:var(--text-dim); line-height:1.35; margin-top:1px; }
+.start-blockers { font-size:0.62rem; color:var(--orange-light); text-align:center; margin-top:0.4rem; min-height:1em; font-style:italic; }
+/* camera panel */
+.cam-panel-btn { display:flex; align-items:center; justify-content:center; gap:0.6rem; width:100%; padding:0.8rem 1rem;
+  border-radius:8px; border:1.5px solid rgba(88,214,141,0.45); background:rgba(30,132,73,0.1);
+  color:var(--green-light); font-family:'Cinzel',serif; font-size:0.78rem; letter-spacing:0.1em; cursor:pointer; transition:all 0.15s; }
+.cam-panel-btn:hover { background:rgba(30,132,73,0.2); box-shadow:0 0 18px rgba(88,214,141,0.2); }
+.cam-panel-btn.live { border-color:var(--red-bright); color:#ffb3ab; background:rgba(192,57,43,0.12); }
+.cam-note { font-size:0.62rem; color:var(--text-dim); line-height:1.55; margin-top:0.5rem; }
+.cam-prev-wrap { position:relative; margin-top:0.6rem; border-radius:8px; overflow:hidden; background:#0a0710;
+  border:1px solid var(--border-gold); aspect-ratio: 4/3; display:none; }
+.cam-prev-wrap.on { display:block; }
+.cam-prev-wrap video { width:100%; height:100%; object-fit:cover; display:block; }
+.cam-mic-row { display:flex; gap:0.5rem; margin-top:0.5rem; }
+.cam-mic-row .settings-btn { flex:1; }
+
 /* ══ LIVE TABLE CAM (v75) ══ */
 #av-fab { position:fixed; top:52px; right:10px; z-index:1200; display:none; flex-direction:column; gap:6px; align-items:flex-end; }
 #av-fab.show { display:flex; }
@@ -1242,11 +1288,7 @@ html, body { height: 100%; background: var(--bg); color: var(--text); font-famil
 </head>
 <body>
 <div id="toast-area"></div>
-<div id="av-fab">
-  <button class="av-btn" id="av-cam-btn" onclick="avToggleTapIn()">📷 TAP IN</button>
-  <button class="av-btn on" id="av-mic-btn" onclick="avToggleMic()" style="display:none">🎤 MIC ON</button>
-  <div class="av-hint" id="av-hint" style="display:none"></div>
-</div>
+<div class="av-hint" id="av-hint" style="display:none;position:fixed;top:52px;right:12px;z-index:1200;"></div>
 <div id="av-pool"></div>
 
 <!-- LANDSCAPE BLOCKER -->
@@ -1262,7 +1304,7 @@ html, body { height: 100%; background: var(--bg); color: var(--text); font-famil
     <div class="landing-center">
       <div>
         <div class="logo-main">COUP</div>
-        <div class="logo-tagline">VERSION 76 · LIVE AT THE TABLE</div>
+        <div class="logo-tagline">VERSION 77 · LIVE AT THE TABLE</div>
         <div class="card-showcase">
           <div class="showcase-card duke">👑<span class="sc-name">Duke</span></div>
           <div class="showcase-card assassin">🗡️<span class="sc-name">Assassin</span></div>
@@ -1415,6 +1457,12 @@ html, body { height: 100%; background: var(--bg); color: var(--text); font-famil
       </div>
     </div>
     <div class="waiting-panel" style="margin-top:0.75rem;">
+      <div class="panel-head">🎥 Live at the Table</div>
+      <button class="cam-panel-btn" id="av-guest-btn" onclick="avToggleTapIn()">📷 JOIN ON CAMERA</button>
+      <div class="cam-prev-wrap" id="av-guest-prev"></div>
+      <div class="cam-note">Optional — your face appears in your frame at the table. Skip it if you're all in one room.</div>
+    </div>
+    <div class="waiting-panel" style="margin-top:0.75rem;">
       <div class="panel-head">Chat</div>
       <div class="lobby-chat">
         <div class="lobby-chat-msgs" id="lobby-chat-msgs-guest"></div>
@@ -1438,6 +1486,8 @@ html, body { height: 100%; background: var(--bg); color: var(--text); font-famil
     <div class="tb-room" id="tb-room"></div>
     <span id="tb-paused" style="display:none;font-family:'Cinzel',serif;font-size:0.65rem;color:#f0c966;letter-spacing:0.12em;animation:pausePulse 1.5s ease-in-out infinite;">⏸ PAUSED</span>
     <div class="tb-right">
+      <button class="settings-btn" id="tb-cam" title="Camera on/off" onclick="avToggleTapIn()" style="display:none">📷</button>
+      <button class="settings-btn" id="tb-mic" title="Mute mic" onclick="avToggleMic()" style="display:none">🎤</button>
       <span id="tb-round">Round 1</span>
       <button class="settings-btn" id="rules-btn" title="Rules" onclick="openRules()">?</button>
       <button class="settings-btn" id="settings-btn" title="Settings" onclick="openSettings()">⚙</button>
@@ -2033,6 +2083,12 @@ function randomUnusedCharacter(taken) {
   const free = CHARACTER_KEYS.filter(k => !taken.includes(k));
   return free[Math.floor(Math.random()*free.length)] || CHARACTER_KEYS[Math.floor(Math.random()*CHARACTER_KEYS.length)];
 }
+// v77: CPUs are cartoons only — friend characters belong to real humans
+function randomCpuCharacter(taken) {
+  const pool = CHARACTER_KEYS.filter(k => !CHARACTERS[k]?.crew);
+  const free = pool.filter(k => !taken.includes(k));
+  return free[Math.floor(Math.random()*free.length)] || pool[Math.floor(Math.random()*pool.length)];
+}
 
 // ════════════════════════════════════════
 // GAME MODE HELPERS
@@ -2188,20 +2244,22 @@ function applyDCTheme(active) {
 }
 
 function modeSelectHtml() {
-  const isDC = selectedGameMode === 'doubleContessa';
-  const isBlitz = selectedGameMode === 'blitz';
-  const isAuction = selectedGameMode === 'auction';
-  const isExpansion = selectedGameMode === 'expansion';
-  const isStd = !isDC && !isBlitz && !isAuction && !isExpansion;
-  return `<div class="mode-select">
-    <div class="mode-btns">
-      <button class="mode-btn${isStd?' active':''}" data-mode="standard" onclick="setGameMode('standard')">Standard</button>
-      <button class="mode-btn${isDC?' dc-active-btn':''}" data-mode="doubleContessa" onclick="setGameMode('doubleContessa')">🌹🌹 Double Contessa</button>
-      <button class="mode-btn${isBlitz?' active':''}" data-mode="blitz" onclick="setGameMode('blitz')" style="${isBlitz?'border-color:#ff9944;color:#ff9944;background:rgba(255,153,68,0.12);':''}">⚡ Blitz</button>
-      <button class="mode-btn${isAuction?' auction-active':''}" data-mode="auction" onclick="setGameMode('auction')">🏺 Auction House</button>
-      <button class="mode-btn${isExpansion?' active':''}" data-mode="expansion" onclick="setGameMode('expansion')">🃏 Expansion Pack</button>
-    </div>
-  </div>`;
+  const cur = selectedGameMode || 'standard';
+  const MODES = [
+    { k:'standard',       e:'⚔️', n:'Standard',        d:'The classic game of lies' },
+    { k:'doubleContessa', e:'🌹', n:'Double Contessa', d:'One player secretly holds two Contessas' },
+    { k:'blitz',          e:'⚡', n:'Blitz',           d:'5-second turns · pure instinct' },
+    { k:'auction',        e:'🏺', n:'Auction House',   d:'Bid tokens for your starting hand' },
+    { k:'expansion',      e:'🃏', n:'Expansion Pack',  d:'25 cards · 3 each · up to 7 players' },
+  ];
+  return `<div class="mode-cards">` + MODES.map(mo => {
+    const on = cur === mo.k;
+    const cls = on ? (mo.k === 'doubleContessa' ? ' dc-on' : (mo.k === 'blitz' ? ' blitz-on' : ' active')) : '';
+    return `<button class="mode-card${cls}" data-mode="${mo.k}" onclick="setGameMode('${mo.k}')">
+      <span class="mc-emoji2">${mo.e}</span>
+      <span style="min-width:0"><div class="mc-name2">${mo.n}</div><div class="mc-desc">${mo.d}</div></span>
+    </button>`;
+  }).join('') + `</div>`;
 }
 
 // ════════════════════════════════════════
@@ -3170,7 +3228,7 @@ function rebuildSoloCpuCharsIfNeeded() {
     soloWaitingCpuChars = [];
     for (let i = 0; i < soloCpuCount; i++) {
       const existing = soloWaitingCpuChars.find ? null : null; // placeholder
-      const key = randomUnusedCharacter(taken.map(t => typeof t === 'string' ? t : t.key));
+      const key = randomCpuCharacter(taken.map(t => typeof t === 'string' ? t : t.key));
       const rv = resolveCharacterVariant(key, soloWaitingCpuChars.map(c => ({ character: c.key, characterVariant: c.characterVariant })));
       soloWaitingCpuChars.push({ key: rv.charKey, characterVariant: rv.characterVariant, displayName: rv.displayName });
       taken.push(rv.charKey);
@@ -3272,7 +3330,7 @@ function adjSoloCPU(d) {
       newList.push(soloWaitingCpuChars[i]);
       taken.push(soloWaitingCpuChars[i].key);
     } else {
-      const key = randomUnusedCharacter(taken);
+      const key = randomCpuCharacter(taken);
       const rv = resolveCharacterVariant(key, newList.map(c => ({ character: c.key, characterVariant: c.characterVariant })));
       newList.push({ key: rv.charKey, characterVariant: rv.characterVariant, displayName: rv.displayName });
       taken.push(rv.charKey);
@@ -3403,6 +3461,7 @@ function beginGameAfterCharacterPick() {
   const charKey = pickedCharacterKey;
   // #52 CPU char lock: when picking FOR a CPU, block human-taken chars
   if (charPickTargetCpuIdx !== null) {
+    if (CHARACTERS[charKey]?.crew) { toast("CPUs can only play the classic characters — your friends play themselves"); return; }
     const _humanChars = (G ? G.players : []).filter(p => !p.isCPU).map(p => p.character).filter(Boolean);
     const _soloHuman = typeof soloWaitingChar !== 'undefined' ? soloWaitingChar : null;
     if (_humanChars.includes(charKey) || charKey === _soloHuman) {
@@ -3552,73 +3611,105 @@ function renumberCPUs() {
 function showHostWaitingRoom() {
   const el = document.getElementById('lobby-inner');
   if (!G) return;
+  // v77: detach the timing panel node so it survives the innerHTML wipe below
+  const _tp = document.getElementById('timing-panel');
+  if (_tp) _tp.remove();
   applyDCTheme(selectedGameMode === 'doubleContessa');
   const playerCount = G.players.length;
   const roomCode = G.roomCode;
+  const maxP = selectedGameMode === 'expansion' ? 7 : 6;
   el.innerHTML = `
-    <div class="panel">
-      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:0.5rem;">
-        <div class="panel-head" style="margin-bottom:0">Room Code</div>
-        <button class="lock-btn ${G.lockedRoom?'locked':''}" id="lock-btn" onclick="toggleRoomLock()">
-          ${G.lockedRoom ? '🔒 Unlock Room' : '🔓 Lock Room'}
-        </button>
+  <div class="lobby-grid">
+    <div class="lg-col">
+      <div class="panel room-hero">
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:0.5rem;">
+          <div class="panel-head" style="margin-bottom:0">Room</div>
+          <button class="lock-btn ${G.lockedRoom?'locked':''}" id="lock-btn" onclick="toggleRoomLock()">${G.lockedRoom ? '🔒' : '🔓'}</button>
+        </div>
+        <div class="room-code-big" id="room-code-big" onclick="copyCode()" title="Tap to copy">${roomCode}</div>
+        <button class="invite-primary" onclick="shareInviteLink('${roomCode}')">🔗 SHARE INVITE LINK</button>
+        <div class="code-hint">or tap the code to copy it</div>
       </div>
-      <div class="room-code-big" id="room-code-big" onclick="copyCode()">${roomCode}</div>
-      <div class="code-hint" style="display:flex;align-items:center;justify-content:center;gap:0.75rem;">Tap to copy &middot; <button class="btn ghost" style="font-size:0.7rem;padding:0.2rem 0.65rem;" onclick="shareInviteLink('${roomCode}')">🔗 Invite Link</button></div>
-    </div>
-    <div class="panel">
-      <div class="panel-head">Game Mode</div>
-      ${modeSelectHtml()}
-    </div>
-    <div class="panel">
-      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:0.8rem;">
-        <div class="panel-head" style="margin-bottom:0">Players</div>
-        <div class="player-count-badge">${playerCount} / 6 players</div>
+      <div class="panel">
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:0.8rem;">
+          <div class="panel-head" style="margin-bottom:0">Players</div>
+          <div class="player-count-badge">${playerCount} / ${maxP}</div>
+        </div>
+        <div class="lobby-players" id="host-plist"></div>
+        <div class="cpu-row" style="margin-top:0.8rem;">
+          <span class="cpu-label">CPU Players <span style="color:var(--text-faint);font-size:0.85em">(cartoons only)</span></span>
+          <div class="stepper">
+            <button class="step-btn" onclick="hostAdjCPU(-1)">−</button>
+            <span class="step-val" id="host-cpu-v">${G.players.filter(p=>p.isCPU).length}</span>
+            <button class="step-btn" onclick="hostAdjCPU(1)">+</button>
+          </div>
+        </div>
+        <div class="cpu-row">
+          <span class="cpu-label">🧠 CPU Difficulty</span>
+          <div style="display:flex;gap:0.3rem;">
+            <button class="settings-btn ${SETTINGS.cpuDifficulty==='easy'?'active-tempo':''}" onclick="setDifficulty('easy',this)">Easy</button>
+            <button class="settings-btn ${SETTINGS.cpuDifficulty==='hard'?'active-tempo':''}" onclick="setDifficulty('hard',this)">Hard</button>
+          </div>
+        </div>
+        <div style="margin-top:1rem;display:flex;gap:0.5rem;flex-wrap:wrap;">
+          <button class="btn primary" style="flex:2;min-width:120px;" id="start-btn" ${playerCount<2?'disabled':''} onclick="hostStart()">Start Game</button>
+          <button class="arrange-seats-btn" title="Arrange seat order" onclick="openSeatArrangement()">⇄ Seats</button>
+          <button class="btn ghost" onclick="goHome()">Leave</button>
+        </div>
+        <div class="start-blockers" id="start-blockers"></div>
       </div>
-      <div class="lobby-players" id="host-plist"></div>
-      <div class="cpu-row" style="margin-top:0.8rem;">
-        <span class="cpu-label">CPU Players</span>
-        <div class="stepper">
-          <button class="step-btn" onclick="hostAdjCPU(-1)">−</button>
-          <span class="step-val" id="host-cpu-v">${G.players.filter(p=>p.isCPU).length}</span>
-          <button class="step-btn" onclick="hostAdjCPU(1)">+</button>
+    </div>
+    <div class="lg-col">
+      <div class="panel">
+        <div class="panel-head">Game Mode</div>
+        ${modeSelectHtml()}
+      </div>
+      <div id="timing-inline-slot"></div>
+    </div>
+    <div class="lg-col">
+      <div class="panel">
+        <div class="panel-head">🎥 Live at the Table</div>
+        <button class="cam-panel-btn" id="av-lobby-btn" onclick="avToggleTapIn()">📷 JOIN ON CAMERA</button>
+        <div class="cam-prev-wrap" id="av-lobby-prev"></div>
+        <div class="cam-mic-row" id="av-lobby-microw" style="display:none">
+          <button class="settings-btn" id="av-lobby-mic" onclick="avToggleMic()">🎤 Mic on</button>
+          <button class="settings-btn" onclick="avToggleTapIn()">Turn camera off</button>
+        </div>
+        <div class="cam-note">See your friends' faces while they lie to yours. <b>Totally optional</b> — playing in the same room? Skip it. You can also tap in mid-game from the 📷 button up top.</div>
+      </div>
+      <div class="panel">
+        <div class="panel-head">Chat</div>
+        <div class="lobby-chat">
+          <div class="lobby-chat-msgs" id="lobby-chat-msgs"></div>
+          <div class="lobby-chat-input-row">
+            <input class="lobby-chat-input" id="lobby-chat-input" placeholder="Message…" maxlength="120" onkeydown="if(event.key==='Enter')sendLobbyChat()"/>
+            <button class="lobby-chat-send" onclick="sendLobbyChat()">Send</button>
+          </div>
         </div>
       </div>
-      <div class="cpu-row">
-        <span class="cpu-label">🧠 CPU Difficulty</span>
-        <div style="display:flex;gap:0.3rem;">
-          <button class="settings-btn ${SETTINGS.cpuDifficulty==='easy'?'active-tempo':''}" onclick="setDifficulty('easy',this)">Easy</button>
-          <button class="settings-btn ${SETTINGS.cpuDifficulty==='hard'?'active-tempo':''}" onclick="setDifficulty('hard',this)">Hard</button>
-        </div>
-      </div>
-      <div style="margin-top:1rem;display:flex;gap:0.5rem;flex-wrap:wrap;">
-        <button class="btn primary" style="flex:2;min-width:120px;" id="start-btn" ${playerCount<2?'disabled':''} onclick="hostStart()">Start Game</button>
-        <button class="arrange-seats-btn" title="Arrange seat order" onclick="openSeatArrangement()">⇄ Seats</button>
-        <button class="btn ghost" onclick="goHome()">Leave</button>
-      </div>
     </div>
-    <div class="panel">
-      <div class="panel-head">Chat</div>
-      <div class="lobby-chat">
-        <div class="lobby-chat-msgs" id="lobby-chat-msgs"></div>
-        <div class="lobby-chat-input-row">
-          <input class="lobby-chat-input" id="lobby-chat-input" placeholder="Message…" maxlength="120" onkeydown="if(event.key==='Enter')sendLobbyChat()"/>
-          <button class="lobby-chat-send" onclick="sendLobbyChat()">Send</button>
-        </div>
-      </div>
-    </div>`;
+  </div>`;
+  // timing panel lives INSIDE the grid now
+  const slot = document.getElementById('timing-inline-slot');
+  if (slot && _tp) slot.appendChild(_tp);
+  const _oldWrap = document.getElementById('lobby-timing-wrap');
+  if (_oldWrap) _oldWrap.style.display = 'none';
   renderHostPlayerList();
-  // Show timing panel only for multiplayer host lobbies (not solo/CPU-only)
-  const timingWrap = document.getElementById('lobby-timing-wrap');
-  if (timingWrap) {
-    timingWrap.style.display = '';
-    renderTimingPanel(selectedGameMode || 'standard');
-  }
+  renderTimingPanel(selectedGameMode || 'standard');
 }
 
 function renderHostPlayerList() {
   const list = document.getElementById('host-plist');
   if (!list || !G) return;
+  setTimeout(() => { try {
+    const sb = document.getElementById('start-blockers');
+    const btn = document.getElementById('start-btn');
+    if (sb && G) {
+      const waiting = G.players.filter(p => !p.isCPU && !p.character).map(p => p.playerName || p.name || 'a player');
+      sb.textContent = waiting.length ? ('Waiting on ' + waiting.join(', ') + ' to pick a character…') : '';
+      if (btn) btn.disabled = (G.players.length < 2) || waiting.length > 0;
+    }
+  } catch(e) {} }, 0);
   list.innerHTML = '';
   G.players.forEach((p, i) => {
     const div = document.createElement('div');
@@ -3708,7 +3799,7 @@ function hostAdjCPU(d) {
   if (d > 0) {
     if (G.players.length >= (selectedGameMode==='expansion'?7:6)) { toast(`Room is full (${selectedGameMode==='expansion'?7:6} players max)`); return; }
     const taken = G.players.map(p => p.character).filter(Boolean);
-    const cpuKey = randomUnusedCharacter(taken.filter((v,i,a)=>a.indexOf(v)===i));
+    const cpuKey = randomCpuCharacter(taken.filter((v,i,a)=>a.indexOf(v)===i));
     const rv = resolveCharacterVariant(cpuKey, G.players.filter(p=>p.character));
     const newCpuId = 'cpu' + cpuCount;
     G.players.push(mkP(newCpuId, rv.displayName, true, cpuKey, rv.characterVariant, rv.displayName));
@@ -3736,8 +3827,16 @@ function hostKickPlayer(pid, nameLabel) {
     ]);
 }
 
+function avMuteForLive() {
+  try {
+    if (isSolo) return;
+    SETTINGS.voice = false; SETTINGS.sound = false;
+    setTimeout(() => { try { addEv('🔇 Announcer & sound effects are off for live play — re-enable any time in ⚙ Settings', 'system'); } catch(e){} }, 1500);
+  } catch(e) {}
+}
 function hostStart() {
   try {
+    avMuteForLive();
     pAction = null; pResponders = []; pResponses = {}; // reset before new game
     if (!G || !G.players || G.players.length < 2) { toast('Need at least 2 players'); return; }
     // DC mode requires at least 3 players (host always knows who has DC with only 2)
@@ -4155,6 +4254,7 @@ function onHostMsg(d) {
     return;
   }
   if (d.type === 'game_start') {
+    avMuteForLive();
     if (d.mode) { selectedGameMode = d.mode; applyDCTheme(d.mode === 'doubleContessa'); }
     const _dcSuffix = (d.mode || selectedGameMode) === 'doubleContessa' ? ' · 🌹🌹 DC' : '';
     document.getElementById('tb-room').textContent = 'Room: ' + d.roomCode + _dcSuffix;
@@ -5341,21 +5441,37 @@ function avHumanPeerIds() {
 }
 function avUpdateFab() {
   try {
-    const fab = document.getElementById('av-fab');
-    if (!fab) return;
+    const sup = avSupported();
     const scr = document.querySelector('.screen.active');
-    const onGameScreens = scr && ['screen-game','screen-lobby','screen-waiting'].includes(scr.id);
-    const inRoom = isSolo || !!(G && G.roomCode);
-    fab.classList.toggle('show', !!(avSupported() && onGameScreens && inRoom));
-    fab.classList.toggle('on-game', !!(scr && scr.id === 'screen-game'));
-    const cam = document.getElementById('av-cam-btn');
-    const mic = document.getElementById('av-mic-btn');
-    if (cam) { cam.classList.toggle('on', AV.tappedIn); cam.innerHTML = AV.tappedIn ? '📷 LIVE' : '📷 TAP IN'; }
-    if (mic) {
-      mic.style.display = AV.tappedIn ? 'flex' : 'none';
-      mic.classList.toggle('on', AV.micOn); mic.classList.toggle('muted', !AV.micOn);
-      mic.innerHTML = AV.micOn ? '🎤 MIC ON' : '🔇 MUTED';
+    const onGame = scr && scr.id === 'screen-game';
+    // top-bar buttons (game screen)
+    const cam = document.getElementById('tb-cam'), mic = document.getElementById('tb-mic');
+    if (cam) {
+      cam.style.display = (sup && onGame) ? '' : 'none';
+      cam.classList.toggle('active-tempo', AV.tappedIn);
+      cam.textContent = '📷';
+      cam.title = AV.tappedIn ? 'Camera is LIVE — click to turn off' : 'Join on camera';
     }
+    if (mic) {
+      mic.style.display = (sup && onGame && AV.tappedIn) ? '' : 'none';
+      mic.textContent = AV.micOn ? '🎤' : '🔇';
+      mic.classList.toggle('active-tempo', AV.micOn);
+      mic.title = AV.micOn ? 'Mute my mic' : 'Unmute my mic';
+    }
+    // lobby / waiting panels
+    [['av-lobby-btn','av-lobby-prev','av-lobby-microw','av-lobby-mic'], ['av-guest-btn','av-guest-prev',null,null]].forEach(([b, pv, mr, mb]) => {
+      const btn = document.getElementById(b);
+      if (btn) {
+        btn.classList.toggle('live', AV.tappedIn);
+        btn.innerHTML = AV.tappedIn ? '🔴 YOU ARE LIVE — tap to turn off' : '📷 JOIN ON CAMERA';
+      }
+      const prev = pv && document.getElementById(pv);
+      if (prev) prev.classList.toggle('on', AV.tappedIn && avStreamLive(AV.local, 'video'));
+      const row = mr && document.getElementById(mr);
+      if (row) row.style.display = AV.tappedIn ? 'flex' : 'none';
+      const micb = mb && document.getElementById(mb);
+      if (micb) { micb.textContent = AV.micOn ? '🎤 Mic on' : '🔇 Muted'; micb.classList.toggle('active-tempo', AV.micOn); }
+    });
   } catch(e) {}
 }
 function avHint(txt, ms=4000) {
@@ -5371,25 +5487,38 @@ async function avToggleTapIn() {
   try {
     if (AV.tappedIn) { avTapOut(); return; }
     if (!avSupported()) { toast('Camera not supported in this browser'); return; }
-    if (!avIsSecure()) { toast('Camera needs the https site (works on the real game link)'); return; }
-    let stream;
-    try {
-      stream = await navigator.mediaDevices.getUserMedia({
-        video: { width:{ideal:320}, height:{ideal:240}, frameRate:{ideal:15,max:24}, facingMode:'user' },
-        audio: { echoCancellation:true, noiseSuppression:true, autoGainControl:true }
-      });
-    } catch(e1) {
-      try { stream = await navigator.mediaDevices.getUserMedia({ video: { width:{ideal:320}, facingMode:'user' } }); avHint('Mic unavailable — video only'); }
-      catch(e2) { toast('📷 Camera blocked — check browser permissions'); return; }
+    if (!avIsSecure()) { toast('Camera needs the https game link (not a local file)'); return; }
+    const TIERS = [
+      { video: { width:{ideal:320}, height:{ideal:240}, frameRate:{ideal:15}, facingMode:'user' }, audio: { echoCancellation:true, noiseSuppression:true, autoGainControl:true } },
+      { video: { facingMode:'user' }, audio: { echoCancellation:true } },
+      { video: true, audio: true },
+      { video: true }
+    ];
+    let stream = null, lastErr = null;
+    for (const c of TIERS) {
+      try { stream = await navigator.mediaDevices.getUserMedia(c); break; }
+      catch(e) { lastErr = e; if (e && (e.name === 'NotAllowedError' || e.name === 'SecurityError')) break; }
+    }
+    if (!stream) {
+      const nm = lastErr && lastErr.name || '';
+      if (nm === 'NotAllowedError' || nm === 'SecurityError') toast('📷 Camera permission denied — allow camera for this site in your browser/phone settings');
+      else if (nm === 'NotFoundError' || nm === 'OverconstrainedError') toast('📷 No usable camera found on this device');
+      else if (nm === 'NotReadableError' || nm === 'AbortError') toast('📷 Camera is busy — close other apps using it, then retry');
+      else toast('📷 Camera failed: ' + (nm || 'unknown') + (lastErr && lastErr.message ? ' — ' + lastErr.message : ''));
+      return;
     }
     AV.local = stream; AV.tappedIn = true; AV.micOn = stream.getAudioTracks().length > 0;
-    stream.getAudioTracks().forEach(tr => tr.enabled = AV.micOn);
-    avEnsureSignaling();
-    avEnsurePeers();
-    Object.values(AV.pcs).forEach(pc => avAddLocalTo(pc));
-    avAttach(); avUpdateFab();
-    addEv && G && addEv(`📷 <span class="ev-name">${esc((G.players.find(p=>p.id===ME)?.displayName)||'You')}</span> ${t('you_tag')==='YOU'?'is':'is'} live on camera`, 'system');
-  } catch(e) { console.warn('avToggleTapIn', e); toast('Camera failed to start'); }
+    if (!AV.micOn) avHint('Mic unavailable — video only');
+    try { stream.getAudioTracks().forEach(tr => tr.enabled = AV.micOn); } catch(e) {}
+    try { avEnsureSignaling(); } catch(e) { console.warn('sig', e); }
+    try { avEnsurePeers(); Object.values(AV.pcs).forEach(pc => avAddLocalTo(pc)); } catch(e) { console.warn('peers', e); }
+    try { avAttach(); } catch(e) { console.warn('attach', e); }
+    try { avUpdateFab(); } catch(e) {}
+    try { if (G && G.started) addEv(`📷 <span class="ev-name">${esc((G.players.find(p=>p.id===ME)?.displayName)||'You')}</span> is live on camera`, 'system'); } catch(e) {}
+  } catch(e) {
+    console.warn('avToggleTapIn', e);
+    toast('📷 Camera failed: ' + ((e && e.name) || '') + ' ' + ((e && e.message) || ''));
+  }
 }
 function avTapOut() {
   try {
@@ -5444,7 +5573,9 @@ function avEnsurePeer(pid) {
   pc.onnegotiationneeded = async () => {
     try {
       AV.making[pid] = true;
-      await pc.setLocalDescription();
+      const offer = await pc.createOffer();
+      if (pc.signalingState !== 'stable') return;
+      await pc.setLocalDescription(offer);
       avSend(pid, { k:'sdp', d: pc.localDescription.toJSON ? pc.localDescription.toJSON() : { type: pc.localDescription.type, sdp: pc.localDescription.sdp } });
     } catch(e) { console.warn('negotiate', e); }
     finally { AV.making[pid] = false; }
@@ -5488,7 +5619,8 @@ async function avOnSignal(msg) {
     pc._settingRemoteAnswer = false;
     if (desc.type === 'offer') {
       try {
-        await pc.setLocalDescription();
+        const answer = await pc.createAnswer();
+        await pc.setLocalDescription(answer);
         avSend(pid, { k:'sdp', d: pc.localDescription.toJSON ? pc.localDescription.toJSON() : { type: pc.localDescription.type, sdp: pc.localDescription.sdp } });
       } catch(e) { console.warn('answer', e); }
     }
@@ -5541,6 +5673,15 @@ function avAttach() {
   try {
     const pool = document.getElementById('av-pool');
     if (!pool) return;
+    // lobby self-preview
+    const lprev = document.getElementById('av-lobby-prev') || document.getElementById('av-guest-prev');
+    if (lprev && AV.tappedIn && avStreamLive(AV.local, 'video') && !document.querySelector('.arena-me')) {
+      let mv = document.getElementById('av-vid-self');
+      if (!mv) mv = avVideoEl('self', true);
+      if (mv.srcObject !== AV.local) mv.srcObject = AV.local;
+      if (mv.parentElement !== lprev) lprev.appendChild(mv);
+      avTryPlay(mv);
+    }
     // my preview
     const meDock = document.querySelector('.arena-me');
     if (meDock) {
@@ -5660,7 +5801,7 @@ const SEAT_LAYOUTS_PORTRAIT = {
   7: [{x:50, y:90}, {x:12, y:74}, {x:12, y:42}, {x:26, y:14}, {x:74, y:14}, {x:88, y:42}, {x:88, y:74}],
 };
 
-const CHAR_NUDGE = { eddie: 'translate(-6%, 9%) scale(1.30)', yossi: 'translate(0, 12%) scale(1.24)' };
+const CHAR_NUDGE = { eddie: 'translate(-3%, 13%) scale(1.30)', yossi: 'translate(0, 15%) scale(1.24)' };
 function charImgHtml(p) {
   let fStyle = p.characterVariant ? variantFilter(p.characterVariant, p.character) : '';
   if (p.character && CHAR_NUDGE[p.character]) fStyle += (fStyle && !fStyle.endsWith(';') ? ';' : '') + 'transform:' + CHAR_NUDGE[p.character] + ';';
@@ -7249,7 +7390,7 @@ function rematch() {
     const r0=resolveCharacterVariant(myCharKey||CHARACTER_KEYS[0],[]);
     const players=[mkP('p0',r0.displayName,false,myCharKey||CHARACTER_KEYS[0],r0.characterVariant,r0.displayName)];
     for(let i=0;i<soloCpuCount;i++){
-      const cpuKey=randomUnusedCharacter(taken.map(p=>p.character));
+      const cpuKey=randomCpuCharacter(taken.map(p=>p.character));
       const rv=resolveCharacterVariant(cpuKey,taken);
       taken.push({character:cpuKey,characterVariant:rv.characterVariant});
       players.push(mkP('cpu'+i,rv.displayName,true,cpuKey,rv.characterVariant,rv.displayName));
