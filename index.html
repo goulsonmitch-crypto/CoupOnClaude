@@ -1200,10 +1200,7 @@ html, body { height: 100%; background: var(--bg); color: var(--text); font-famil
   /* players panel fills its column; the LIST scrolls internally, never the page */
   .lobby-wide .players-panel { flex:1 1 auto; min-height:0; display:flex; flex-direction:column; margin-bottom:0; }
   .lobby-wide .players-panel .lobby-players { flex:1 1 auto; min-height:56px; overflow-y:auto; }
-  /* chat fills the right column */
-  .lobby-wide .chat-panel { flex:1 1 auto; min-height:0; display:flex; flex-direction:column; margin-bottom:0; }
-  .lobby-wide .chat-panel .lobby-chat { flex:1; display:flex; flex-direction:column; min-height:0; }
-  .lobby-wide .chat-panel .lobby-chat-msgs { flex:1; max-height:none; min-height:40px; }
+  .lobby-wide .faces-panel { flex:1 1 auto; min-height:0; }
   .lobby-wide #timing-inline-slot { overflow-y:auto; min-height:0; }
 }
 @media (min-width: 1000px) and (max-height: 840px) {
@@ -1253,6 +1250,40 @@ html, body { height: 100%; background: var(--bg); color: var(--text); font-famil
 .cam-prev-wrap video { width:100%; height:100%; object-fit:cover; display:block; }
 .cam-mic-row { display:flex; gap:0.5rem; margin-top:0.5rem; }
 .cam-mic-row .settings-btn { flex:1; }
+
+
+/* v80: compact room block (left column bottom) */
+.room-mini { text-align:center; }
+.room-mini-row { display:flex; align-items:center; justify-content:center; gap:0.6rem; }
+.room-code-mini { font-family:'Cinzel',serif; font-size:1.5rem; font-weight:700; letter-spacing:0.3em; color:var(--gold);
+  padding:0.35rem 0.9rem; background:var(--surface2); border:1px dashed var(--border-gold); border-radius:6px;
+  cursor:pointer; user-select:all; }
+.room-mini .invite-primary { margin-top:0.55rem; padding:0.55rem 1rem; font-size:0.7rem; }
+/* v80: faces wall */
+.faces-panel { flex:1 1 auto; min-height:0; display:flex; flex-direction:column; }
+.lobby-faces { flex:1; min-height:120px; display:grid; grid-template-columns:repeat(auto-fit, minmax(108px, 1fr));
+  gap:0.5rem; align-content:start; overflow-y:auto; }
+.face-tile { position:relative; border-radius:8px; overflow:hidden; background:#0a0710;
+  border:1.5px solid var(--border-gold); aspect-ratio:4/3; box-shadow:0 4px 12px rgba(0,0,0,0.45); }
+.face-tile video { width:100%; height:100%; object-fit:cover; display:block; }
+.face-tile .face-name { position:absolute; left:0; right:0; bottom:0; font-family:'Cinzel',serif; font-size:0.52rem;
+  letter-spacing:0.08em; color:#fff; text-align:center; padding:2px 4px 3px;
+  background:linear-gradient(180deg,transparent,rgba(0,0,0,0.75)); text-shadow:0 1px 2px #000; }
+.face-tile .av-dot { left:5px; top:5px; }
+.faces-empty { grid-column:1/-1; align-self:center; text-align:center; color:var(--text-faint); font-size:0.66rem;
+  font-style:italic; line-height:1.6; padding:1.2rem 0.5rem; }
+/* v80: mini chat */
+.mini-chat { padding:0.55rem 0.8rem !important; margin-bottom:0 !important; }
+.mini-chat-head { display:flex; align-items:center; gap:0.45rem; cursor:pointer; font-family:'Cinzel',serif;
+  font-size:0.62rem; letter-spacing:0.12em; color:var(--gold-dim); user-select:none; }
+.mini-chat-head:hover { color:var(--gold); }
+.mini-chat-count { color:var(--text-faint); font-size:0.58rem; }
+.mini-chat-last { flex:1; min-width:0; font-family:'Crimson Pro',serif; font-style:italic; font-size:0.66rem;
+  color:var(--text-dim); white-space:nowrap; overflow:hidden; text-overflow:ellipsis; letter-spacing:0; }
+.mini-chat-caret { transition:transform 0.2s; }
+.mini-chat.open .mini-chat-caret { transform:rotate(90deg); }
+.mini-chat-body { margin-top:0.5rem; }
+.mini-chat .lobby-chat-msgs { max-height:130px; }
 
 /* ══ LIVE TABLE CAM (v75) ══ */
 #av-fab { position:fixed; top:52px; right:10px; z-index:1200; display:none; flex-direction:column; gap:6px; align-items:flex-end; }
@@ -1340,7 +1371,7 @@ html, body { height: 100%; background: var(--bg); color: var(--text); font-famil
     <div class="landing-center">
       <div>
         <div class="logo-main">COUP</div>
-        <div class="logo-tagline">VERSION 79 · LIVE AT THE TABLE</div>
+        <div class="logo-tagline">VERSION 80 · LIVE AT THE TABLE</div>
         <div class="card-showcase">
           <div class="showcase-card duke">👑<span class="sc-name">Duke</span></div>
           <div class="showcase-card assassin">🗡️<span class="sc-name">Assassin</span></div>
@@ -3657,15 +3688,20 @@ function showHostWaitingRoom() {
   el.innerHTML = `
   <div class="lobby-grid">
     <div class="lg-col">
-      <div class="panel room-hero">
-        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:0.5rem;">
-          <div class="panel-head" style="margin-bottom:0">Room</div>
+      <div class="panel">
+        <div class="panel-head">Game Mode</div>
+        ${modeSelectHtml()}
+      </div>
+      <div id="timing-inline-slot"><div class="timing-panel" id="timing-panel"></div></div>
+      <div class="panel room-mini">
+        <div class="room-mini-row">
+          <div class="room-code-mini" id="room-code-big" onclick="copyCode()" title="Tap to copy">${roomCode}</div>
           <button class="lock-btn ${G.lockedRoom?'locked':''}" id="lock-btn" onclick="toggleRoomLock()">${G.lockedRoom ? '🔒' : '🔓'}</button>
         </div>
-        <div class="room-code-big" id="room-code-big" onclick="copyCode()" title="Tap to copy">${roomCode}</div>
         <button class="invite-primary" onclick="shareInviteLink('${roomCode}')">🔗 SHARE INVITE LINK</button>
-        <div class="code-hint">or tap the code to copy it</div>
       </div>
+    </div>
+    <div class="lg-col">
       <div class="panel players-panel">
         <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:0.8rem;">
           <div class="panel-head" style="margin-bottom:0">Players</div>
@@ -3687,7 +3723,7 @@ function showHostWaitingRoom() {
             <button class="settings-btn ${SETTINGS.cpuDifficulty==='hard'?'active-tempo':''}" onclick="setDifficulty('hard',this)">Hard</button>
           </div>
         </div>
-        <div style="margin-top:1rem;display:flex;gap:0.5rem;flex-wrap:wrap;">
+        <div style="margin-top:0.9rem;display:flex;gap:0.5rem;flex-wrap:wrap;">
           <button class="btn primary" style="flex:2;min-width:120px;" id="start-btn" ${playerCount<2?'disabled':''} onclick="hostStart()">Start Game</button>
           <button class="arrange-seats-btn" title="Arrange seat order" onclick="openSeatArrangement()">⇄ Seats</button>
           <button class="btn ghost" onclick="goHome()">Leave</button>
@@ -3697,25 +3733,25 @@ function showHostWaitingRoom() {
     </div>
     <div class="lg-col">
       <div class="panel">
-        <div class="panel-head">Game Mode</div>
-        ${modeSelectHtml()}
-      </div>
-      <div id="timing-inline-slot"><div class="timing-panel" id="timing-panel"></div></div>
-    </div>
-    <div class="lg-col">
-      <div class="panel">
         <div class="panel-head">🎥 Live at the Table</div>
         <button class="cam-panel-btn" id="av-lobby-btn" onclick="avToggleTapIn()">📷 JOIN ON CAMERA</button>
-        <div class="cam-prev-wrap" id="av-lobby-prev"></div>
         <div class="cam-mic-row" id="av-lobby-microw" style="display:none">
           <button class="settings-btn" id="av-lobby-mic" onclick="avToggleMic()">🎤 Mic on</button>
           <button class="settings-btn" onclick="avToggleTapIn()">Turn camera off</button>
         </div>
-        <div class="cam-note">See your friends' faces while they lie to yours. <b>Totally optional</b> — playing in the same room? Skip it. You can also tap in mid-game from the 📷 button up top.</div>
+        <div class="cam-note">Optional — skip it if you're all in one room. Mid-game: 📷 up top.</div>
       </div>
-      <div class="panel chat-panel">
-        <div class="panel-head">Chat</div>
-        <div class="lobby-chat">
+      <div class="panel faces-panel">
+        <div class="panel-head">At the Table</div>
+        <div class="lobby-faces" id="lobby-faces"></div>
+      </div>
+      <div class="panel mini-chat" id="mini-chat">
+        <div class="mini-chat-head" onclick="toggleMiniChat()">
+          <span>💬 Chat</span><span class="mini-chat-count" id="mini-chat-count"></span>
+          <span class="mini-chat-last" id="mini-chat-last"></span>
+          <span class="mini-chat-caret" id="mini-chat-caret">▸</span>
+        </div>
+        <div class="mini-chat-body" id="mini-chat-body" style="display:none">
           <div class="lobby-chat-msgs" id="lobby-chat-msgs"></div>
           <div class="lobby-chat-input-row">
             <input class="lobby-chat-input" id="lobby-chat-input" placeholder="Message…" maxlength="120" onkeydown="if(event.key==='Enter')sendLobbyChat()"/>
@@ -3727,7 +3763,9 @@ function showHostWaitingRoom() {
   </div>`;
   renderHostPlayerList();
   renderTimingPanel(selectedGameMode || 'standard');
-  replayLobbyChat();
+  if (_miniChatOpen) toggleMiniChat(true);
+  updateMiniChatHead();
+  setTimeout(() => { try { avAttach(); } catch(e){} }, 30);
 }
 
 function renderHostPlayerList() {
@@ -3770,8 +3808,7 @@ function renderHostPlayerList() {
         ? `<div style="display:flex;flex-direction:column;gap:1px;">${_charLabel}</div>`
         : _charLabel;
     let tag = '';
-    if (p.isCPU) tag = '<span class="lobby-tag">CPU</span>';
-    else if (i === 0) tag = '<span class="lobby-tag" style="color:var(--gold-dim)">HOST</span>';
+    if (i === 0 && !p.isCPU) tag = '<span class="lobby-tag" style="color:var(--gold-dim)">HOST</span>';
     let kickBtn = '';
     if (!p.isCPU && i !== 0 && !isChoosing) {
       kickBtn = `<button class="lobby-kick-btn" onclick="hostKickPlayer('${p.id}','${esc(p.displayName||p.name)}')">✕</button>`;
@@ -4551,6 +4588,30 @@ function connDotHtml(latency) {
   return '<span class="conn-dot ' + cls + '" title="' + latency + 'ms"></span>';
 }
 let _lobbyChatLog = [];
+let _miniChatOpen = false;
+function toggleMiniChat(forceOpen) {
+  try {
+    const body = document.getElementById('mini-chat-body');
+    const box = document.getElementById('mini-chat');
+    if (!body || !box) return;
+    _miniChatOpen = forceOpen === true ? true : (forceOpen === false ? false : !_miniChatOpen);
+    body.style.display = _miniChatOpen ? '' : 'none';
+    box.classList.toggle('open', _miniChatOpen);
+    if (_miniChatOpen) { replayLobbyChat(); const l = document.getElementById('lobby-chat-msgs'); if (l) l.scrollTop = l.scrollHeight; }
+    updateMiniChatHead();
+  } catch(e) {}
+}
+function updateMiniChatHead() {
+  try {
+    const c = document.getElementById('mini-chat-count');
+    const last = document.getElementById('mini-chat-last');
+    if (c) c.textContent = _lobbyChatLog.length ? '(' + _lobbyChatLog.length + ')' : '';
+    if (last) {
+      const m = _lobbyChatLog[_lobbyChatLog.length - 1];
+      last.textContent = (!_miniChatOpen && m) ? (m.name + ': ' + m.text) : '';
+    }
+  } catch(e) {}
+}
 function replayLobbyChat() {
   try {
     const host = document.getElementById('lobby-chat-msgs');
@@ -4568,6 +4629,7 @@ function replayLobbyChat() {
 function appendLobbyChatMsg(name, text) {
   _lobbyChatLog.push({ name, text });
   if (_lobbyChatLog.length > 80) _lobbyChatLog.shift();
+  try { updateMiniChatHead(); } catch(e) {}
   if (!text) return;
   ['lobby-chat-msgs','lobby-chat-msgs-guest'].forEach(id => {
     const el = document.getElementById(id);
@@ -5721,13 +5783,55 @@ function avAttach() {
   try {
     const pool = document.getElementById('av-pool');
     if (!pool) return;
-    // lobby self-preview
-    const lprev = document.getElementById('av-lobby-prev') || document.getElementById('av-guest-prev');
-    if (lprev && AV.tappedIn && avStreamLive(AV.local, 'video') && !document.querySelector('.arena-me')) {
+    // v80: lobby faces wall (host) — live cameras only
+    const wall = document.getElementById('lobby-faces');
+    if (wall && !document.querySelector('.arena-me')) {
+      const entries = [];
+      if (AV.tappedIn && avStreamLive(AV.local, 'video')) {
+        const meP = G && G.players ? G.players.find(pp => pp.id === ME) : null;
+        entries.push({ pid: 'self', stream: AV.local, name: (meP && (meP.playerName || meP.name)) || 'You', muted: true });
+      }
+      (G?.players || []).forEach(pp => {
+        if (!pp.id || pp.id === ME || pp.isCPU) return;
+        const st = AV.streams[pp.id];
+        if (avStreamLive(st, 'video')) entries.push({ pid: pp.id, stream: st, name: pp.playerName || pp.name || '?', muted: false });
+      });
+      // prune tiles no longer live
+      [...wall.querySelectorAll('.face-tile')].forEach(tile => {
+        if (!entries.find(en => en.pid === tile.dataset.pid)) {
+          const v = tile.querySelector('video');
+          if (v) document.getElementById('av-pool').appendChild(v);
+          tile.remove();
+        }
+      });
+      const emptyEl = wall.querySelector('.faces-empty');
+      if (!entries.length) {
+        if (!emptyEl) wall.innerHTML = '<div class="faces-empty">Nobody\'s on camera yet.<br>Tap 📷 above to be first at the table.</div>';
+      } else {
+        if (emptyEl) emptyEl.remove();
+        entries.forEach(en => {
+          let tile = wall.querySelector(`.face-tile[data-pid="${cssEsc(en.pid)}"]`);
+          if (!tile) {
+            tile = document.createElement('div');
+            tile.className = 'face-tile';
+            tile.dataset.pid = en.pid;
+            tile.innerHTML = `<div class="av-dot"></div><div class="face-name">${esc(en.name)}</div>`;
+            wall.appendChild(tile);
+          }
+          const v = avVideoEl(en.pid, en.muted);
+          if (v.srcObject !== en.stream) v.srcObject = en.stream;
+          if (v.parentElement !== tile) tile.insertBefore(v, tile.firstChild);
+          avTryPlay(v);
+        });
+      }
+    }
+    // guest waiting self-preview (unchanged)
+    const gprev = document.getElementById('av-guest-prev');
+    if (gprev && AV.tappedIn && avStreamLive(AV.local, 'video') && !document.querySelector('.arena-me') && !wall) {
       let mv = document.getElementById('av-vid-self');
       if (!mv) mv = avVideoEl('self', true);
       if (mv.srcObject !== AV.local) mv.srcObject = AV.local;
-      if (mv.parentElement !== lprev) lprev.appendChild(mv);
+      if (mv.parentElement !== gprev) gprev.appendChild(mv);
       avTryPlay(mv);
     }
     // my preview
