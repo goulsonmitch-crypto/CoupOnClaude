@@ -1371,7 +1371,7 @@ html, body { height: 100%; background: var(--bg); color: var(--text); font-famil
     <div class="landing-center">
       <div>
         <div class="logo-main">COUP</div>
-        <div class="logo-tagline">VERSION 80 · LIVE AT THE TABLE</div>
+        <div class="logo-tagline">VERSION 81 · LIVE AT THE TABLE</div>
         <div class="card-showcase">
           <div class="showcase-card duke">👑<span class="sc-name">Duke</span></div>
           <div class="showcase-card assassin">🗡️<span class="sc-name">Assassin</span></div>
@@ -3184,7 +3184,7 @@ function swapRevealedCardForFresh(player, role) {
 // SCREEN HELPERS
 // ════════════════════════════════════════
 function showScr(id) {
-  setTimeout(() => { try { avUpdateFab(); if (!isSolo && G && G.roomCode) { avEnsureSignaling(); avEnsurePeers(); } } catch(e){} }, 30);
+  setTimeout(() => { try { avUpdateFab(); if (!isSolo && (avRoom())) { avEnsureSignaling(); avEnsurePeers(); } } catch(e){} }, 30);
   document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
   document.getElementById('screen-' + id).classList.add('active');
 }
@@ -3668,6 +3668,7 @@ function hostCreate(name) {
     onGuestMsg(msg, gid);
   });
 
+  try { avSetIdentity(code, 'p0'); avRegisterRoster(G.players); } catch(e) {}
   showHostWaitingRoom();
   toast('Room created! Share code: ' + code);
 }
@@ -4013,6 +4014,7 @@ function sanitizePlayers() {
 }
 function broadcastLobbyUpdate() {
   if (!G) return;
+  try { avRegisterRoster(G.players); } catch(e) {}
   const mode = G.mode || selectedGameMode;
   broadcastAll({ type: 'lobby_update', players: sanitizePlayers(), locked: G.lockedRoom, mode, cfg: { timer: (typeof GAME_TIMERS!=='undefined' ? (GAME_TIMERS[mode] || GAME_TIMERS.standard) : 10), color: SETTINGS.tableColor, bounty: !!SETTINGS.bountyMode } });
   if (db && G && G.roomCode) {
@@ -4130,6 +4132,7 @@ function guestJoin() {
         G.roomCode = code;
         sessionStorage.setItem('coup_room', code);
         sessionStorage.setItem('coup_pid', ME);
+        try { avSetIdentity(code, ME); } catch(e) {}
 
         // Stop listening on temp inbox
         clearTimeout(_tempListenerTimeout); _cleanupTempListener();
@@ -4462,6 +4465,7 @@ function onHostMsg(d) {
 
 function updateGuestWaitingRoom(players, locked, gameStarted=false, mode=null) {
   lastLobbyPlayers = players || [];
+  try { avRegisterRoster(players || []); } catch(e) {}
   const plist = document.getElementById('waiting-plist');
   const countEl = document.getElementById('waiting-count');
   if (!plist) return;
@@ -5539,15 +5543,19 @@ function _auctionCompleteFinish() {
 // LIVE TABLE CAM (v75) — WebRTC mesh, Firebase signaling, portrait fallback.
 // Every entry point is guarded: if anything fails, the game continues on portraits.
 // ═══════════════════════════════════════════════
-const AV = { local:null, tappedIn:false, micOn:true, pcs:{}, streams:{}, making:{}, ignoreOffer:{}, sigReady:false, audioUnlocked:false };
+const AV = { local:null, tappedIn:false, micOn:true, pcs:{}, streams:{}, making:{}, ignoreOffer:{}, sigReady:false, audioUnlocked:false, room:null, me:null, roster:[] };
 setInterval(() => { try { avUpdateFab(); } catch(e){} }, 2000);
 const AV_RTC_CFG = { iceServers: [{ urls: ['stun:stun.l.google.com:19302','stun:stun1.l.google.com:19302'] }] };
 
 function avSupported() { return !!(navigator.mediaDevices && navigator.mediaDevices.getUserMedia && window.RTCPeerConnection); }
 function avIsSecure() { return window.isSecureContext; }
 function avHumanPeerIds() {
-  if (!G || !G.players || isSolo) return [];
-  return G.players.filter(p => !p.isCPU && p.id && p.id !== ME).map(p => p.id);
+  if (isSolo) return [];
+  const me = avMe();
+  const ids = new Set();
+  if (G && G.players) G.players.forEach(p => { if (!p.isCPU && p.id && p.id !== me) ids.add(p.id); });
+  (AV.roster || []).forEach(id => { if (id && id !== me) ids.add(id); });
+  return [...ids];
 }
 function avUpdateFab() {
   try {
@@ -5595,7 +5603,12 @@ function avHint(txt, ms=4000) {
 
 async function avToggleTapIn() {
   try {
-    if (AV.tappedIn) { avTapOut(); return; }
+    if (AV.tappedIn) {
+      const stillLive = avStreamLive(AV.local, 'video') || avStreamLive(AV.local, 'audio');
+      avTapOut();
+      if (stillLive) return;
+      // camera had already died (phone slept / OS took it) — fall through and re-acquire now
+    }
     if (!avSupported()) { toast('Camera not supported in this browser'); return; }
     if (!avIsSecure()) { toast('Camera needs the https game link (not a local file)'); return; }
     const TIERS = [
@@ -5618,6 +5631,7 @@ async function avToggleTapIn() {
       return;
     }
     AV.local = stream; AV.tappedIn = true; AV.micOn = stream.getAudioTracks().length > 0;
+    try { stream.getTracks().forEach(tr => { tr.onended = () => avLocalTrackDied(); }); } catch(e) {}
     if (!AV.micOn) avHint('Mic unavailable — video only');
     try { stream.getAudioTracks().forEach(tr => tr.enabled = AV.micOn); } catch(e) {}
     try { avEnsureSignaling(); } catch(e) { console.warn('sig', e); }
@@ -5649,13 +5663,33 @@ function avToggleMic() {
   } catch(e) {}
 }
 
+function avRoom() { return AV.room || (G && G.roomCode) || null; }
+function avMe() { return AV.me || ME; }
+// v81: called at room create/join so the camera mesh works before the game object exists
+function avSetIdentity(code, pid) {
+  try {
+    AV.room = code || AV.room; AV.me = pid || AV.me;
+    avEnsureSignaling();
+  } catch(e) {}
+}
+// v81: lobby roster feed — lets both sides know who the humans are pre-game
+function avRegisterRoster(players) {
+  try {
+    if (!Array.isArray(players)) return;
+    const me = avMe();
+    AV.roster = players.filter(p => p && !p.isCPU && p.id && p.id !== me && String(p.id).charAt(0) === 'p').map(p => p.id);
+    avEnsureSignaling(); avEnsurePeers();
+    setTimeout(() => { try { avAttach(); } catch(e) {} }, 60);
+  } catch(e) {}
+}
 function avSend(to, obj) {
-  try { if (db && G && G.roomCode) db.ref(`rooms/${G.roomCode}/rtc/${to}`).push({ ...obj, from: ME, _ts: Date.now() }); } catch(e) {}
+  try { const rc = avRoom(); if (db && rc) db.ref(`rooms/${rc}/rtc/${to}`).push({ ...obj, from: avMe(), _ts: Date.now() }); } catch(e) {}
 }
 function avEnsureSignaling() {
   try {
-    if (AV.sigReady || isSolo || !G || !G.roomCode || typeof fbListenInbox !== 'function' || !db) return;
-    fbListenInbox(`rooms/${G.roomCode}/rtc/${ME}`, msg => { avOnSignal(msg).catch(e => console.warn('avOnSignal', e)); });
+    const rc = avRoom(), me = avMe();
+    if (AV.sigReady || isSolo || !rc || !me || typeof fbListenInbox !== 'function' || !db) return;
+    fbListenInbox(`rooms/${rc}/rtc/${me}`, msg => { avOnSignal(msg).catch(e => console.warn('avOnSignal', e)); });
     AV.sigReady = true;
   } catch(e) {}
 }
@@ -5663,7 +5697,12 @@ function avEnsurePeers() {
   try { avHumanPeerIds().forEach(pid => avEnsurePeer(pid)); } catch(e) {}
 }
 function avEnsurePeer(pid) {
-  if (AV.pcs[pid]) return AV.pcs[pid];
+  const ex = AV.pcs[pid];
+  if (ex) {
+    const cs = ex.connectionState, ss = ex.signalingState;
+    if (cs !== 'failed' && cs !== 'closed' && ss !== 'closed') return ex;
+    avClosePeer(pid);  // dead — rebuild below
+  }
   const initiator = String(ME) < String(pid);   // deterministic; polite = !initiator
   const pc = new RTCPeerConnection(AV_RTC_CFG);
   AV.pcs[pid] = pc; AV.making[pid] = false; AV.ignoreOffer[pid] = false;
@@ -5675,20 +5714,38 @@ function avEnsurePeer(pid) {
   pc.onconnectionstatechange = () => {
     try {
       if (['failed','closed','disconnected'].includes(pc.connectionState)) {
-        if (pc.connectionState === 'failed') { avClosePeer(pid); }
+        if (pc.connectionState === 'failed') {
+          avClosePeer(pid);
+          setTimeout(() => { try { if (avHumanPeerIds().includes(pid)) avEnsurePeer(pid); } catch(e) {} }, 900);
+        } else if (pc.connectionState === 'disconnected') {
+          setTimeout(() => {
+            try {
+              if (AV.pcs[pid] === pc && pc.connectionState === 'disconnected' && pc.restartIce) pc.restartIce();
+            } catch(e) {}
+          }, 4000);
+        }
         avAttach();
       }
     } catch(e) {}
   };
   pc.onnegotiationneeded = async () => {
     try {
+      if (pc.signalingState !== 'stable') { pc._renegQueued = true; return; }
       AV.making[pid] = true;
       const offer = await pc.createOffer();
-      if (pc.signalingState !== 'stable') return;
+      if (pc.signalingState !== 'stable') { pc._renegQueued = true; return; }
       await pc.setLocalDescription(offer);
       avSend(pid, { k:'sdp', d: pc.localDescription.toJSON ? pc.localDescription.toJSON() : { type: pc.localDescription.type, sdp: pc.localDescription.sdp } });
     } catch(e) { console.warn('negotiate', e); }
     finally { AV.making[pid] = false; }
+  };
+  pc.onsignalingstatechange = () => {
+    try {
+      if (pc.signalingState === 'stable' && pc._renegQueued) {
+        pc._renegQueued = false;
+        setTimeout(() => { try { if (pc.signalingState === 'stable') pc.onnegotiationneeded(); } catch(e) {} }, 120);
+      }
+    } catch(e) {}
   };
   if (initiator) {
     try { pc.addTransceiver('video', { direction:'recvonly' }); pc.addTransceiver('audio', { direction:'recvonly' }); } catch(e) {}
@@ -5699,17 +5756,55 @@ function avEnsurePeer(pid) {
 function avAddLocalTo(pc) {
   try {
     if (!AV.local) return;
-    const have = pc.getSenders().map(s => s.track && s.track.kind).filter(Boolean);
     AV.local.getTracks().forEach(tr => {
-      const sender = pc.getSenders().find(s => s.track === null && s.track !== tr);
-      if (!have.includes(tr.kind)) {
-        const tx = pc.getTransceivers().find(t => t.receiver && t.receiver.track && t.receiver.track.kind === tr.kind && t.direction === 'recvonly');
-        if (tx) { tx.direction = 'sendrecv'; tx.sender.replaceTrack(tr); }
-        else pc.addTrack(tr, AV.local);
-      }
+      // 1) a sender already carries this kind (even a dead/ended track) → swap in place, no renegotiation
+      const carrying = pc.getSenders().find(s => s.track && s.track.kind === tr.kind);
+      if (carrying) { if (carrying.track !== tr) { try { carrying.replaceTrack(tr); } catch(e) {} } return; }
+      // 2) a transceiver of this kind with an empty sender (recvonly, or emptied by tap-out) → reuse it
+      const tx = pc.getTransceivers().find(t => !t.stopped && t.receiver && t.receiver.track && t.receiver.track.kind === tr.kind && (!t.sender || !t.sender.track));
+      if (tx) { try { tx.direction = 'sendrecv'; tx.sender.replaceTrack(tr); } catch(e) {} return; }
+      // 3) nothing usable → add fresh (triggers negotiation)
+      try { pc.addTrack(tr, AV.local); } catch(e) {}
     });
   } catch(e) { console.warn('avAddLocalTo', e); }
 }
+// v81: local camera died (phone slept, OS reclaimed it) — drop cleanly so one tap re-acquires
+function avLocalTrackDied() {
+  try {
+    if (!AV.tappedIn) return;
+    if (avStreamLive(AV.local, 'video') || avStreamLive(AV.local, 'audio')) { avAttach(); avUpdateFab(); return; }
+    AV.tappedIn = false;
+    if (AV.local) { AV.local.getTracks().forEach(t => { try { t.stop(); } catch(e) {} }); AV.local = null; }
+    avAttach(); avUpdateFab();
+    toast('📷 Camera was interrupted — tap JOIN ON CAMERA to go live again');
+  } catch(e) {}
+}
+// v81: coming back to the app — if our camera silently died, grab it again automatically
+let _avRecovering = false;
+async function avRecoverLocal() {
+  if (_avRecovering) return;
+  _avRecovering = true;
+  try {
+    const old = AV.local;
+    let stream = null;
+    try { stream = await navigator.mediaDevices.getUserMedia({ video: { width:{ideal:320}, height:{ideal:240}, frameRate:{ideal:15}, facingMode:'user' }, audio: { echoCancellation:true, noiseSuppression:true, autoGainControl:true } }); }
+    catch(e1) { try { stream = await navigator.mediaDevices.getUserMedia({ video: true, audio: true }); } catch(e2) { stream = null; } }
+    if (!stream) { avLocalTrackDied(); return; }
+    if (old) old.getTracks().forEach(t => { try { t.stop(); } catch(e) {} });
+    AV.local = stream; AV.tappedIn = true;
+    try { stream.getAudioTracks().forEach(tr => tr.enabled = AV.micOn); } catch(e) {}
+    try { stream.getTracks().forEach(tr => { tr.onended = () => avLocalTrackDied(); }); } catch(e) {}
+    Object.values(AV.pcs).forEach(pc => { try { avAddLocalTo(pc); } catch(e) {} });
+    avAttach(); avUpdateFab(); avHint('📷 Camera restored');
+  } catch(e) { avLocalTrackDied(); }
+  finally { _avRecovering = false; }
+}
+document.addEventListener('visibilitychange', () => {
+  try {
+    if (document.visibilityState !== 'visible') return;
+    if (AV.tappedIn && (!AV.local || !avStreamLive(AV.local, 'video'))) setTimeout(() => { try { avRecoverLocal(); } catch(e) {} }, 350);
+  } catch(e) {}
+});
 async function avOnSignal(msg) {
   if (!msg || !msg.from) return;
   const pid = msg.from;
@@ -5745,6 +5840,7 @@ function avShutdown() {
     avTapOut();
     Object.keys(AV.pcs).forEach(avClosePeer);
     AV.sigReady = false;
+    AV.room = null; AV.me = null; AV.roster = [];
     const pool = document.getElementById('av-pool');
     if (pool) pool.innerHTML = '';
     avUpdateFab();
