@@ -1450,7 +1450,7 @@ html, body { height: 100%; background: var(--bg); color: var(--text); font-famil
     <div class="landing-center">
       <div>
         <div class="logo-main">COUP</div>
-        <div class="logo-tagline">VERSION 86 · LIVE AT THE TABLE</div>
+        <div class="logo-tagline">VERSION 87 · LIVE AT THE TABLE</div>
         <div class="card-showcase">
           <div class="showcase-card duke">👑<span class="sc-name">Duke</span></div>
           <div class="showcase-card assassin">🗡️<span class="sc-name">Assassin</span></div>
@@ -6714,14 +6714,39 @@ function avSizeFrames() {
     const h = Math.min(Math.round(w * 0.80), hCap);
     document.documentElement.style.setProperty('--af-w', w + 'px');
     document.documentElement.style.setProperty('--af-h', h + 'px');
-    // my own tile: clearly smaller than an opponent, but big enough to actually see myself
-    const meW = Math.max(96, Math.round(w * 0.62));
+    // My own tile: bigger than the old 64px postage stamp, but the dock's height is set by my
+    // cards — anything taller grows the dock UP over the treasury/deck/discard. So cap it to
+    // roughly card height and let avFitMyDock() claw back any extra room that actually exists.
+    const meW = Math.max(84, Math.min(104, Math.round(w * 0.62)));
     document.documentElement.style.setProperty('--me-w', meW + 'px');
     document.documentElement.style.setProperty('--me-h', Math.round(meW * 1.12) + 'px');
   } catch(e) {}
 }
+// After layout, measure the real gap between the table centre and the bottom of the table and
+// let my own video use it — never overlapping the treasury, deck or discard pile.
+function avFitMyDock() {
+  try {
+    const dock = document.querySelector('.arena-me') || document.getElementById('my-dock');
+    const cz = document.querySelector('.center-zone');
+    const ta = document.getElementById('table-area');
+    if (!dock || !cz || !ta) return;
+    const chip = dock.querySelector('.me-chip');
+    if (!chip) return;
+    const dockH = dock.getBoundingClientRect().height;
+    const chipH = chip.getBoundingClientRect().height;
+    const chrome = Math.max(0, dockH - chipH);              // padding/plate around the chip
+    const avail = (ta.getBoundingClientRect().bottom - cz.getBoundingClientRect().bottom) - 16;
+    const maxChipH = Math.floor(avail - chrome);
+    if (!isFinite(maxChipH) || maxChipH < 60) return;
+    const want = parseInt(getComputedStyle(document.documentElement).getPropertyValue('--me-h')) || chipH;
+    const h = Math.max(72, Math.min(want, maxChipH));
+    document.documentElement.style.setProperty('--me-h', h + 'px');
+    document.documentElement.style.setProperty('--me-w', Math.round(h / 1.12) + 'px');
+  } catch(e) {}
+}
 function renderSeats() {
   try { avSizeFrames(); } catch(e) {}
+  setTimeout(() => { try { avFitMyDock(); } catch(e) {} }, 0);
   const arc = document.getElementById('arena-arc');
   setTimeout(() => { try { avAttach(); } catch(e){} }, 0);
   const dock = document.getElementById('my-dock');
