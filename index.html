@@ -1450,7 +1450,7 @@ html, body { height: 100%; background: var(--bg); color: var(--text); font-famil
     <div class="landing-center">
       <div>
         <div class="logo-main">COUP</div>
-        <div class="logo-tagline">VERSION 87 · LIVE AT THE TABLE</div>
+        <div class="logo-tagline">VERSION 88 · LIVE AT THE TABLE</div>
         <div class="card-showcase">
           <div class="showcase-card duke">👑<span class="sc-name">Duke</span></div>
           <div class="showcase-card assassin">🗡️<span class="sc-name">Assassin</span></div>
@@ -3378,23 +3378,17 @@ function buildLobby(mode) {
   const el = document.getElementById('lobby-inner');
   el.classList.remove('lobby-wide');
   if (mode === 'create') {
+    // v88: no name step — make the room straight away, then go pick a character
     el.innerHTML = `<div class="panel">
       <div class="panel-head">Host a Game</div>
-      <div class="input-wrap">
-        <label class="input-label">Your Name</label>
-        <input class="input" id="l-name" placeholder="Enter name" maxlength="16"/>
-      </div>
-      <div style="margin-top:1rem;display:flex;gap:0.5rem;">
-        <button class="btn primary" style="flex:1" onclick="enterHostWaiting()">Continue →</button>
-        <button class="btn ghost" onclick="goHome()">Back</button>
-      </div>
+      <div style="text-align:center;padding:1.2rem 0.4rem;color:var(--text-dim);font-size:0.8rem;">Opening the table…</div>
     </div>`;
-    setTimeout(() => { const i = document.getElementById('l-name'); if (i) { i.focus(); } }, 50);
+    setTimeout(() => { try { enterHostWaiting(); } catch(e) {} }, 30);
   } else if (mode === 'join') {
     el.innerHTML = `<div class="panel">
       <div class="panel-head">Join a Game</div>
-      <div class="input-wrap"><label class="input-label">Your Name</label><input class="input" id="l-name" placeholder="Enter name" maxlength="16"/></div>
       <div class="input-wrap"><label class="input-label">Room Code</label><input class="input" id="l-code" placeholder="4 letters" maxlength="4" style="text-transform:uppercase;letter-spacing:0.25em;font-size:1.3rem"/></div>
+      <div style="font-size:0.62rem;color:var(--text-faint);text-align:center;margin:-0.3rem 0 0.7rem;line-height:1.7">You'll pick your character next — that's who you are at the table.</div>
       <div style="display:flex;gap:0.5rem;">
         <button class="btn primary" style="flex:1" id="join-btn" onclick="guestJoin()">Join Room</button>
         <button class="btn ghost" onclick="goHome()">Back</button>
@@ -3403,31 +3397,36 @@ function buildLobby(mode) {
     const rc = new URLSearchParams(window.location.search).get('room');
     if (rc) setTimeout(() => { const e = document.getElementById('l-code'); if(e) e.value = rc.toUpperCase(); }, 50);
   } else {
-    // Solo — just name entry, then go to solo waiting room
+    // v88: solo needs no name either — go straight in and pick a character
     el.innerHTML = `<div class="panel">
       <div class="panel-head">Play vs CPU</div>
-      <div class="input-wrap"><label class="input-label">Your Name</label><input class="input" id="l-name" placeholder="Your name" maxlength="16" value="${esc(soloPlayerName)}"/></div>
-      <div style="margin-top:1rem;display:flex;gap:0.5rem;">
-        <button class="btn primary" style="flex:1" onclick="enterSoloWaiting()">Continue →</button>
-        <button class="btn ghost" onclick="goHome()">Back</button>
-      </div>
+      <div style="text-align:center;padding:1.2rem 0.4rem;color:var(--text-dim);font-size:0.8rem;">Setting up the table…</div>
     </div>`;
-    setTimeout(() => { const i=document.getElementById('l-name'); if(i){i.focus();i.select();} }, 50);
+    setTimeout(() => { try { enterSoloWaiting(); } catch(e) {} }, 30);
   }
 }
 
 function enterSoloWaiting() {
-  soloPlayerName = document.getElementById('l-name')?.value.trim() || 'Player';
-  if (!soloPlayerName) { toast('Enter your name'); return; }
-  // Initialize CPU chars if not already set or count changed
   rebuildSoloCpuCharsIfNeeded();
   showSoloWaitingRoom();
+  // No character yet? Open the picker immediately — it's the only identity choice there is.
+  if (!soloWaitingChar) setTimeout(() => { try { soloChangeMyChar(); } catch(e) {} }, 60);
 }
 
 function enterHostWaiting() {
-  const name = document.getElementById('l-name')?.value.trim();
-  if (!name) { toast('Enter your name'); return; }
-  hostCreate(name);
+  try { hostCreate(); } catch(e) { console.warn('hostCreate', e); }
+  // Drop the host straight into the character picker — the character is their identity.
+  if (G && G.roomCode) setTimeout(() => { try { hostPickMyChar(); } catch(e) { console.warn('pick', e); } }, 60);
+}
+// Open the character picker for the host, returning to the host waiting room after.
+function hostPickMyChar() {
+  if (!G || !G.players) return;
+  charPickReturnCtx = 'hostWaiting';
+  charPickTargetCpuIdx = null;
+  guestMode = false;
+  const taken = {};
+  G.players.forEach((p, pi) => { if (pi !== 0 && p.character) taken[p.character] = (taken[p.character]||0)+1; });
+  showCharacterPick(taken);
 }
 
 function rebuildSoloCpuCharsIfNeeded() {
@@ -3459,8 +3458,8 @@ function showSoloWaitingRoom() {
 
   const _soloCharName = soloWaitingChar && CHARACTERS[soloWaitingChar] ? CHARACTERS[soloWaitingChar].name : null;
   const _soloNameLabel = _soloCharName
-    ? `<div style="display:flex;flex-direction:column;gap:1px;"><span style="font-weight:600">${esc(_soloCharName)} <span style="color:var(--text-faint);font-size:0.85em;">(${playerName})</span></span></div>`
-    : `<div style="display:flex;flex-direction:column;gap:1px;"><span style="font-weight:600">${playerName}</span><span style="color:var(--text-faint);font-size:0.68em;letter-spacing:0.05em;text-transform:uppercase;">TAP TO PICK CHARACTER</span></div>`;
+    ? `<div style="display:flex;flex-direction:column;gap:1px;"><span style="font-weight:600">${esc(_soloCharName)}</span></div>`
+    : `<div style="display:flex;flex-direction:column;gap:1px;"><span style="font-weight:600" class="pick-me">Choose your character</span><span style="color:var(--text-faint);font-size:0.68em;letter-spacing:0.05em;text-transform:uppercase;">TAP TO PICK</span></div>`;
 
   let cpuHtml = soloWaitingCpuChars.map((cpu, i) => {
     const fs = cpu.characterVariant ? variantFilter(cpu.characterVariant, cpu.key) : '';
@@ -3598,9 +3597,8 @@ function buildHostCharPicker() {
 }
 
 function checkHostCreateReady() {
-  const name = document.getElementById('l-name')?.value.trim();
   const btn = document.getElementById('create-room-btn');
-  if (btn) btn.disabled = !(name && hostPickedChar);
+  if (btn) btn.disabled = !hostPickedChar;
 }
 
 function copyCode()    { const c=document.getElementById('room-code-big')?.textContent; navigator.clipboard.writeText(c||'').catch(()=>{}); toast('Copied: '+c); }
@@ -3618,11 +3616,13 @@ function shareInviteLink(code) {
 // SOLO
 // ════════════════════════════════════════
 function mkP(id, name, isCPU, charKey=null, characterVariant=null, displayName=null) {
-  let dn = displayName || name;
+  // v88: a player IS their character, so the character's name is the only name we use.
+  const charName = (charKey && CHARACTERS[charKey]) ? (CHARACTERS[charKey].name || charKey) : null;
+  let dn = displayName || charName || name;
   if (isCPU && dn && !/\(CPU\)/.test(dn)) dn = dn + ' (CPU)';
-  return { id, name: isCPU ? dn : name, coins:2, cards:[], eliminated:false, isCPU,
+  return { id, name: isCPU ? dn : (charName || name), coins:2, cards:[], eliminated:false, isCPU,
     character: charKey, characterVariant: characterVariant,
-    playerName: isCPU ? 'CPU' : name,
+    playerName: isCPU ? 'CPU' : (charName || name),
     displayName: dn };
 }
 
@@ -3702,6 +3702,7 @@ function beginGameAfterCharacterPick() {
       const rv = resolveCharacterVariant(charKey, []);
       soloWaitingChar = charKey;
       soloWaitingCharVariant = rv.characterVariant;
+      soloPlayerName = rv.displayName;      // v88: character name is the player's name
     }
     charPickReturnCtx = null; charPickTargetCpuIdx = null;
     showScr('lobby');
@@ -3729,6 +3730,8 @@ function beginGameAfterCharacterPick() {
       G.players[0].characterVariant = rv.characterVariant;
       G.players[0].displayName = rv.displayName;
       G.players[0].name = rv.displayName;
+      G.players[0].playerName = rv.displayName;
+      G.players[0].status = 'ready';
       hostPickedChar = charKey;
     }
     charPickReturnCtx = null; charPickTargetCpuIdx = null;
@@ -3779,10 +3782,10 @@ function beginGameAfterCharacterPick() {
 // ════════════════════════════════════════
 // HOST CREATE + WAITING ROOM
 // ════════════════════════════════════════
-function hostCreate(name) {
+function hostCreate() {
   if (!firebaseAvailable()) return;
   _lobbyChatLog = [];
-  if (!name) { toast('Enter your name'); return; }
+  const name = 'Host';          // placeholder until a character is chosen; never shown as a label
   isHost = true; ME = 'p0';
   const code = rndCode();
   initFirebase();
@@ -3944,14 +3947,14 @@ function renderHostPlayerList() {
       avatarHtml = `<div class="lobby-avatar choosing">?</div>`;
     }
     const _charDisplayName = p.character && CHARACTERS[p.character] ? (CHARACTERS[p.character].name || p.character) : null;
-    const _playerRealName = p.playerName || (p.isCPU ? 'CPU' : (p.name || '?'));
+    // v88: the character name is the whole label — no "(real name)" parenthetical any more
     const _charLabel = _charDisplayName
-      ? `<span style="font-weight:600">${esc(_charDisplayName)}</span> <span style="color:var(--text-faint);font-size:0.85em;">(${esc(_playerRealName)})</span>`
-      : `<span style="font-weight:600">${esc(_playerRealName)}</span>`;
+      ? `<span style="font-weight:600">${esc(_charDisplayName)}</span>${p.isCPU ? ' <span style="color:var(--text-faint);font-size:0.85em;">(CPU)</span>' : ''}`
+      : `<span style="color:var(--text-faint);font-style:italic;">Choosing character…</span>`;
     const _dot = p.isCPU ? '' : connDotHtml(p.latency);
     const nameLabel = isChoosing
       ? (i === 0
-          ? `<div style="display:flex;flex-direction:column;gap:1px;"><span style="font-weight:600">${esc(_playerRealName)}</span><span style="color:var(--text-faint);font-size:0.68em;letter-spacing:0.05em;text-transform:uppercase;">TAP TO PICK CHARACTER</span></div>`
+          ? `<div style="display:flex;flex-direction:column;gap:1px;"><span style="font-weight:600">Choose your character</span><span style="color:var(--text-faint);font-size:0.68em;letter-spacing:0.05em;text-transform:uppercase;">TAP TO PICK</span></div>`
           : '<span style="color:var(--text-faint);font-style:italic;">Choosing character…</span>')
       : (i === 0 && !p.isCPU)
         ? `<div style="display:flex;flex-direction:column;gap:1px;">${_charLabel}</div>`
@@ -3969,14 +3972,7 @@ function renderHostPlayerList() {
     if (isHostEntry) {
       div.style.cursor = 'pointer';
       div.title = 'Click to change your character';
-      div.onclick = () => {
-        charPickReturnCtx = 'hostWaiting';
-        charPickTargetCpuIdx = null;
-        guestMode = false;
-        const taken = {};
-        G.players.forEach((p, pi) => { if (pi !== 0 && p.character) taken[p.character] = (taken[p.character]||0)+1; });
-        showCharacterPick(taken);
-      };
+      div.onclick = () => hostPickMyChar();
     }
     let cpuChangeBtn = '';
     if (p.isCPU) {
@@ -4185,9 +4181,8 @@ function pingAllGuests() {
 // GUEST NETWORKING
 // ════════════════════════════════════════
 function guestJoin() {
-  const name = document.getElementById('l-name')?.value.trim();
+  const name = 'Player';       // placeholder; replaced by the chosen character's name
   const code = document.getElementById('l-code')?.value.trim().toUpperCase();
-  if (!name) { toast('Enter your name'); return; }
   if (code.length !== 4) { toast('Enter 4-letter code'); return; }
 
   const existingRoom = sessionStorage.getItem('coup_room');
@@ -4680,11 +4675,10 @@ function updateGuestWaitingRoom(players, locked, gameStarted=false, mode=null) {
       avatarHtml = `<div class="lobby-avatar choosing"><span class="choosing-spinner">⟳</span></div>`;
     }
     const _gCharName = p.charKey && CHARACTERS[p.charKey] ? (CHARACTERS[p.charKey].name || p.charKey) : null;
-    const _gPlayerName = p.playerName || (p.isCPU ? 'CPU' : (p.displayName || p.name));
     const nameLabel = isChoosing
       ? '<span style="color:var(--text-faint);font-style:italic;">Choosing character…</span>'
       : _gCharName
-        ? `<span style="font-weight:600">${esc(_gCharName)}</span> <span style="color:var(--text-faint);font-size:0.85em;">(${esc(p.isCPU ? 'CPU' : _gPlayerName)})</span>`
+        ? `<span style="font-weight:600">${esc(_gCharName)}</span>${p.isCPU ? ' <span style="color:var(--text-faint);font-size:0.85em;">(CPU)</span>' : ''}`
         : esc(p.displayName || p.name);
     const youTag = p.id === ME ? '<span class="lobby-tag" style="color:var(--blue-light)">YOU</span>' : '';
     const cpuTag = (p.isCPU && !/\(CPU\)/i.test(p.displayName || p.name || '')) ? '<span class="lobby-tag">CPU</span>' : '';
@@ -4759,6 +4753,7 @@ function onGuestMsg(d, gid) {
     pl.characterVariant = rv.characterVariant;
     pl.displayName = rv.displayName;
     pl.name = rv.displayName;
+    pl.playerName = rv.displayName;
     pl.status = 'ready';
     fbToGuest(gid, { type: 'char_ack', pid: gid, charKey, characterVariant: rv.characterVariant, displayName: rv.displayName });
     broadcastLobbyUpdate();
