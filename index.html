@@ -1327,6 +1327,12 @@ html, body { height: 100%; background: var(--bg); color: var(--text); font-famil
 .faces-head { font-family:'Cinzel',serif; font-size:0.56rem; letter-spacing:0.18em; color:var(--gold-dim);
   margin:0.6rem 0 0.3rem; text-align:center; }
 #waiting-faces { display:grid; grid-template-columns:repeat(auto-fit, minmax(96px, 1fr)); gap:7px; }
+/* v89: on a phone the lobby just shows your own camera — everyone else appears in-game,
+   at full size in their seat frames, rather than as a row of unreadable thumbnails. */
+@media (max-width: 720px) {
+  #waiting-faces { display:none; }
+  #screen-waiting .faces-head { display:none; }
+}
 .face-tile.cam-off { border-style:dashed; opacity:0.86; }
 .face-tile.cam-off .av-dot { display:none; }
 .face-ph { position:absolute; inset:0; display:flex; align-items:flex-end; justify-content:center;
@@ -1450,7 +1456,7 @@ html, body { height: 100%; background: var(--bg); color: var(--text); font-famil
     <div class="landing-center">
       <div>
         <div class="logo-main">COUP</div>
-        <div class="logo-tagline">VERSION 88 · LIVE AT THE TABLE</div>
+        <div class="logo-tagline">VERSION 89 · LIVE AT THE TABLE</div>
         <div class="card-showcase">
           <div class="showcase-card duke">👑<span class="sc-name">Duke</span></div>
           <div class="showcase-card assassin">🗡️<span class="sc-name">Assassin</span></div>
@@ -1460,9 +1466,9 @@ html, body { height: 100%; background: var(--bg); color: var(--text); font-famil
         </div>
       </div>
       <div class="menu-btns">
-        <button class="btn primary" onclick="goLobby('create')">Host a Game</button>
+        <button class="btn primary" onclick="startHostFlow()">Host a Game</button>
         <button class="btn"         onclick="goLobby('join')" id="btn-join-game">Join a Game</button>
-        <button class="btn ghost"   onclick="goLobby('solo')">Play vs CPU</button>
+        <button class="btn ghost"   onclick="startSoloFlow()">Play vs CPU</button>
       </div>
       <div style="font-size:0.62rem;color:var(--text-faint);text-align:center;line-height:1.9;max-width:240px;">
         Bluff. Challenge. Survive.<br>Last influence standing wins.
@@ -3378,12 +3384,8 @@ function buildLobby(mode) {
   const el = document.getElementById('lobby-inner');
   el.classList.remove('lobby-wide');
   if (mode === 'create') {
-    // v88: no name step — make the room straight away, then go pick a character
-    el.innerHTML = `<div class="panel">
-      <div class="panel-head">Host a Game</div>
-      <div style="text-align:center;padding:1.2rem 0.4rem;color:var(--text-dim);font-size:0.8rem;">Opening the table…</div>
-    </div>`;
-    setTimeout(() => { try { enterHostWaiting(); } catch(e) {} }, 30);
+    startHostFlow();
+    return;
   } else if (mode === 'join') {
     el.innerHTML = `<div class="panel">
       <div class="panel-head">Join a Game</div>
@@ -3397,12 +3399,8 @@ function buildLobby(mode) {
     const rc = new URLSearchParams(window.location.search).get('room');
     if (rc) setTimeout(() => { const e = document.getElementById('l-code'); if(e) e.value = rc.toUpperCase(); }, 50);
   } else {
-    // v88: solo needs no name either — go straight in and pick a character
-    el.innerHTML = `<div class="panel">
-      <div class="panel-head">Play vs CPU</div>
-      <div style="text-align:center;padding:1.2rem 0.4rem;color:var(--text-dim);font-size:0.8rem;">Setting up the table…</div>
-    </div>`;
-    setTimeout(() => { try { enterSoloWaiting(); } catch(e) {} }, 30);
+    startSoloFlow();
+    return;
   }
 }
 
@@ -3413,10 +3411,20 @@ function enterSoloWaiting() {
   if (!soloWaitingChar) setTimeout(() => { try { soloChangeMyChar(); } catch(e) {} }, 60);
 }
 
-function enterHostWaiting() {
-  try { hostCreate(); } catch(e) { console.warn('hostCreate', e); }
-  // Drop the host straight into the character picker — the character is their identity.
-  if (G && G.roomCode) setTimeout(() => { try { hostPickMyChar(); } catch(e) { console.warn('pick', e); } }, 60);
+function enterHostWaiting() { startHostFlow(); }
+// v89: create the room WITHOUT rendering the lobby, then show the picker. Rendering the
+// waiting room first and swapping 60ms later is what caused the visible flash.
+function startHostFlow() {
+  if (!firebaseAvailable()) return;
+  try { hostCreate({ silent: true }); } catch(e) { console.warn('hostCreate', e); }
+  if (G && G.roomCode) hostPickMyChar();
+  else { showScr('lobby'); toast('Could not open a room — try again'); goHome(); }
+}
+// Same for solo: the picker is the first screen, the waiting room comes after.
+function startSoloFlow() {
+  try { rebuildSoloCpuCharsIfNeeded(); } catch(e) {}
+  if (!soloWaitingChar) soloChangeMyChar();
+  else { showScr('lobby'); showSoloWaitingRoom(); }
 }
 // Open the character picker for the host, returning to the host waiting room after.
 function hostPickMyChar() {
@@ -3782,7 +3790,7 @@ function beginGameAfterCharacterPick() {
 // ════════════════════════════════════════
 // HOST CREATE + WAITING ROOM
 // ════════════════════════════════════════
-function hostCreate() {
+function hostCreate(opts) {
   if (!firebaseAvailable()) return;
   _lobbyChatLog = [];
   const name = 'Host';          // placeholder until a character is chosen; never shown as a label
@@ -3819,8 +3827,11 @@ function hostCreate() {
   });
 
   try { avSetIdentity(code, 'p0'); avRegisterRoster(G.players); } catch(e) {}
-  showHostWaitingRoom();
-  toast('Room created! Share code: ' + code);
+  // silent: caller is about to show the character picker, so don't paint the lobby first
+  if (!opts || !opts.silent) {
+    showHostWaitingRoom();
+    toast('Room created! Share code: ' + code);
+  }
 }
 
 function renumberCPUs() {
@@ -4954,6 +4965,20 @@ async function decMine(b64) {
 }
 
 // A deck of the right SIZE but no identities and no order — length is public, contents are not
+// v89: before a game starts a GUEST has no G.players — only the lobby snapshot. Without
+// this fallback a guest's faces wall could never show anybody except themselves.
+function avLobbyRoster() {
+  try {
+    if (G && G.players && G.players.length) return G.players;
+    if (typeof lastLobbyPlayers !== 'undefined' && lastLobbyPlayers && lastLobbyPlayers.length) {
+      return lastLobbyPlayers.map(p => ({
+        id: p.id, isCPU: p.isCPU, character: p.charKey || p.character,
+        playerName: p.playerName, name: p.name, displayName: p.displayName
+      }));
+    }
+  } catch(e) {}
+  return [];
+}
 function opaqueDeck() { const n = (G && G.deck && G.deck.length) || 0; return new Array(n).fill('?'); }
 // Every live role hidden from everyone; dead/revealed cards stay public (they are, in Coup)
 function hideRoles(players) {
@@ -6003,7 +6028,8 @@ function avUpdateFab() {
       const row = mr && document.getElementById(mr);
       if (row) row.style.display = AV.tappedIn ? 'flex' : 'none';
       const stripBtn = document.getElementById('tb-strip');
-      if (stripBtn) stripBtn.style.display = (sup && onGame) ? '' : 'none';
+      const _narrowBtn = (window.innerWidth || 1200) <= 720;
+      if (stripBtn) stripBtn.style.display = (sup && onGame && !_narrowBtn) ? '' : 'none';
       if (stripBtn) stripBtn.classList.toggle('active-tempo', _avStripOpen);
       const micb = mb && document.getElementById(mb);
       if (micb) { micb.textContent = AV.micOn ? '🎤 Mic on' : '🔇 Muted'; micb.classList.toggle('active-tempo', AV.micOn); }
@@ -6406,8 +6432,9 @@ function avAttachStrip() {
     const scr = document.querySelector('.screen.active');
     const onGame = !!(scr && scr.id === 'screen-game');
     const entries = [];
-    const meP = G && G.players ? G.players.find(pp => pp.id === ME) : null;
-    const humans = (G && G.players ? G.players : []).filter(pp => pp.id && !pp.isCPU);
+    const _sRoster = avLobbyRoster();
+    const meP = _sRoster.find(pp => pp.id === ME) || null;
+    const humans = _sRoster.filter(pp => pp.id && !pp.isCPU);
     if (humans.length > 1) {   // only worth a strip when there are other humans present
       entries.push({ pid: 'self', stream: (AV.tappedIn && avStreamLive(AV.local, 'video')) ? AV.local : null,
                      name: (meP && (meP.playerName || meP.displayName || meP.name)) || 'You', charKey: meP && meP.character });
@@ -6418,7 +6445,10 @@ function avAttachStrip() {
                        name: pp.playerName || pp.displayName || pp.name || '?', charKey: pp.character });
       });
     }
-    const show = onGame && _avStripOpen && entries.length > 0;
+    // v89: no strip on phones — it would sit on top of the action cards, and the seat
+    // frames already carry everyone's live video there.
+    const _narrow = (window.innerWidth || 1200) <= 720;
+    const show = onGame && _avStripOpen && entries.length > 0 && !_narrow;
     strip.style.display = show ? 'flex' : 'none';
     if (!show) {
       const pool = document.getElementById('av-pool');
@@ -6476,16 +6506,23 @@ function avAttach() {
     // v80: lobby faces wall (host) — live cameras only
     // v86: the host sees #lobby-faces, a guest sees #waiting-faces — render into whichever
     // wall is on the screen that's actually showing, so BOTH sides see everybody.
+    // v89: and only if that wall is VISIBLE. On phones the guest grid is hidden, and a hidden
+    // wall used to still claim the one self-video element, leaving an empty black box behind.
     const _activeScr = document.querySelector('.screen.active');
-    const wall = (_activeScr ? _activeScr.querySelector('.faces-wall') : null) || document.getElementById('lobby-faces');
+    let wall = _activeScr ? _activeScr.querySelector('.faces-wall') : null;
+    if (wall) {
+      const _cs = getComputedStyle(wall);
+      if (_cs.display === 'none' || _cs.visibility === 'hidden' || wall.offsetParent === null) wall = null;
+    }
     if (wall && !document.querySelector('.arena-me')) {
       // v85: a tile for EVERY human in the room — live video when they're on camera,
       // their character portrait when they aren't. Nobody disappears from the table.
       const entries = [];
-      const meP = G && G.players ? G.players.find(pp => pp.id === ME) : null;
+      const _roster = avLobbyRoster();
+      const meP = _roster.find(pp => pp.id === ME) || null;
       entries.push({ pid: 'self', stream: (AV.tappedIn && avStreamLive(AV.local, 'video')) ? AV.local : null,
                      name: (meP && (meP.playerName || meP.name)) || 'You', muted: true, charKey: meP && meP.character });
-      (G?.players || []).forEach(pp => {
+      _roster.forEach(pp => {
         if (!pp.id || pp.id === ME || pp.isCPU) return;
         const st = AV.streams[pp.id];
         entries.push({ pid: pp.id, stream: avStreamLive(st, 'video') ? st : null,
@@ -6540,6 +6577,9 @@ function avAttach() {
     }
     // guest waiting self-preview (unchanged)
     const gprev = document.getElementById('av-guest-prev');
+    // v89: when a visible faces wall owns the self-video, hide the separate preview — leaving
+    // it on screen is what produced the empty black box above the camera.
+    if (gprev) gprev.style.display = wall ? 'none' : '';
     if (gprev && AV.tappedIn && avStreamLive(AV.local, 'video') && !document.querySelector('.arena-me') && !wall) {
       let mv = document.getElementById('av-vid-self');
       if (!mv) mv = avVideoEl('self', true);
