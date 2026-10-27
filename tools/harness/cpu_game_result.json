@@ -1,0 +1,72 @@
+[
+  {
+    "viewport": "desktop-1920",
+    "completed": true,
+    "seconds": 117,
+    "steps": 446,
+    "winnerName": "Baby (CPU)",
+    "turns": 32,
+    "actionAreaHeights": {
+      "185": 445
+    },
+    "pageerrors": [],
+    "consoleErrors": [],
+    "windowErrors": []
+  },
+  {
+    "viewport": "laptop-1440",
+    "completed": true,
+    "seconds": 91,
+    "steps": 344,
+    "winnerName": "Yossi (CPU)",
+    "turns": 27,
+    "actionAreaHeights": {
+      "185": 343
+    },
+    "pageerrors": [],
+    "consoleErrors": [],
+    "windowErrors": []
+  },
+  {
+    "viewport": "ipad-1024",
+    "completed": true,
+    "seconds": 122,
+    "steps": 469,
+    "winnerName": "Jonny Soul (CPU)",
+    "turns": 29,
+    "actionAreaHeights": {
+      "185": 468
+    },
+    "pageerrors": [],
+    "consoleErrors": [],
+    "windowErrors": []
+  },
+  {
+    "viewport": "iphone14-390",
+    "completed": true,
+    "seconds": 138,
+    "steps": 532,
+    "winnerName": "Bevman (CPU)",
+    "turns": 39,
+    "actionAreaHeights": {
+      "205": 531
+    },
+    "pageerrors": [],
+    "consoleErrors": [],
+    "windowErrors": []
+  },
+  {
+    "viewport": "android-360",
+    "completed": true,
+    "seconds": 120,
+    "steps": 462,
+    "winnerName": "Yossi (CPU)",
+    "turns": 30,
+    "actionAreaHeights": {
+      "189": 461
+    },
+    "pageerrors": [],
+    "consoleErrors": [],
+    "windowErrors": []
+  }
+]

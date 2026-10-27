@@ -1,0 +1,27 @@
+{
+  "desktop-1920": {
+    "pageerrors": [],
+    "consoleErrors": [],
+    "windowErrors": []
+  },
+  "laptop-1440": {
+    "pageerrors": [],
+    "consoleErrors": [],
+    "windowErrors": []
+  },
+  "ipad-1024": {
+    "pageerrors": [],
+    "consoleErrors": [],
+    "windowErrors": []
+  },
+  "iphone14-390": {
+    "pageerrors": [],
+    "consoleErrors": [],
+    "windowErrors": []
+  },
+  "android-360": {
+    "pageerrors": [],
+    "consoleErrors": [],
+    "windowErrors": []
+  }
+}
