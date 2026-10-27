@@ -1684,6 +1684,14 @@ body { -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; 
 .showcase-card { width: 62px; height: 84px; gap: 4px; }
 .sc-name { opacity: 0.85; max-width: 100%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; padding: 0 2px; }
 .showcase-card.ambassador .sc-name { letter-spacing: 0.02em; }
+.af-cpu { font-size: inherit; }
+@media (max-width: 720px) {
+  .af-cpu { display: none; }
+  .btn { padding-left: 0.75rem; padding-right: 0.75rem; letter-spacing: 0.08em; }
+  .modal .btn, .char-screen-inner .btn { white-space: normal; line-height: 1.2; overflow-wrap: anywhere; }
+  .showcase-card { width: 52px; height: 70px; }
+  .showcase-card .sc-name { display: none; }
+}
 
 </style>
 </head>
@@ -3881,13 +3889,13 @@ function showSoloWaitingRoom() {
   const _soloCharName = soloWaitingChar && CHARACTERS[soloWaitingChar] ? CHARACTERS[soloWaitingChar].name : null;
   const _soloNameLabel = _soloCharName
     ? `<div style="display:flex;flex-direction:column;gap:1px;"><span style="font-weight:600">${esc(_soloCharName)}</span></div>`
-    : `<div style="display:flex;flex-direction:column;gap:1px;"><span style="font-weight:600" class="pick-me">Choose your character</span><span style="color:var(--text-3);font-size:0.68em;letter-spacing:0.05em;text-transform:uppercase;">TAP TO PICK</span></div>`;
+    : `<div style="display:flex;flex-direction:column;gap:1px;"><span style="font-weight:600" class="pick-me">Choose your character</span><span style="color:var(--text-3);font-size:max(0.68em, var(--fs-xs));letter-spacing:0.05em;text-transform:uppercase;">TAP TO PICK</span></div>`;
 
   let cpuHtml = soloWaitingCpuChars.map((cpu, i) => {
     const fs = cpu.characterVariant ? variantFilter(cpu.characterVariant, cpu.key) : '';
     return `<div class="lobby-player" style="cursor:pointer;" title="Click to change CPU character" onclick="hostChangeCpuChar(${i})">
       <div class="lobby-avatar" style="${fs}">${getCharacterSvg(cpu.key, cpu.characterVariant)}</div>
-      <span style="font-weight:600">${esc(String(cpu.displayName||'').replace(/\s*\(CPU\)/ig,''))} <span style="color:var(--text-3);font-size:0.85em;">(CPU)</span></span>
+      <span style="font-weight:600">${esc(String(cpu.displayName||'').replace(/\s*\(CPU\)/ig,''))} <span style="color:var(--text-3);font-size:max(0.85em, var(--fs-xs));">(CPU)</span></span>
       <span class="cpu-char-btn">✏️</span>
     </div>`;
   }).join('');
@@ -4308,7 +4316,7 @@ function showHostWaitingRoom() {
         </div>
         <div class="lobby-players" id="host-plist"></div>
         <div class="cpu-row" style="margin-top:0.8rem;">
-          <span class="cpu-label">CPU Players <span style="color:var(--text-3);font-size:0.85em">(cartoons only)</span></span>
+          <span class="cpu-label">CPU Players <span style="color:var(--text-3);font-size:max(0.85em, var(--fs-xs))">(cartoons only)</span></span>
           <div class="stepper">
             <button class="step-btn" onclick="hostAdjCPU(-1)">−</button>
             <span class="step-val" id="host-cpu-v">${G.players.filter(p=>p.isCPU).length}</span>
@@ -4396,12 +4404,12 @@ function renderHostPlayerList() {
     const _charDisplayName = p.character && CHARACTERS[p.character] ? (CHARACTERS[p.character].name || p.character) : null;
     // v88: the character name is the whole label — no "(real name)" parenthetical any more
     const _charLabel = _charDisplayName
-      ? `<span style="font-weight:600">${esc(_charDisplayName)}</span>${p.isCPU ? ' <span style="color:var(--text-3);font-size:0.85em;">(CPU)</span>' : ''}`
+      ? `<span style="font-weight:600">${esc(_charDisplayName)}</span>${p.isCPU ? ' <span style="color:var(--text-3);font-size:max(0.85em, var(--fs-xs));">(CPU)</span>' : ''}`
       : `<span style="color:var(--text-3);font-style:italic;">Choosing character…</span>`;
     const _dot = p.isCPU ? '' : connDotHtml(p.latency);
     const nameLabel = isChoosing
       ? (i === 0
-          ? `<div style="display:flex;flex-direction:column;gap:1px;"><span style="font-weight:600">Choose your character</span><span style="color:var(--text-3);font-size:0.68em;letter-spacing:0.05em;text-transform:uppercase;">TAP TO PICK</span></div>`
+          ? `<div style="display:flex;flex-direction:column;gap:1px;"><span style="font-weight:600">Choose your character</span><span style="color:var(--text-3);font-size:max(0.68em, var(--fs-xs));letter-spacing:0.05em;text-transform:uppercase;">TAP TO PICK</span></div>`
           : '<span style="color:var(--text-3);font-style:italic;">Choosing character…</span>')
       : (i === 0 && !p.isCPU)
         ? `<div style="display:flex;flex-direction:column;gap:1px;">${_charLabel}</div>`
@@ -5126,7 +5134,7 @@ function updateGuestWaitingRoom(players, locked, gameStarted=false, mode=null) {
     const nameLabel = isChoosing
       ? '<span style="color:var(--text-3);font-style:italic;">Choosing character…</span>'
       : _gCharName
-        ? `<span style="font-weight:600">${esc(_gCharName)}</span>${p.isCPU ? ' <span style="color:var(--text-3);font-size:0.85em;">(CPU)</span>' : ''}`
+        ? `<span style="font-weight:600">${esc(_gCharName)}</span>${p.isCPU ? ' <span style="color:var(--text-3);font-size:max(0.85em, var(--fs-xs));">(CPU)</span>' : ''}`
         : esc(p.displayName || p.name);
     const youTag = p.id === ME ? '<span class="lobby-tag" style="color:var(--captain-tint)">YOU</span>' : '';
     const cpuTag = (p.isCPU && !/\(CPU\)/i.test(p.displayName || p.name || '')) ? '<span class="lobby-tag">CPU</span>' : '';
@@ -8008,7 +8016,7 @@ function resolveResps() {
   if      (ch) handleChallenge(cur.actorId,ch[0],ACTS[cur.type]?.char,cur.type,cur.targetId);
   else if (bl) handleBlock(cur.actorId,bl[0],bl[1].ch,cur.type,cur.targetId);
   else {
-    addEv('<span style="color:var(--text-3);font-size:0.9em;">(no one challenges)</span>', 'system');
+    addEv('<span style="color:var(--text-3);font-size:max(0.9em, var(--fs-xs));">(no one challenges)</span>', 'system');
     if (isDCMode() && cur.type === 'coup' && cur.coupCostPaid) {
       const _dcActor = G.players.find(p=>p.id===cur.actorId);
       const _dcTarget = G.players.find(p=>p.id===cur.targetId);
@@ -9419,7 +9427,7 @@ function executeForceAdvance(idx) {
   const cfg = configs[idx];
   closeModal();
   downloadBugReport(cfg);
-  addEv('<span style="color:rgba(var(--danger-rgb),0.8);font-size:0.85em;">[DEV] Force advanced: ' + esc(cfg.label) + '</span>', 'system');
+  addEv('<span style="color:rgba(var(--danger-rgb),0.8);font-size:max(0.85em, var(--fs-xs));">[DEV] Force advanced: ' + esc(cfg.label) + '</span>', 'system');
   if (cfg.type === 'action') {
     pAction = null; pResponders = []; pResponses = {};
     G.phase = 'action';
