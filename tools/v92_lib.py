@@ -50,6 +50,15 @@ class Patch:
         print(f'  ok: {tag} ({n})')
         return n
 
+    # append CSS at the end of the stylesheet, but above the reduced-motion block (item 10),
+    # which must stay the last rule so its !important overrides always win
+    def css(self, block, tag):
+        marker = '\n/* ══ v92 reduced motion (item 10)'
+        if marker in self.src:
+            self.rep(marker, block + marker, tag)
+        else:
+            self.rep('\n</style>\n</head>', block + '\n</style>\n</head>', tag)
+
     def region(self, name):
         s = self.src
         if name == 'css':
