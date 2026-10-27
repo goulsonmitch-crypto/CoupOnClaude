@@ -1943,8 +1943,8 @@ img { image-rendering: auto; }
 /* side walls recede */
 @media (min-width: 1024px) {
   .home-wall { position: relative; padding: 1.4rem 0.4rem 0.6rem; }
-  #home-wall-left { transform: perspective(1200px) rotateY(9deg); transform-origin: 100% 50%; }
-  #home-wall-right { transform: perspective(1200px) rotateY(-9deg); transform-origin: 0 50%; }
+  #home-wall-left { transform: perspective(1200px) rotateY(-9deg); transform-origin: 100% 50%; }
+  #home-wall-right { transform: perspective(1200px) rotateY(9deg); transform-origin: 0 50%; }
   /* the outer column sits deeper in the room: dimmer and a touch smaller (no overlay panels) */
   #home-wall-left .wall-hang:nth-child(odd), #home-wall-right .wall-hang:nth-child(even) { filter: brightness(0.74) saturate(0.9); }
   #home-wall-left .wall-hang:nth-child(even), #home-wall-right .wall-hang:nth-child(odd) { filter: brightness(0.92); }
@@ -2049,6 +2049,11 @@ img { image-rendering: auto; }
   .disc-stack { width: 42px; height: 58px; }
   .discard-stacks { min-height: 60px; padding: 3px 8px 4px 2px; gap: 10px; }
   #table-center .center-zone { row-gap: 2px; }
+}
+
+@media (min-width: 1024px) and (max-width: 1279px) {
+  .logo-main { font-size: clamp(4.2rem, 9vw, 6.5rem); }
+  .landing-grid { gap: 1.4rem; }
 }
 
 /* ══ v92 reduced motion (item 10) — keep this block LAST in the stylesheet ══ */
