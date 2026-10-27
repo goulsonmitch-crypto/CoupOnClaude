@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>COUP — Online</title>
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
@@ -1711,6 +1711,40 @@ img { image-rendering: auto; }
   object-fit: cover; object-position: 50% 0%; transform: none; }
 .af-portrait > .pcrop > img.pimg { filter: drop-shadow(0 5px 9px rgba(0,0,0,0.7)); }
 .face-ph > .pcrop, .wall-frame2 > .pcrop, .me-chip > .pcrop, .pit-chip > .pcrop, .pit-waitface > .pcrop { height: 100%; }
+
+/* ══ v92 safe areas (item 8): fallback line first, env() second ══ */
+#top-bar { padding-top: 0.5rem; padding-top: calc(0.5rem + env(safe-area-inset-top, 0px)); padding-left: 0.9rem; padding-left: calc(0.9rem + env(safe-area-inset-left, 0px)); padding-right: 0.9rem; padding-right: calc(0.9rem + env(safe-area-inset-right, 0px)); }
+#action-area { margin-left: 0.6rem; margin-left: calc(0.6rem + env(safe-area-inset-left, 0px)); margin-right: 0.6rem; margin-right: calc(0.6rem + env(safe-area-inset-right, 0px)); padding-bottom: 0.7rem; padding-bottom: calc(0.7rem + env(safe-area-inset-bottom, 0px)); }
+#event-log-col { padding-right: 0px; padding-right: calc(0px + env(safe-area-inset-right, 0px)); }
+#toast-area { top: 1rem; top: calc(1rem + env(safe-area-inset-top, 0px)); }
+#av-fab { top: 52px; top: calc(52px + env(safe-area-inset-top, 0px)); right: 10px; right: calc(10px + env(safe-area-inset-right, 0px)); }
+.av-strip { top: 62px; top: calc(62px + env(safe-area-inset-top, 0px)); left: 8px; left: calc(8px + env(safe-area-inset-left, 0px)); }
+.rules-overlay-header { padding-top: 1.1rem; padding-top: calc(1.1rem + env(safe-area-inset-top, 0px)); padding-left: 1.2rem; padding-left: calc(1.2rem + env(safe-area-inset-left, 0px)); padding-right: 1.2rem; padding-right: calc(1.2rem + env(safe-area-inset-right, 0px)); }
+.rules-overlay-body { padding-bottom: 3rem; padding-bottom: calc(3rem + env(safe-area-inset-bottom, 0px)); padding-left: 1.2rem; padding-left: calc(1.2rem + env(safe-area-inset-left, 0px)); padding-right: 1.2rem; padding-right: calc(1.2rem + env(safe-area-inset-right, 0px)); }
+.elo-header { padding-top: 0.8rem; padding-top: calc(0.8rem + env(safe-area-inset-top, 0px)); }
+#event-log-overlay-list { padding-bottom: 0.5rem; padding-bottom: calc(0.5rem + env(safe-area-inset-bottom, 0px)); }
+.modal-overlay, #seat-modal-overlay { padding: 1.5rem;
+  padding: max(1.5rem, env(safe-area-inset-top, 0px)) max(1.5rem, env(safe-area-inset-right, 0px)) max(1.5rem, env(safe-area-inset-bottom, 0px)) max(1.5rem, env(safe-area-inset-left, 0px)); }
+#auction-reshuffle-banner, .auction-flip-overlay { padding: 1rem; padding: max(1rem, env(safe-area-inset-top, 0px)) max(1rem, env(safe-area-inset-right, 0px)) max(1rem, env(safe-area-inset-bottom, 0px)) max(1rem, env(safe-area-inset-left, 0px)); }
+#screen-landing, #screen-lobby, #screen-character { padding-top: 1.5rem; padding-top: calc(1.5rem + env(safe-area-inset-top, 0px)); padding-bottom: 1.5rem; padding-bottom: calc(1.5rem + env(safe-area-inset-bottom, 0px)); padding-left: 1.5rem; padding-left: calc(1.5rem + env(safe-area-inset-left, 0px)); padding-right: 1.5rem; padding-right: calc(1.5rem + env(safe-area-inset-right, 0px)); }
+#screen-waiting { padding-top: 2rem; padding-top: calc(2rem + env(safe-area-inset-top, 0px)); padding-bottom: 2rem; padding-bottom: calc(2rem + env(safe-area-inset-bottom, 0px)); padding-left: 1.5rem; padding-left: calc(1.5rem + env(safe-area-inset-left, 0px)); padding-right: 1.5rem; padding-right: calc(1.5rem + env(safe-area-inset-right, 0px)); }
+#screen-reveal { padding-top: 1.5rem; padding-top: calc(1.5rem + env(safe-area-inset-top, 0px)); padding-bottom: 1.5rem; padding-bottom: calc(1.5rem + env(safe-area-inset-bottom, 0px)); padding-left: 1rem; padding-left: calc(1rem + env(safe-area-inset-left, 0px)); padding-right: 1rem; padding-right: calc(1rem + env(safe-area-inset-right, 0px)); }
+#screen-winner { padding-top: 2rem; padding-top: calc(2rem + env(safe-area-inset-top, 0px)); padding-bottom: 2rem; padding-bottom: calc(2rem + env(safe-area-inset-bottom, 0px)); }
+#recap-overlay { padding-top: 2.5rem !important; padding-top: calc(2.5rem + env(safe-area-inset-top, 0px)) !important;
+  padding-bottom: 2rem !important; padding-bottom: calc(2rem + env(safe-area-inset-bottom, 0px)) !important; }
+#auction-settings-btn { top: 10px; top: calc(10px + env(safe-area-inset-top, 0px)); right: 12px; right: calc(12px + env(safe-area-inset-right, 0px)); }
+@media (max-width: 720px) {
+  #screen-landing { padding-top: 1.6rem; padding-top: calc(1.6rem + env(safe-area-inset-top, 0px)); padding-bottom: 2rem; padding-bottom: calc(2rem + env(safe-area-inset-bottom, 0px)); padding-left: 1rem; padding-left: calc(1rem + env(safe-area-inset-left, 0px)); padding-right: 1rem; padding-right: calc(1rem + env(safe-area-inset-right, 0px)); }
+  .av-strip { bottom: 4px; bottom: calc(4px + env(safe-area-inset-bottom, 0px)); left: 4px; left: calc(4px + env(safe-area-inset-left, 0px)); right: 4px; right: calc(4px + env(safe-area-inset-right, 0px)); }
+}
+@media (max-width: 560px) {
+  #action-area { padding-bottom: 0.7rem; }
+  #mobile-log { padding-bottom: 0.3rem; padding-bottom: calc(0.3rem + env(safe-area-inset-bottom, 0px)); padding-left: 0.9rem; padding-left: calc(0.9rem + env(safe-area-inset-left, 0px)); padding-right: 0.9rem; padding-right: calc(0.9rem + env(safe-area-inset-right, 0px));
+    min-height: 1.6rem; min-height: calc(1.6rem + env(safe-area-inset-bottom, 0px)); }
+}
+@media (max-width: 768px) and (orientation: portrait) {
+  #my-dock { width: calc(100% - 8px); width: calc(100% - 8px - env(safe-area-inset-left, 0px) - env(safe-area-inset-right, 0px)); }
+}
 
 </style>
 </head>
