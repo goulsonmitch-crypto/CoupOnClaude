@@ -781,7 +781,7 @@ body { -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; 
 }
 
 /* MODAL */
-.modal-overlay { position:fixed; inset:0; background:rgba(0,0,0,0.82); z-index:500; display:flex; align-items:center; justify-content:center; padding:1.5rem; backdrop-filter:blur(6px); }
+.modal-overlay { position:fixed; inset:0; z-index:500; display:flex; align-items:center; justify-content:center; padding:1.5rem; }
 .modal-overlay.hidden { display:none; }
 .modal { background:var(--surface-2); border:1px solid var(--border-1); border-radius:var(--r-md); padding:1.5rem; max-width:420px; width:100%; box-shadow:var(--e5); animation:modIn var(--dur-base) var(--ease-enter); }
 @keyframes modIn { from{opacity:0;transform:scale(0.95) translateY(8px)} to{opacity:1;transform:scale(1) translateY(0)} }
@@ -1274,7 +1274,7 @@ body { -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; 
 .af-name { font-family:var(--font-body); font-weight:600; font-size: clamp(0.7rem, 0.95vw, 0.88rem);
   color:var(--gold-0); white-space:nowrap; overflow:hidden; text-overflow:ellipsis; max-width: 70%; line-height:1.1; }
 .af-plate .seat-cpu-tag { color:var(--gold-1); font-size:var(--fs-xs); }
-.af-coins { font-size: clamp(0.68rem, 0.9vw, 0.85rem); font-weight:700; color:var(--gold-0); white-space:nowrap; }
+.af-coins { font-size: clamp(var(--fs-xs), 0.9vw, 0.85rem); font-weight:700; color:var(--gold-0); white-space:nowrap; }
 .af-coins.hot { color:var(--danger-deep); text-shadow:0 0 6px rgba(255,220,120,0.9); animation: coinHot 1.6s ease-in-out infinite; }
 .af-coins.maxed { color:var(--danger-deep); animation: coinHot 0.8s ease-in-out infinite; }
 @keyframes coinHot { 0%,100% { transform:scale(1); } 50% { transform:scale(1.18); } }
@@ -1978,6 +1978,51 @@ img { image-rendering: auto; }
 .showcase-card.ambassador { background: linear-gradient(160deg, rgba(var(--ambassador-rgb),0.45), var(--ambassador-shade)); }
 .showcase-card.contessa { background: linear-gradient(160deg, rgba(var(--contessa-rgb),0.45), var(--contessa-shade)); }
 @media (max-width: 599px) { .showcase-card { width: 52px; height: 70px; } }
+
+/* ══ v92 chrome (item 17) ══ */
+:root { --scrim: rgba(var(--surface-0-rgb),0.66); --scrim-blur: blur(10px) saturate(1.15); --focus: var(--gold-5); }
+/* one scrim behind everything modal */
+.modal-overlay, #seat-modal-overlay, #event-log-overlay, .auction-flip-overlay, #auction-reshuffle-banner {
+  background: var(--scrim); -webkit-backdrop-filter: var(--scrim-blur); backdrop-filter: var(--scrim-blur); }
+/* one modal chrome */
+.modal, #seat-modal, .auction-flip-box, .auction-announce-box, .arb-box, #auction-settings-panel {
+  background: linear-gradient(180deg, rgba(var(--gold-4-rgb),0.07), transparent 96px), linear-gradient(160deg, var(--surface-3), var(--surface-2));
+  border: 1px solid var(--border-2); border-radius: var(--r-lg);
+  box-shadow: inset 0 1px 0 rgba(var(--gold-5-rgb),0.2), inset 0 0 0 1px rgba(0,0,0,0.5), var(--e5); }
+.auction-announce-box { border-color: rgba(var(--ok-rgb),0.45); }
+#ctx-menu { background: linear-gradient(160deg, var(--surface-3), var(--surface-2)); border: 1px solid var(--border-2);
+  border-radius: var(--r-md); box-shadow: inset 0 1px 0 rgba(var(--gold-5-rgb),0.16), var(--e4); }
+.modal-title, .seat-modal-title, .arb-title, .asp-title { font-family: var(--font-display); color: var(--gold-4); letter-spacing: 0.12em; }
+.modal-title { padding-bottom: 0.55rem; margin-bottom: 0.8rem; border-bottom: 1px solid var(--border-1); }
+/* button states: hover / active / disabled / loading */
+:where(button, .btn, .act-btn, .settings-btn, .mode-btn, .mode-card, .lr-tab, .step-btn, .lock-btn, .lobby-chat-send, .wr-back-game-btn, .wr-change-char-btn, .elim-wr-btn, .cam-panel-btn, .invite-primary, .auction-bid-btn, .asp-toggle, .asp-action, .asp-close, .av-btn, .arrange-seats-btn, .rules-overlay-close, .elo-close, .lobby-kick-btn, .cpu-char-btn, .mobile-rules-btn, .tgt-item, .ctx-item, .log-toggle, .log-pin) { transition: background-color var(--dur-fast) var(--ease-emphasis), border-color var(--dur-fast) var(--ease-emphasis),
+  color var(--dur-fast) var(--ease-emphasis), box-shadow var(--dur-fast) var(--ease-emphasis), filter var(--dur-fast) var(--ease-emphasis),
+  transform var(--dur-fast) var(--ease-emphasis), opacity var(--dur-fast) var(--ease-emphasis); }
+:where(button, .btn, .act-btn, .settings-btn, .mode-btn, .mode-card, .lr-tab, .step-btn, .lock-btn, .lobby-chat-send, .wr-back-game-btn, .wr-change-char-btn, .elim-wr-btn, .cam-panel-btn, .invite-primary, .auction-bid-btn, .asp-toggle, .asp-action, .asp-close, .av-btn, .arrange-seats-btn, .rules-overlay-close, .elo-close, .lobby-kick-btn, .cpu-char-btn, .mobile-rules-btn, .tgt-item, .ctx-item, .log-toggle, .log-pin):hover:not(:disabled):not([aria-disabled="true"]) { filter: brightness(1.14); }
+:where(button, .btn, .act-btn, .settings-btn, .mode-btn, .mode-card, .lr-tab, .step-btn, .lock-btn, .lobby-chat-send, .wr-back-game-btn, .wr-change-char-btn, .elim-wr-btn, .cam-panel-btn, .invite-primary, .auction-bid-btn, .asp-toggle, .asp-action, .asp-close, .av-btn, .arrange-seats-btn, .rules-overlay-close, .elo-close, .lobby-kick-btn, .cpu-char-btn, .mobile-rules-btn, .tgt-item, .ctx-item, .log-toggle, .log-pin):active:not(:disabled):not([aria-disabled="true"]) { filter: brightness(0.9); }
+:where(button, .btn, .act-btn, .settings-btn, .mode-btn, .mode-card, .lr-tab, .step-btn, .lock-btn, .lobby-chat-send, .wr-back-game-btn, .wr-change-char-btn, .elim-wr-btn, .cam-panel-btn, .invite-primary, .auction-bid-btn, .asp-toggle, .asp-action, .asp-close, .av-btn, .arrange-seats-btn, .rules-overlay-close, .elo-close, .lobby-kick-btn, .cpu-char-btn, .mobile-rules-btn, .tgt-item, .ctx-item, .log-toggle, .log-pin):disabled, :where(button, .btn, .act-btn, .settings-btn, .mode-btn, .mode-card, .lr-tab, .step-btn, .lock-btn, .lobby-chat-send, .wr-back-game-btn, .wr-change-char-btn, .elim-wr-btn, .cam-panel-btn, .invite-primary, .auction-bid-btn, .asp-toggle, .asp-action, .asp-close, .av-btn, .arrange-seats-btn, .rules-overlay-close, .elo-close, .lobby-kick-btn, .cpu-char-btn, .mobile-rules-btn, .tgt-item, .ctx-item, .log-toggle, .log-pin)[aria-disabled="true"] { opacity: 0.38; cursor: not-allowed; filter: grayscale(0.5); box-shadow: none; }
+:where(button, .btn, .act-btn, .settings-btn, .mode-btn, .mode-card, .lr-tab, .step-btn, .lock-btn, .lobby-chat-send, .wr-back-game-btn, .wr-change-char-btn, .elim-wr-btn, .cam-panel-btn, .invite-primary, .auction-bid-btn, .asp-toggle, .asp-action, .asp-close, .av-btn, .arrange-seats-btn, .rules-overlay-close, .elo-close, .lobby-kick-btn, .cpu-char-btn, .mobile-rules-btn, .tgt-item, .ctx-item, .log-toggle, .log-pin)[aria-busy="true"] { position: relative; color: transparent !important; pointer-events: none; }
+:where(button, .btn, .act-btn, .settings-btn, .mode-btn, .mode-card, .lr-tab, .step-btn, .lock-btn, .lobby-chat-send, .wr-back-game-btn, .wr-change-char-btn, .elim-wr-btn, .cam-panel-btn, .invite-primary, .auction-bid-btn, .asp-toggle, .asp-action, .asp-close, .av-btn, .arrange-seats-btn, .rules-overlay-close, .elo-close, .lobby-kick-btn, .cpu-char-btn, .mobile-rules-btn, .tgt-item, .ctx-item, .log-toggle, .log-pin)[aria-busy="true"]::after { content: ''; position: absolute; left: 50%; top: 50%; width: 14px; height: 14px; margin: -7px 0 0 -7px;
+  inset: auto; opacity: 1; background: none; border-radius: 50%; border: 2px solid rgba(var(--gold-4-rgb),0.3); border-top-color: var(--gold-5);
+  animation: spinnerRot 0.8s linear infinite; }
+.btn[aria-busy="true"]::after { inset: auto; left: 50%; top: 50%; }
+.action-card.disabled, .respond-zone[aria-disabled="true"] { filter: grayscale(0.4); }
+/* focus: one visible ring on everything interactive */
+:is(a[href], button, input, select, textarea, summary, [tabindex], [role="button"], [role="switch"], .action-card, .respond-zone, .tgt-item, .exch-card, .char-card, .mode-card, .toggle, .seat-token, .discard-stacks):focus-visible { outline: 2px solid var(--focus); outline-offset: 3px; }
+.input:focus-visible, .lobby-chat-input:focus-visible, .timing-slider:focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; }
+.action-card:focus-visible, .respond-zone:focus-visible { outline-offset: 4px; z-index: 6; }
+:focus:not(:focus-visible) { outline: none; }
+/* top bar never wraps its counters */
+.tb-right, #tb-round, .tb-room { white-space: nowrap; }
+/* event log hierarchy */
+.ev { color: var(--text-2); border-bottom: 1px solid rgba(var(--text-0-rgb),0.035); }
+.ev.action { color: var(--text-1); }
+.ev .ev-name, .ev .ev-tgt { font-family: var(--font-label); font-weight: 700; font-variant-caps: all-small-caps; letter-spacing: 0.05em;
+  font-size: 1.06em; padding: 0 0.3em 0.05em; border-radius: var(--r-xs);
+  background: rgba(var(--text-0-rgb),0.06); background: color-mix(in srgb, currentColor 17%, transparent);
+  box-shadow: inset 0 0 0 1px rgba(var(--text-0-rgb),0.06); text-shadow: 0 1px 1px rgba(0,0,0,0.6); }
+.ev.system { border-bottom-color: transparent; }
+.log-head { color: var(--gold-2); }
 
 /* ══ v92 reduced motion (item 10) — keep this block LAST in the stylesheet ══ */
 @media (prefers-reduced-motion: reduce) {
@@ -4056,6 +4101,7 @@ function swapRevealedCardForFresh(player, role) {
 // SCREEN HELPERS
 // ════════════════════════════════════════
 function showScr(id) {
+  try { v92ClearBusy(); } catch(e) {}
   setTimeout(() => { try { avUpdateFab(); if (!isSolo && (avRoom())) { avEnsureSignaling(); avEnsurePeers(); } avAttach(); } catch(e){} }, 30);
   document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
   document.getElementById('screen-' + id).classList.add('active');
@@ -4119,7 +4165,7 @@ function buildLobby(mode) {
       <div class="input-wrap"><label class="input-label">Room Code</label><input class="input" id="l-code" placeholder="4 letters" maxlength="4" style="text-transform:uppercase;letter-spacing:0.25em;font-size:var(--fs-xl)"/></div>
       <div style="font-size:var(--fs-xs);color:var(--text-3);text-align:center;margin:-0.3rem 0 0.7rem;line-height:1.7">You'll pick your character next — that's who you are at the table.</div>
       <div style="display:flex;gap:0.5rem;">
-        <button class="btn primary" style="flex:1" id="join-btn" onclick="guestJoin()">Join Room</button>
+        <button class="btn primary" style="flex:1" id="join-btn" onclick="v92Busy(this); guestJoin()">Join Room</button>
         <button class="btn ghost" onclick="goHome()">Back</button>
       </div>
     </div>`;
@@ -9556,7 +9602,45 @@ function rndCode(){return Math.random().toString(36).substr(2,4).toUpperCase();}
   document.addEventListener('animationend', done, true);
   document.addEventListener('animationcancel', done, true);
 })();
-function toast(msg){const el=document.createElement('div');el.className='toast';el.textContent=msg;document.getElementById('toast-area').appendChild(el);setTimeout(()=>el.remove(),3300);}
+// v92: presentational busy state for buttons that start async work; cleared by the next toast or screen change
+function v92Busy(btn) {
+  if (!btn) return;
+  btn.setAttribute('aria-busy', 'true');
+  clearTimeout(btn._v92busy);
+  btn._v92busy = setTimeout(() => btn.removeAttribute('aria-busy'), 8000);
+}
+function v92ClearBusy() { document.querySelectorAll('[aria-busy="true"]').forEach(b => b.removeAttribute('aria-busy')); }
+// v92: make the game's clickable <div>s reachable and operable from the keyboard
+(function () {
+  const SEL = '.action-card, .respond-zone, .tgt-item, .exch-card, .char-card, .mode-card, .toggle, .seat-token, .discard-stacks, ' +
+              '.char-mini-card, .room-code-big, .room-code-mini, .ctx-item, .showcase-card, [onclick]';
+  const NATIVE = /^(BUTTON|A|INPUT|SELECT|TEXTAREA|SUMMARY|OPTION|LABEL)$/;
+  let queued = false;
+  const scan = () => {
+    queued = false;
+    document.querySelectorAll(SEL).forEach(el => {
+      if (NATIVE.test(el.tagName) || el.id === 'modal-overlay' || el.id === 'seat-modal-overlay' || el.classList.contains('auction-flip-overlay')) return;
+      const off = el.classList.contains('disabled') || el.classList.contains('taken') || el.classList.contains('ctx-disabled');
+      const want = off ? '-1' : '0';
+      if (el.getAttribute('tabindex') !== want) el.setAttribute('tabindex', want);
+      if (!el.hasAttribute('role')) el.setAttribute('role', el.classList.contains('toggle') ? 'switch' : 'button');
+      if (off) el.setAttribute('aria-disabled', 'true'); else el.removeAttribute('aria-disabled');
+      if (el.classList.contains('toggle')) el.setAttribute('aria-checked', el.classList.contains('on') ? 'true' : 'false');
+    });
+  };
+  const queue = () => { if (!queued) { queued = true; requestAnimationFrame(scan); } };
+  new MutationObserver(queue).observe(document.documentElement, { childList: true, subtree: true, attributes: true, attributeFilter: ['class'] });
+  document.addEventListener('DOMContentLoaded', scan);
+  document.addEventListener('keydown', e => {
+    if (e.key !== 'Enter' && e.key !== ' ') return;
+    const el = e.target;
+    if (!el || NATIVE.test(el.tagName) || !el.matches || !el.matches(SEL)) return;
+    if (el.getAttribute('aria-disabled') === 'true') return;
+    e.preventDefault();
+    el.click();
+  });
+})();
+function toast(msg){v92ClearBusy();const el=document.createElement('div');el.className='toast';el.textContent=msg;document.getElementById('toast-area').appendChild(el);setTimeout(()=>el.remove(),3300);}
 
 // ════════════════════════════════════════
 // SETTINGS / RULES MODALS
