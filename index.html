@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>COUP — Online</title>
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
@@ -1691,6 +1691,14 @@ body { -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; 
   .modal .btn, .char-screen-inner .btn { white-space: normal; line-height: 1.2; overflow-wrap: anywhere; }
   .showcase-card { width: 52px; height: 70px; }
   .showcase-card .sc-name { display: none; }
+}
+
+/* ══ v92 touch (item 5): zoom is allowed; only the controls opt out of double-tap zoom ══ */
+button, .btn, input, select, textarea, label, [onclick], [role="button"], .action-card, .respond-zone, .tgt-item,
+.exch-card, .char-card, .mode-card, .toggle, .seat-token, .lr-tab, .settings-btn, .discard-stacks, .arena-frame {
+  touch-action: manipulation; }
+@media (pointer: coarse) {
+  input:not([type="range"]):not([type="checkbox"]), select, textarea { font-size: max(16px, 1em); }
 }
 
 </style>
