@@ -1,0 +1,3039 @@
+{
+  "desktop-1920": {
+    "landing": {
+      "minFont": 11.2368,
+      "minFontAt": "div#screen-landing.screen.active > div.landing-grid > div.landing-center > div \"Bluff. Challenge. Surviv\"",
+      "font": [],
+      "overflow": [],
+      "portraitOver": [],
+      "focus": [],
+      "portraits": [
+        {
+          "key": "?",
+          "scale": 0.461,
+          "ctx": "div.wall-frame2 > div.wall-window > span.pcrop > img.pimg",
+          "nw": 375,
+          "nh": 338,
+          "box": "175x124"
+        },
+        {
+          "key": "?",
+          "scale": 0.337,
+          "ctx": "div.wall-hang > div.wall-frame2 > div.wall-window > img.pimg",
+          "nw": 179,
+          "nh": 360,
+          "box": "61x123"
+        },
+        {
+          "key": "?",
+          "scale": 0.353,
+          "ctx": "div.wall-frame2 > div.wall-window > span.pcrop > img.pimg",
+          "nw": 294,
+          "nh": 360,
+          "box": "105x124"
+        },
+        {
+          "key": "?",
+          "scale": 0.441,
+          "ctx": "div.wall-frame2 > div.wall-window > span.pcrop > img.pimg",
+          "nw": 439,
+          "nh": 360,
+          "box": "196x124"
+        },
+        {
+          "key": "?",
+          "scale": 0.337,
+          "ctx": "div.wall-hang > div.wall-frame2 > div.wall-window > img.pimg",
+          "nw": 266,
+          "nh": 360,
+          "box": "91x123"
+        },
+        {
+          "key": "?",
+          "scale": 0.34,
+          "ctx": "div.wall-hang > div.wall-frame2 > div.wall-window > img.pimg",
+          "nw": 238,
+          "nh": 360,
+          "box": "82x124"
+        },
+        {
+          "key": "?",
+          "scale": 0.337,
+          "ctx": "div.wall-hang > div.wall-frame2 > div.wall-window > img.pimg",
+          "nw": 241,
+          "nh": 360,
+          "box": "83x123"
+        },
+        {
+          "key": "?",
+          "scale": 0.337,
+          "ctx": "div.wall-hang > div.wall-frame2 > div.wall-window > img.pimg",
+          "nw": 196,
+          "nh": 360,
+          "box": "67x123"
+        },
+        {
+          "key": "?",
+          "scale": 0.34,
+          "ctx": "div.wall-hang > div.wall-frame2 > div.wall-window > img.pimg",
+          "nw": 226,
+          "nh": 360,
+          "box": "78x124"
+        },
+        {
+          "key": "?",
+          "scale": 0.409,
+          "ctx": "div.wall-frame2 > div.wall-window > span.pcrop > img.pimg",
+          "nw": 215,
+          "nh": 360,
+          "box": "89x124"
+        },
+        {
+          "key": "?",
+          "scale": 0.337,
+          "ctx": "div.wall-hang > div.wall-frame2 > div.wall-window > img.pimg",
+          "nw": 223,
+          "nh": 360,
+          "box": "77x123"
+        },
+        {
+          "key": "?",
+          "scale": 0.388,
+          "ctx": "div.wall-frame2 > div.wall-window > span.pcrop > img.pimg",
+          "nw": 206,
+          "nh": 360,
+          "box": "81x124"
+        },
+        {
+          "key": "?",
+          "scale": 0.339,
+          "ctx": "div.wall-hang > div.wall-frame2 > div.wall-window > img.pimg",
+          "nw": 300,
+          "nh": 360,
+          "box": "103x124"
+        },
+        {
+          "key": "?",
+          "scale": 0.34,
+          "ctx": "div.wall-hang > div.wall-frame2 > div.wall-window > img.pimg",
+          "nw": 279,
+          "nh": 360,
+          "box": "96x124"
+        },
+        {
+          "key": "?",
+          "scale": 0.44,
+          "ctx": "div.wall-frame2 > div.wall-window > span.pcrop > img.pimg",
+          "nw": 420,
+          "nh": 360,
+          "box": "187x124"
+        },
+        {
+          "key": "?",
+          "scale": 0.485,
+          "ctx": "div.wall-frame2 > div.wall-window > span.pcrop > img.pimg",
+          "nw": 218,
+          "nh": 277,
+          "box": "107x124"
+        },
+        {
+          "key": "?",
+          "scale": 0.339,
+          "ctx": "div.wall-hang > div.wall-frame2 > div.wall-window > img.pimg",
+          "nw": 259,
+          "nh": 360,
+          "box": "89x124"
+        },
+        {
+          "key": "?",
+          "scale": 0.337,
+          "ctx": "div.wall-hang > div.wall-frame2 > div.wall-window > img.pimg",
+          "nw": 267,
+          "nh": 360,
+          "box": "92x123"
+        },
+        {
+          "key": "?",
+          "scale": 0.338,
+          "ctx": "div.wall-hang > div.wall-frame2 > div.wall-window > img.pimg",
+          "nw": 278,
+          "nh": 360,
+          "box": "95x124"
+        },
+        {
+          "key": "?",
+          "scale": 0.34,
+          "ctx": "div.wall-hang > div.wall-frame2 > div.wall-window > img.pimg",
+          "nw": 250,
+          "nh": 360,
+          "box": "86x124"
+        }
+      ],
+      "focusableCount": 9
+    },
+    "rules": {
+      "minFont": 11.2368,
+      "minFontAt": "div#screen-landing.screen.active > div.landing-grid > div.landing-center > div \"Bluff. Challenge. Surviv\"",
+      "font": [],
+      "overflow": [],
+      "portraitOver": [],
+      "focus": [],
+      "portraits": [
+        {
+          "key": "?",
+          "scale": 0.34,
+          "ctx": "div.wall-hang > div.wall-frame2 > div.wall-window > img.pimg",
+          "nw": 279,
+          "nh": 360,
+          "box": "96x124"
+        },
+        {
+          "key": "?",
+          "scale": 0.339,
+          "ctx": "div.wall-hang > div.wall-frame2 > div.wall-window > img.pimg",
+          "nw": 300,
+          "nh": 360,
+          "box": "103x124"
+        },
+        {
+          "key": "?",
+          "scale": 0.337,
+          "ctx": "div.wall-hang > div.wall-frame2 > div.wall-window > img.pimg",
+          "nw": 223,
+          "nh": 360,
+          "box": "77x123"
+        },
+        {
+          "key": "?",
+          "scale": 0.409,
+          "ctx": "div.wall-frame2 > div.wall-window > span.pcrop > img.pimg",
+          "nw": 215,
+          "nh": 360,
+          "box": "89x124"
+        },
+        {
+          "key": "?",
+          "scale": 0.337,
+          "ctx": "div.wall-hang > div.wall-frame2 > div.wall-window > img.pimg",
+          "nw": 179,
+          "nh": 360,
+          "box": "61x123"
+        },
+        {
+          "key": "?",
+          "scale": 0.34,
+          "ctx": "div.wall-hang > div.wall-frame2 > div.wall-window > img.pimg",
+          "nw": 250,
+          "nh": 360,
+          "box": "86x124"
+        },
+        {
+          "key": "?",
+          "scale": 0.337,
+          "ctx": "div.wall-hang > div.wall-frame2 > div.wall-window > img.pimg",
+          "nw": 241,
+          "nh": 360,
+          "box": "83x123"
+        },
+        {
+          "key": "?",
+          "scale": 0.339,
+          "ctx": "div.wall-hang > div.wall-frame2 > div.wall-window > img.pimg",
+          "nw": 259,
+          "nh": 360,
+          "box": "89x124"
+        },
+        {
+          "key": "?",
+          "scale": 0.441,
+          "ctx": "div.wall-frame2 > div.wall-window > span.pcrop > img.pimg",
+          "nw": 439,
+          "nh": 360,
+          "box": "196x124"
+        },
+        {
+          "key": "?",
+          "scale": 0.485,
+          "ctx": "div.wall-frame2 > div.wall-window > span.pcrop > img.pimg",
+          "nw": 218,
+          "nh": 277,
+          "box": "107x124"
+        },
+        {
+          "key": "?",
+          "scale": 0.353,
+          "ctx": "div.wall-frame2 > div.wall-window > span.pcrop > img.pimg",
+          "nw": 294,
+          "nh": 360,
+          "box": "105x124"
+        },
+        {
+          "key": "?",
+          "scale": 0.337,
+          "ctx": "div.wall-hang > div.wall-frame2 > div.wall-window > img.pimg",
+          "nw": 196,
+          "nh": 360,
+          "box": "67x123"
+        },
+        {
+          "key": "?",
+          "scale": 0.44,
+          "ctx": "div.wall-frame2 > div.wall-window > span.pcrop > img.pimg",
+          "nw": 420,
+          "nh": 360,
+          "box": "187x124"
+        },
+        {
+          "key": "?",
+          "scale": 0.338,
+          "ctx": "div.wall-hang > div.wall-frame2 > div.wall-window > img.pimg",
+          "nw": 278,
+          "nh": 360,
+          "box": "95x124"
+        },
+        {
+          "key": "?",
+          "scale": 0.461,
+          "ctx": "div.wall-frame2 > div.wall-window > span.pcrop > img.pimg",
+          "nw": 375,
+          "nh": 338,
+          "box": "175x124"
+        },
+        {
+          "key": "?",
+          "scale": 0.34,
+          "ctx": "div.wall-hang > div.wall-frame2 > div.wall-window > img.pimg",
+          "nw": 226,
+          "nh": 360,
+          "box": "78x124"
+        },
+        {
+          "key": "?",
+          "scale": 0.388,
+          "ctx": "div.wall-frame2 > div.wall-window > span.pcrop > img.pimg",
+          "nw": 206,
+          "nh": 360,
+          "box": "81x124"
+        },
+        {
+          "key": "?",
+          "scale": 0.337,
+          "ctx": "div.wall-hang > div.wall-frame2 > div.wall-window > img.pimg",
+          "nw": 266,
+          "nh": 360,
+          "box": "91x123"
+        },
+        {
+          "key": "?",
+          "scale": 0.34,
+          "ctx": "div.wall-hang > div.wall-frame2 > div.wall-window > img.pimg",
+          "nw": 238,
+          "nh": 360,
+          "box": "82x124"
+        },
+        {
+          "key": "?",
+          "scale": 0.337,
+          "ctx": "div.wall-hang > div.wall-frame2 > div.wall-window > img.pimg",
+          "nw": 267,
+          "nh": 360,
+          "box": "92x123"
+        }
+      ],
+      "focusableCount": 15
+    },
+    "character": {
+      "minFont": 12.6416,
+      "minFontAt": "div#screen-character.screen.active > div.char-screen-inner > div.char-screen-head > div#char-screen-subtitle.char-subtitle \"CPUs will pick from whoe\"",
+      "font": [],
+      "overflow": [],
+      "portraitOver": [],
+      "focus": [],
+      "portraits": [
+        {
+          "key": "?",
+          "scale": 0.222,
+          "ctx": "div#char-grid.char-grid > div.char-card > div.char-avatar > img",
+          "nw": 215,
+          "nh": 360,
+          "box": "72x80"
+        },
+        {
+          "key": "?",
+          "scale": 0.222,
+          "ctx": "div#char-grid.char-grid > div.char-card > div.char-avatar > img",
+          "nw": 206,
+          "nh": 360,
+          "box": "72x80"
+        },
+        {
+          "key": "?",
+          "scale": 0.222,
+          "ctx": "div#char-grid.char-grid > div.char-card > div.char-avatar > img",
+          "nw": 294,
+          "nh": 360,
+          "box": "72x80"
+        },
+        {
+          "key": "?",
+          "scale": 0.164,
+          "ctx": "div#char-grid.char-grid > div.char-card > div.char-avatar > img",
+          "nw": 439,
+          "nh": 360,
+          "box": "72x80"
+        },
+        {
+          "key": "?",
+          "scale": 0.222,
+          "ctx": "div#char-grid.char-grid > div.char-card > div.char-avatar > img",
+          "nw": 267,
+          "nh": 360,
+          "box": "72x80"
+        },
+        {
+          "key": "?",
+          "scale": 0.222,
+          "ctx": "div#char-grid.char-grid > div.char-card > div.char-avatar > img",
+          "nw": 266,
+          "nh": 360,
+          "box": "72x80"
+        },
+        {
+          "key": "?",
+          "scale": 0.222,
+          "ctx": "div#char-grid.char-grid > div.char-card > div.char-avatar > img",
+          "nw": 278,
+          "nh": 360,
+          "box": "72x80"
+        },
+        {
+          "key": "?",
+          "scale": 0.222,
+          "ctx": "div#char-grid.char-grid > div.char-card > div.char-avatar > img",
+          "nw": 300,
+          "nh": 360,
+          "box": "72x80"
+        },
+        {
+          "key": "?",
+          "scale": 0.171,
+          "ctx": "div#char-grid.char-grid > div.char-card > div.char-avatar > img",
+          "nw": 420,
+          "nh": 360,
+          "box": "72x80"
+        },
+        {
+          "key": "?",
+          "scale": 0.222,
+          "ctx": "div#char-grid.char-grid > div.char-card > div.char-avatar > img",
+          "nw": 241,
+          "nh": 360,
+          "box": "72x80"
+        },
+        {
+          "key": "?",
+          "scale": 0.222,
+          "ctx": "div#char-grid.char-grid > div.char-card > div.char-avatar > img",
+          "nw": 259,
+          "nh": 360,
+          "box": "72x80"
+        },
+        {
+          "key": "?",
+          "scale": 0.222,
+          "ctx": "div#char-grid.char-grid > div.char-card > div.char-avatar > img",
+          "nw": 223,
+          "nh": 360,
+          "box": "72x80"
+        },
+        {
+          "key": "?",
+          "scale": 0.222,
+          "ctx": "div#char-grid.char-grid > div.char-card > div.char-avatar > img",
+          "nw": 226,
+          "nh": 360,
+          "box": "72x80"
+        },
+        {
+          "key": "?",
+          "scale": 0.289,
+          "ctx": "div#char-grid.char-grid > div.char-card > div.char-avatar > img",
+          "nw": 218,
+          "nh": 277,
+          "box": "72x80"
+        },
+        {
+          "key": "?",
+          "scale": 0.222,
+          "ctx": "div#char-grid.char-grid > div.char-card > div.char-avatar > img",
+          "nw": 250,
+          "nh": 360,
+          "box": "72x80"
+        },
+        {
+          "key": "?",
+          "scale": 0.222,
+          "ctx": "div#char-grid.char-grid > div.char-card > div.char-avatar > img",
+          "nw": 196,
+          "nh": 360,
+          "box": "72x80"
+        },
+        {
+          "key": "?",
+          "scale": 0.192,
+          "ctx": "div#char-grid.char-grid > div.char-card > div.char-avatar > img",
+          "nw": 375,
+          "nh": 338,
+          "box": "72x80"
+        },
+        {
+          "key": "?",
+          "scale": 0.222,
+          "ctx": "div#char-grid.char-grid > div.char-card > div.char-avatar > img",
+          "nw": 279,
+          "nh": 360,
+          "box": "72x80"
+        },
+        {
+          "key": "?",
+          "scale": 0.222,
+          "ctx": "div#char-grid.char-grid > div.char-card > div.char-avatar > img",
+          "nw": 238,
+          "nh": 360,
+          "box": "72x80"
+        },
+        {
+          "key": "?",
+          "scale": 0.222,
+          "ctx": "div#char-grid.char-grid > div.char-card > div.char-avatar > img",
+          "nw": 179,
+          "nh": 360,
+          "box": "72x80"
+        }
+      ],
+      "focusableCount": 22
+    },
+    "lobby": {
+      "minFont": 11.2368,
+      "minFontAt": "div.panel > div.lobby-players > div.lobby-player > span.lobby-tag \"YOU\"",
+      "font": [],
+      "overflow": [],
+      "portraitOver": [],
+      "focus": [],
+      "portraits": [
+        {
+          "key": "?",
+          "scale": 0.167,
+          "ctx": "div.lobby-players > div.lobby-player > div.lobby-avatar > img",
+          "nw": 278,
+          "nh": 360,
+          "box": "54x60"
+        },
+        {
+          "key": "?",
+          "scale": 0.167,
+          "ctx": "div.lobby-players > div.lobby-player > div.lobby-avatar > img",
+          "nw": 226,
+          "nh": 360,
+          "box": "54x60"
+        },
+        {
+          "key": "?",
+          "scale": 0.144,
+          "ctx": "div.lobby-players > div.lobby-player > div.lobby-avatar > img",
+          "nw": 375,
+          "nh": 338,
+          "box": "54x60"
+        },
+        {
+          "key": "?",
+          "scale": 0.167,
+          "ctx": "div.lobby-players > div.lobby-player > div.lobby-avatar > img",
+          "nw": 300,
+          "nh": 360,
+          "box": "54x60"
+        }
+      ],
+      "focusableCount": 15
+    },
+    "waiting": {
+      "minFont": 11.2368,
+      "minFontAt": "div.waiting-inner > div.waiting-panel > div > div#waiting-count.player-count-badge \"0 / 6 players\"",
+      "font": [],
+      "overflow": [],
+      "portraitOver": [],
+      "focus": [],
+      "portraits": [],
+      "focusableCount": 4
+    },
+    "game": {
+      "minFont": 11.2368,
+      "minFontAt": "div#screen-game.screen.active > div#top-bar > div#tb-room.tb-room \"Solo\"",
+      "font": [],
+      "overflow": [],
+      "portraitOver": [],
+      "focus": [],
+      "portraits": [
+        {
+          "key": "?",
+          "scale": 0.547,
+          "ctx": "div.seat.arena-frame > div.af-body > div.af-portrait > img.pimg",
+          "nw": 300,
+          "nh": 360,
+          "box": "164x197"
+        },
+        {
+          "key": "?",
+          "scale": 0.621,
+          "ctx": "div.af-body > div.af-portrait > span.pcrop > img.pimg",
+          "nw": 206,
+          "nh": 360,
+          "box": "128x197"
+        },
+        {
+          "key": "?",
+          "scale": 0.547,
+          "ctx": "div.seat.arena-frame > div.af-body > div.af-portrait > img.pimg",
+          "nw": 266,
+          "nh": 360,
+          "box": "146x197"
+        },
+        {
+          "key": "?",
+          "scale": 0.309,
+          "ctx": "div#my-dock > div.seat.is-me > div.me-chip > img.pimg",
+          "nw": 278,
+          "nh": 360,
+          "box": "86x112"
+        }
+      ],
+      "focusableCount": 14
+    },
+    "modal": {
+      "minFont": 11.2368,
+      "minFontAt": "div#screen-game.screen.active > div#top-bar > div#tb-room.tb-room \"Solo\"",
+      "font": [],
+      "overflow": [],
+      "portraitOver": [],
+      "focus": [],
+      "portraits": [
+        {
+          "key": "?",
+          "scale": 0.547,
+          "ctx": "div.seat.arena-frame > div.af-body > div.af-portrait > img.pimg",
+          "nw": 300,
+          "nh": 360,
+          "box": "164x197"
+        },
+        {
+          "key": "?",
+          "scale": 0.621,
+          "ctx": "div.af-body > div.af-portrait > span.pcrop > img.pimg",
+          "nw": 206,
+          "nh": 360,
+          "box": "128x197"
+        },
+        {
+          "key": "?",
+          "scale": 0.547,
+          "ctx": "div.seat.arena-frame > div.af-body > div.af-portrait > img.pimg",
+          "nw": 266,
+          "nh": 360,
+          "box": "146x197"
+        },
+        {
+          "key": "?",
+          "scale": 0.309,
+          "ctx": "div#my-dock > div.seat.is-me > div.me-chip > img.pimg",
+          "nw": 278,
+          "nh": 360,
+          "box": "86x112"
+        }
+      ],
+      "focusableCount": 28
+    },
+    "auction": {
+      "minFont": 11.2368,
+      "minFontAt": "div#screen-auction.screen.active > div#auction-layout > div#auction-hist-panel.auction-side-panel > div.auction-side-label \"Auctioned\"",
+      "font": [],
+      "overflow": [],
+      "portraitOver": [],
+      "focus": [],
+      "portraits": [],
+      "focusableCount": 2
+    },
+    "reveal": {
+      "minFont": 11.2368,
+      "minFontAt": "div#reveal-grid.reveal-grid > div.reveal-card.winner-card > div.reveal-player-name > span \"👑\"",
+      "font": [],
+      "overflow": [],
+      "portraitOver": [],
+      "focus": [],
+      "portraits": [],
+      "focusableCount": 3
+    },
+    "winner": {
+      "minFont": 11.2368,
+      "minFontAt": "div#screen-winner.screen.active > div#winner-stats > div \"FINAL STANDINGS\"",
+      "font": [],
+      "overflow": [],
+      "portraitOver": [],
+      "focus": [],
+      "portraits": [
+        {
+          "key": "?",
+          "scale": 0.583,
+          "ctx": "div#winner-portrait > div.win-frame > div.win-port > img.pimg",
+          "nw": 278,
+          "nh": 360,
+          "box": "162x210"
+        }
+      ],
+      "focusableCount": 3
+    },
+    "__errors": {
+      "pageerrors": [],
+      "consoleErrors": []
+    }
+  },
+  "laptop-1440": {
+    "landing": {
+      "minFont": 11.2368,
+      "minFontAt": "div#screen-landing.screen.active > div.landing-grid > div.landing-center > div \"Bluff. Challenge. Surviv\"",
+      "font": [],
+      "overflow": [],
+      "portraitOver": [],
+      "focus": [],
+      "portraits": [
+        {
+          "key": "?",
+          "scale": 0.461,
+          "ctx": "div.wall-frame2 > div.wall-window > span.pcrop > img.pimg",
+          "nw": 375,
+          "nh": 338,
+          "box": "175x124"
+        },
+        {
+          "key": "?",
+          "scale": 0.337,
+          "ctx": "div.wall-hang > div.wall-frame2 > div.wall-window > img.pimg",
+          "nw": 179,
+          "nh": 360,
+          "box": "61x123"
+        },
+        {
+          "key": "?",
+          "scale": 0.353,
+          "ctx": "div.wall-frame2 > div.wall-window > span.pcrop > img.pimg",
+          "nw": 294,
+          "nh": 360,
+          "box": "105x124"
+        },
+        {
+          "key": "?",
+          "scale": 0.441,
+          "ctx": "div.wall-frame2 > div.wall-window > span.pcrop > img.pimg",
+          "nw": 439,
+          "nh": 360,
+          "box": "196x124"
+        },
+        {
+          "key": "?",
+          "scale": 0.337,
+          "ctx": "div.wall-hang > div.wall-frame2 > div.wall-window > img.pimg",
+          "nw": 266,
+          "nh": 360,
+          "box": "91x123"
+        },
+        {
+          "key": "?",
+          "scale": 0.34,
+          "ctx": "div.wall-hang > div.wall-frame2 > div.wall-window > img.pimg",
+          "nw": 238,
+          "nh": 360,
+          "box": "82x124"
+        },
+        {
+          "key": "?",
+          "scale": 0.337,
+          "ctx": "div.wall-hang > div.wall-frame2 > div.wall-window > img.pimg",
+          "nw": 241,
+          "nh": 360,
+          "box": "83x123"
+        },
+        {
+          "key": "?",
+          "scale": 0.337,
+          "ctx": "div.wall-hang > div.wall-frame2 > div.wall-window > img.pimg",
+          "nw": 196,
+          "nh": 360,
+          "box": "67x123"
+        },
+        {
+          "key": "?",
+          "scale": 0.34,
+          "ctx": "div.wall-hang > div.wall-frame2 > div.wall-window > img.pimg",
+          "nw": 226,
+          "nh": 360,
+          "box": "78x124"
+        },
+        {
+          "key": "?",
+          "scale": 0.409,
+          "ctx": "div.wall-frame2 > div.wall-window > span.pcrop > img.pimg",
+          "nw": 215,
+          "nh": 360,
+          "box": "89x124"
+        },
+        {
+          "key": "?",
+          "scale": 0.337,
+          "ctx": "div.wall-hang > div.wall-frame2 > div.wall-window > img.pimg",
+          "nw": 223,
+          "nh": 360,
+          "box": "77x123"
+        },
+        {
+          "key": "?",
+          "scale": 0.388,
+          "ctx": "div.wall-frame2 > div.wall-window > span.pcrop > img.pimg",
+          "nw": 206,
+          "nh": 360,
+          "box": "81x124"
+        },
+        {
+          "key": "?",
+          "scale": 0.339,
+          "ctx": "div.wall-hang > div.wall-frame2 > div.wall-window > img.pimg",
+          "nw": 300,
+          "nh": 360,
+          "box": "103x124"
+        },
+        {
+          "key": "?",
+          "scale": 0.34,
+          "ctx": "div.wall-hang > div.wall-frame2 > div.wall-window > img.pimg",
+          "nw": 279,
+          "nh": 360,
+          "box": "96x124"
+        },
+        {
+          "key": "?",
+          "scale": 0.44,
+          "ctx": "div.wall-frame2 > div.wall-window > span.pcrop > img.pimg",
+          "nw": 420,
+          "nh": 360,
+          "box": "187x124"
+        },
+        {
+          "key": "?",
+          "scale": 0.485,
+          "ctx": "div.wall-frame2 > div.wall-window > span.pcrop > img.pimg",
+          "nw": 218,
+          "nh": 277,
+          "box": "107x124"
+        },
+        {
+          "key": "?",
+          "scale": 0.339,
+          "ctx": "div.wall-hang > div.wall-frame2 > div.wall-window > img.pimg",
+          "nw": 259,
+          "nh": 360,
+          "box": "89x124"
+        },
+        {
+          "key": "?",
+          "scale": 0.337,
+          "ctx": "div.wall-hang > div.wall-frame2 > div.wall-window > img.pimg",
+          "nw": 267,
+          "nh": 360,
+          "box": "92x123"
+        },
+        {
+          "key": "?",
+          "scale": 0.338,
+          "ctx": "div.wall-hang > div.wall-frame2 > div.wall-window > img.pimg",
+          "nw": 278,
+          "nh": 360,
+          "box": "95x124"
+        },
+        {
+          "key": "?",
+          "scale": 0.34,
+          "ctx": "div.wall-hang > div.wall-frame2 > div.wall-window > img.pimg",
+          "nw": 250,
+          "nh": 360,
+          "box": "86x124"
+        }
+      ],
+      "focusableCount": 9
+    },
+    "rules": {
+      "minFont": 11.2368,
+      "minFontAt": "div#screen-landing.screen.active > div.landing-grid > div.landing-center > div \"Bluff. Challenge. Surviv\"",
+      "font": [],
+      "overflow": [],
+      "portraitOver": [],
+      "focus": [],
+      "portraits": [
+        {
+          "key": "?",
+          "scale": 0.34,
+          "ctx": "div.wall-hang > div.wall-frame2 > div.wall-window > img.pimg",
+          "nw": 279,
+          "nh": 360,
+          "box": "96x124"
+        },
+        {
+          "key": "?",
+          "scale": 0.339,
+          "ctx": "div.wall-hang > div.wall-frame2 > div.wall-window > img.pimg",
+          "nw": 300,
+          "nh": 360,
+          "box": "103x124"
+        },
+        {
+          "key": "?",
+          "scale": 0.337,
+          "ctx": "div.wall-hang > div.wall-frame2 > div.wall-window > img.pimg",
+          "nw": 223,
+          "nh": 360,
+          "box": "77x123"
+        },
+        {
+          "key": "?",
+          "scale": 0.409,
+          "ctx": "div.wall-frame2 > div.wall-window > span.pcrop > img.pimg",
+          "nw": 215,
+          "nh": 360,
+          "box": "89x124"
+        },
+        {
+          "key": "?",
+          "scale": 0.337,
+          "ctx": "div.wall-hang > div.wall-frame2 > div.wall-window > img.pimg",
+          "nw": 179,
+          "nh": 360,
+          "box": "61x123"
+        },
+        {
+          "key": "?",
+          "scale": 0.34,
+          "ctx": "div.wall-hang > div.wall-frame2 > div.wall-window > img.pimg",
+          "nw": 250,
+          "nh": 360,
+          "box": "86x124"
+        },
+        {
+          "key": "?",
+          "scale": 0.337,
+          "ctx": "div.wall-hang > div.wall-frame2 > div.wall-window > img.pimg",
+          "nw": 241,
+          "nh": 360,
+          "box": "83x123"
+        },
+        {
+          "key": "?",
+          "scale": 0.339,
+          "ctx": "div.wall-hang > div.wall-frame2 > div.wall-window > img.pimg",
+          "nw": 259,
+          "nh": 360,
+          "box": "89x124"
+        },
+        {
+          "key": "?",
+          "scale": 0.441,
+          "ctx": "div.wall-frame2 > div.wall-window > span.pcrop > img.pimg",
+          "nw": 439,
+          "nh": 360,
+          "box": "196x124"
+        },
+        {
+          "key": "?",
+          "scale": 0.485,
+          "ctx": "div.wall-frame2 > div.wall-window > span.pcrop > img.pimg",
+          "nw": 218,
+          "nh": 277,
+          "box": "107x124"
+        },
+        {
+          "key": "?",
+          "scale": 0.353,
+          "ctx": "div.wall-frame2 > div.wall-window > span.pcrop > img.pimg",
+          "nw": 294,
+          "nh": 360,
+          "box": "105x124"
+        },
+        {
+          "key": "?",
+          "scale": 0.337,
+          "ctx": "div.wall-hang > div.wall-frame2 > div.wall-window > img.pimg",
+          "nw": 196,
+          "nh": 360,
+          "box": "67x123"
+        },
+        {
+          "key": "?",
+          "scale": 0.44,
+          "ctx": "div.wall-frame2 > div.wall-window > span.pcrop > img.pimg",
+          "nw": 420,
+          "nh": 360,
+          "box": "187x124"
+        },
+        {
+          "key": "?",
+          "scale": 0.338,
+          "ctx": "div.wall-hang > div.wall-frame2 > div.wall-window > img.pimg",
+          "nw": 278,
+          "nh": 360,
+          "box": "95x124"
+        },
+        {
+          "key": "?",
+          "scale": 0.461,
+          "ctx": "div.wall-frame2 > div.wall-window > span.pcrop > img.pimg",
+          "nw": 375,
+          "nh": 338,
+          "box": "175x124"
+        },
+        {
+          "key": "?",
+          "scale": 0.34,
+          "ctx": "div.wall-hang > div.wall-frame2 > div.wall-window > img.pimg",
+          "nw": 226,
+          "nh": 360,
+          "box": "78x124"
+        },
+        {
+          "key": "?",
+          "scale": 0.388,
+          "ctx": "div.wall-frame2 > div.wall-window > span.pcrop > img.pimg",
+          "nw": 206,
+          "nh": 360,
+          "box": "81x124"
+        },
+        {
+          "key": "?",
+          "scale": 0.337,
+          "ctx": "div.wall-hang > div.wall-frame2 > div.wall-window > img.pimg",
+          "nw": 266,
+          "nh": 360,
+          "box": "91x123"
+        },
+        {
+          "key": "?",
+          "scale": 0.34,
+          "ctx": "div.wall-hang > div.wall-frame2 > div.wall-window > img.pimg",
+          "nw": 238,
+          "nh": 360,
+          "box": "82x124"
+        },
+        {
+          "key": "?",
+          "scale": 0.337,
+          "ctx": "div.wall-hang > div.wall-frame2 > div.wall-window > img.pimg",
+          "nw": 267,
+          "nh": 360,
+          "box": "92x123"
+        }
+      ],
+      "focusableCount": 15
+    },
+    "character": {
+      "minFont": 12.6416,
+      "minFontAt": "div#screen-character.screen.active > div.char-screen-inner > div.char-screen-head > div#char-screen-subtitle.char-subtitle \"CPUs will pick from whoe\"",
+      "font": [],
+      "overflow": [],
+      "portraitOver": [],
+      "focus": [],
+      "portraits": [
+        {
+          "key": "?",
+          "scale": 0.222,
+          "ctx": "div#char-grid.char-grid > div.char-card > div.char-avatar > img",
+          "nw": 215,
+          "nh": 360,
+          "box": "72x80"
+        },
+        {
+          "key": "?",
+          "scale": 0.222,
+          "ctx": "div#char-grid.char-grid > div.char-card > div.char-avatar > img",
+          "nw": 206,
+          "nh": 360,
+          "box": "72x80"
+        },
+        {
+          "key": "?",
+          "scale": 0.222,
+          "ctx": "div#char-grid.char-grid > div.char-card > div.char-avatar > img",
+          "nw": 294,
+          "nh": 360,
+          "box": "72x80"
+        },
+        {
+          "key": "?",
+          "scale": 0.164,
+          "ctx": "div#char-grid.char-grid > div.char-card > div.char-avatar > img",
+          "nw": 439,
+          "nh": 360,
+          "box": "72x80"
+        },
+        {
+          "key": "?",
+          "scale": 0.222,
+          "ctx": "div#char-grid.char-grid > div.char-card > div.char-avatar > img",
+          "nw": 267,
+          "nh": 360,
+          "box": "72x80"
+        },
+        {
+          "key": "?",
+          "scale": 0.222,
+          "ctx": "div#char-grid.char-grid > div.char-card > div.char-avatar > img",
+          "nw": 266,
+          "nh": 360,
+          "box": "72x80"
+        },
+        {
+          "key": "?",
+          "scale": 0.222,
+          "ctx": "div#char-grid.char-grid > div.char-card > div.char-avatar > img",
+          "nw": 278,
+          "nh": 360,
+          "box": "72x80"
+        },
+        {
+          "key": "?",
+          "scale": 0.222,
+          "ctx": "div#char-grid.char-grid > div.char-card > div.char-avatar > img",
+          "nw": 300,
+          "nh": 360,
+          "box": "72x80"
+        },
+        {
+          "key": "?",
+          "scale": 0.171,
+          "ctx": "div#char-grid.char-grid > div.char-card > div.char-avatar > img",
+          "nw": 420,
+          "nh": 360,
+          "box": "72x80"
+        },
+        {
+          "key": "?",
+          "scale": 0.222,
+          "ctx": "div#char-grid.char-grid > div.char-card > div.char-avatar > img",
+          "nw": 241,
+          "nh": 360,
+          "box": "72x80"
+        },
+        {
+          "key": "?",
+          "scale": 0.222,
+          "ctx": "div#char-grid.char-grid > div.char-card > div.char-avatar > img",
+          "nw": 259,
+          "nh": 360,
+          "box": "72x80"
+        },
+        {
+          "key": "?",
+          "scale": 0.222,
+          "ctx": "div#char-grid.char-grid > div.char-card > div.char-avatar > img",
+          "nw": 223,
+          "nh": 360,
+          "box": "72x80"
+        },
+        {
+          "key": "?",
+          "scale": 0.222,
+          "ctx": "div#char-grid.char-grid > div.char-card > div.char-avatar > img",
+          "nw": 226,
+          "nh": 360,
+          "box": "72x80"
+        },
+        {
+          "key": "?",
+          "scale": 0.289,
+          "ctx": "div#char-grid.char-grid > div.char-card > div.char-avatar > img",
+          "nw": 218,
+          "nh": 277,
+          "box": "72x80"
+        },
+        {
+          "key": "?",
+          "scale": 0.222,
+          "ctx": "div#char-grid.char-grid > div.char-card > div.char-avatar > img",
+          "nw": 250,
+          "nh": 360,
+          "box": "72x80"
+        },
+        {
+          "key": "?",
+          "scale": 0.222,
+          "ctx": "div#char-grid.char-grid > div.char-card > div.char-avatar > img",
+          "nw": 196,
+          "nh": 360,
+          "box": "72x80"
+        },
+        {
+          "key": "?",
+          "scale": 0.192,
+          "ctx": "div#char-grid.char-grid > div.char-card > div.char-avatar > img",
+          "nw": 375,
+          "nh": 338,
+          "box": "72x80"
+        },
+        {
+          "key": "?",
+          "scale": 0.222,
+          "ctx": "div#char-grid.char-grid > div.char-card > div.char-avatar > img",
+          "nw": 279,
+          "nh": 360,
+          "box": "72x80"
+        },
+        {
+          "key": "?",
+          "scale": 0.222,
+          "ctx": "div#char-grid.char-grid > div.char-card > div.char-avatar > img",
+          "nw": 238,
+          "nh": 360,
+          "box": "72x80"
+        },
+        {
+          "key": "?",
+          "scale": 0.222,
+          "ctx": "div#char-grid.char-grid > div.char-card > div.char-avatar > img",
+          "nw": 179,
+          "nh": 360,
+          "box": "72x80"
+        }
+      ],
+      "focusableCount": 22
+    },
+    "lobby": {
+      "minFont": 11.2368,
+      "minFontAt": "div.panel > div.lobby-players > div.lobby-player > span.lobby-tag \"YOU\"",
+      "font": [],
+      "overflow": [],
+      "portraitOver": [],
+      "focus": [],
+      "portraits": [
+        {
+          "key": "?",
+          "scale": 0.167,
+          "ctx": "div.lobby-players > div.lobby-player > div.lobby-avatar > img",
+          "nw": 278,
+          "nh": 360,
+          "box": "54x60"
+        },
+        {
+          "key": "?",
+          "scale": 0.167,
+          "ctx": "div.lobby-players > div.lobby-player > div.lobby-avatar > img",
+          "nw": 226,
+          "nh": 360,
+          "box": "54x60"
+        },
+        {
+          "key": "?",
+          "scale": 0.144,
+          "ctx": "div.lobby-players > div.lobby-player > div.lobby-avatar > img",
+          "nw": 375,
+          "nh": 338,
+          "box": "54x60"
+        },
+        {
+          "key": "?",
+          "scale": 0.167,
+          "ctx": "div.lobby-players > div.lobby-player > div.lobby-avatar > img",
+          "nw": 300,
+          "nh": 360,
+          "box": "54x60"
+        }
+      ],
+      "focusableCount": 15
+    },
+    "waiting": {
+      "minFont": 11.2368,
+      "minFontAt": "div.waiting-inner > div.waiting-panel > div > div#waiting-count.player-count-badge \"0 / 6 players\"",
+      "font": [],
+      "overflow": [],
+      "portraitOver": [],
+      "focus": [],
+      "portraits": [],
+      "focusableCount": 4
+    },
+    "game": {
+      "minFont": 11.2368,
+      "minFontAt": "div#screen-game.screen.active > div#top-bar > div#tb-room.tb-room \"Solo\"",
+      "font": [],
+      "overflow": [],
+      "portraitOver": [],
+      "focus": [],
+      "portraits": [
+        {
+          "key": "?",
+          "scale": 0.533,
+          "ctx": "div.seat.arena-frame > div.af-body > div.af-portrait > img.pimg",
+          "nw": 300,
+          "nh": 360,
+          "box": "160x192"
+        },
+        {
+          "key": "?",
+          "scale": 0.607,
+          "ctx": "div.af-body > div.af-portrait > span.pcrop > img.pimg",
+          "nw": 206,
+          "nh": 360,
+          "box": "125x192"
+        },
+        {
+          "key": "?",
+          "scale": 0.533,
+          "ctx": "div.seat.arena-frame > div.af-body > div.af-portrait > img.pimg",
+          "nw": 266,
+          "nh": 360,
+          "box": "142x192"
+        },
+        {
+          "key": "?",
+          "scale": 0.309,
+          "ctx": "div#my-dock > div.seat.is-me > div.me-chip > img.pimg",
+          "nw": 278,
+          "nh": 360,
+          "box": "86x112"
+        }
+      ],
+      "focusableCount": 14
+    },
+    "modal": {
+      "minFont": 11.2368,
+      "minFontAt": "div#screen-game.screen.active > div#top-bar > div#tb-room.tb-room \"Solo\"",
+      "font": [],
+      "overflow": [],
+      "portraitOver": [],
+      "focus": [],
+      "portraits": [
+        {
+          "key": "?",
+          "scale": 0.533,
+          "ctx": "div.seat.arena-frame > div.af-body > div.af-portrait > img.pimg",
+          "nw": 300,
+          "nh": 360,
+          "box": "160x192"
+        },
+        {
+          "key": "?",
+          "scale": 0.607,
+          "ctx": "div.af-body > div.af-portrait > span.pcrop > img.pimg",
+          "nw": 206,
+          "nh": 360,
+          "box": "125x192"
+        },
+        {
+          "key": "?",
+          "scale": 0.533,
+          "ctx": "div.seat.arena-frame > div.af-body > div.af-portrait > img.pimg",
+          "nw": 266,
+          "nh": 360,
+          "box": "142x192"
+        },
+        {
+          "key": "?",
+          "scale": 0.309,
+          "ctx": "div#my-dock > div.seat.is-me > div.me-chip > img.pimg",
+          "nw": 278,
+          "nh": 360,
+          "box": "86x112"
+        }
+      ],
+      "focusableCount": 28
+    },
+    "auction": {
+      "minFont": 11.2368,
+      "minFontAt": "div#screen-auction.screen.active > div#auction-layout > div#auction-hist-panel.auction-side-panel > div.auction-side-label \"Auctioned\"",
+      "font": [],
+      "overflow": [],
+      "portraitOver": [],
+      "focus": [],
+      "portraits": [],
+      "focusableCount": 2
+    },
+    "reveal": {
+      "minFont": 11.2368,
+      "minFontAt": "div#reveal-grid.reveal-grid > div.reveal-card.winner-card > div.reveal-player-name > span \"👑\"",
+      "font": [],
+      "overflow": [],
+      "portraitOver": [],
+      "focus": [],
+      "portraits": [],
+      "focusableCount": 3
+    },
+    "winner": {
+      "minFont": 11.2368,
+      "minFontAt": "div#screen-winner.screen.active > div#winner-stats > div \"FINAL STANDINGS\"",
+      "font": [],
+      "overflow": [],
+      "portraitOver": [],
+      "focus": [],
+      "portraits": [
+        {
+          "key": "?",
+          "scale": 0.583,
+          "ctx": "div#winner-portrait > div.win-frame > div.win-port > img.pimg",
+          "nw": 278,
+          "nh": 360,
+          "box": "162x210"
+        }
+      ],
+      "focusableCount": 3
+    },
+    "__errors": {
+      "pageerrors": [],
+      "consoleErrors": []
+    }
+  },
+  "ipad-1024": {
+    "landing": {
+      "minFont": 11.2368,
+      "minFontAt": "div#screen-landing.screen.active > div.landing-grid > div.landing-center > div \"Bluff. Challenge. Surviv\"",
+      "font": [],
+      "overflow": [],
+      "portraitOver": [],
+      "focus": [],
+      "portraits": [
+        {
+          "key": "?",
+          "scale": 0.366,
+          "ctx": "div.wall-frame2 > div.wall-window > span.pcrop > img.pimg",
+          "nw": 375,
+          "nh": 338,
+          "box": "139x98"
+        },
+        {
+          "key": "?",
+          "scale": 0.269,
+          "ctx": "div.wall-hang > div.wall-frame2 > div.wall-window > img.pimg",
+          "nw": 179,
+          "nh": 360,
+          "box": "49x98"
+        },
+        {
+          "key": "?",
+          "scale": 0.279,
+          "ctx": "div.wall-frame2 > div.wall-window > span.pcrop > img.pimg",
+          "nw": 294,
+          "nh": 360,
+          "box": "83x98"
+        },
+        {
+          "key": "?",
+          "scale": 0.349,
+          "ctx": "div.wall-frame2 > div.wall-window > span.pcrop > img.pimg",
+          "nw": 439,
+          "nh": 360,
+          "box": "155x98"
+        },
+        {
+          "key": "?",
+          "scale": 0.267,
+          "ctx": "div.wall-hang > div.wall-frame2 > div.wall-window > img.pimg",
+          "nw": 266,
+          "nh": 360,
+          "box": "72x98"
+        },
+        {
+          "key": "?",
+          "scale": 0.269,
+          "ctx": "div.wall-hang > div.wall-frame2 > div.wall-window > img.pimg",
+          "nw": 238,
+          "nh": 360,
+          "box": "65x98"
+        },
+        {
+          "key": "?",
+          "scale": 0.269,
+          "ctx": "div.wall-hang > div.wall-frame2 > div.wall-window > img.pimg",
+          "nw": 241,
+          "nh": 360,
+          "box": "66x98"
+        },
+        {
+          "key": "?",
+          "scale": 0.267,
+          "ctx": "div.wall-hang > div.wall-frame2 > div.wall-window > img.pimg",
+          "nw": 196,
+          "nh": 360,
+          "box": "53x98"
+        },
+        {
+          "key": "?",
+          "scale": 0.269,
+          "ctx": "div.wall-hang > div.wall-frame2 > div.wall-window > img.pimg",
+          "nw": 226,
+          "nh": 360,
+          "box": "62x98"
+        },
+        {
+          "key": "?",
+          "scale": 0.322,
+          "ctx": "div.wall-frame2 > div.wall-window > span.pcrop > img.pimg",
+          "nw": 215,
+          "nh": 360,
+          "box": "70x98"
+        },
+        {
+          "key": "?",
+          "scale": 0.269,
+          "ctx": "div.wall-hang > div.wall-frame2 > div.wall-window > img.pimg",
+          "nw": 223,
+          "nh": 360,
+          "box": "61x98"
+        },
+        {
+          "key": "?",
+          "scale": 0.307,
+          "ctx": "div.wall-frame2 > div.wall-window > span.pcrop > img.pimg",
+          "nw": 206,
+          "nh": 360,
+          "box": "64x98"
+        },
+        {
+          "key": "?",
+          "scale": 0.269,
+          "ctx": "div.wall-hang > div.wall-frame2 > div.wall-window > img.pimg",
+          "nw": 300,
+          "nh": 360,
+          "box": "82x98"
+        },
+        {
+          "key": "?",
+          "scale": 0.269,
+          "ctx": "div.wall-hang > div.wall-frame2 > div.wall-window > img.pimg",
+          "nw": 279,
+          "nh": 360,
+          "box": "76x98"
+        },
+        {
+          "key": "?",
+          "scale": 0.35,
+          "ctx": "div.wall-frame2 > div.wall-window > span.pcrop > img.pimg",
+          "nw": 420,
+          "nh": 360,
+          "box": "149x98"
+        },
+        {
+          "key": "?",
+          "scale": 0.385,
+          "ctx": "div.wall-frame2 > div.wall-window > span.pcrop > img.pimg",
+          "nw": 218,
+          "nh": 277,
+          "box": "85x98"
+        },
+        {
+          "key": "?",
+          "scale": 0.269,
+          "ctx": "div.wall-hang > div.wall-frame2 > div.wall-window > img.pimg",
+          "nw": 259,
+          "nh": 360,
+          "box": "71x98"
+        },
+        {
+          "key": "?",
+          "scale": 0.269,
+          "ctx": "div.wall-hang > div.wall-frame2 > div.wall-window > img.pimg",
+          "nw": 267,
+          "nh": 360,
+          "box": "73x98"
+        },
+        {
+          "key": "?",
+          "scale": 0.269,
+          "ctx": "div.wall-hang > div.wall-frame2 > div.wall-window > img.pimg",
+          "nw": 278,
+          "nh": 360,
+          "box": "76x98"
+        },
+        {
+          "key": "?",
+          "scale": 0.269,
+          "ctx": "div.wall-hang > div.wall-frame2 > div.wall-window > img.pimg",
+          "nw": 250,
+          "nh": 360,
+          "box": "68x98"
+        }
+      ],
+      "focusableCount": 9
+    },
+    "rules": {
+      "minFont": 11.2368,
+      "minFontAt": "div#screen-landing.screen.active > div.landing-grid > div.landing-center > div \"Bluff. Challenge. Surviv\"",
+      "font": [],
+      "overflow": [],
+      "portraitOver": [],
+      "focus": [],
+      "portraits": [
+        {
+          "key": "?",
+          "scale": 0.269,
+          "ctx": "div.wall-hang > div.wall-frame2 > div.wall-window > img.pimg",
+          "nw": 279,
+          "nh": 360,
+          "box": "76x98"
+        },
+        {
+          "key": "?",
+          "scale": 0.269,
+          "ctx": "div.wall-hang > div.wall-frame2 > div.wall-window > img.pimg",
+          "nw": 300,
+          "nh": 360,
+          "box": "82x98"
+        },
+        {
+          "key": "?",
+          "scale": 0.269,
+          "ctx": "div.wall-hang > div.wall-frame2 > div.wall-window > img.pimg",
+          "nw": 223,
+          "nh": 360,
+          "box": "61x98"
+        },
+        {
+          "key": "?",
+          "scale": 0.322,
+          "ctx": "div.wall-frame2 > div.wall-window > span.pcrop > img.pimg",
+          "nw": 215,
+          "nh": 360,
+          "box": "70x98"
+        },
+        {
+          "key": "?",
+          "scale": 0.269,
+          "ctx": "div.wall-hang > div.wall-frame2 > div.wall-window > img.pimg",
+          "nw": 179,
+          "nh": 360,
+          "box": "49x98"
+        },
+        {
+          "key": "?",
+          "scale": 0.269,
+          "ctx": "div.wall-hang > div.wall-frame2 > div.wall-window > img.pimg",
+          "nw": 250,
+          "nh": 360,
+          "box": "68x98"
+        },
+        {
+          "key": "?",
+          "scale": 0.269,
+          "ctx": "div.wall-hang > div.wall-frame2 > div.wall-window > img.pimg",
+          "nw": 241,
+          "nh": 360,
+          "box": "66x98"
+        },
+        {
+          "key": "?",
+          "scale": 0.269,
+          "ctx": "div.wall-hang > div.wall-frame2 > div.wall-window > img.pimg",
+          "nw": 259,
+          "nh": 360,
+          "box": "71x98"
+        },
+        {
+          "key": "?",
+          "scale": 0.349,
+          "ctx": "div.wall-frame2 > div.wall-window > span.pcrop > img.pimg",
+          "nw": 439,
+          "nh": 360,
+          "box": "155x98"
+        },
+        {
+          "key": "?",
+          "scale": 0.385,
+          "ctx": "div.wall-frame2 > div.wall-window > span.pcrop > img.pimg",
+          "nw": 218,
+          "nh": 277,
+          "box": "85x98"
+        },
+        {
+          "key": "?",
+          "scale": 0.279,
+          "ctx": "div.wall-frame2 > div.wall-window > span.pcrop > img.pimg",
+          "nw": 294,
+          "nh": 360,
+          "box": "83x98"
+        },
+        {
+          "key": "?",
+          "scale": 0.267,
+          "ctx": "div.wall-hang > div.wall-frame2 > div.wall-window > img.pimg",
+          "nw": 196,
+          "nh": 360,
+          "box": "53x98"
+        },
+        {
+          "key": "?",
+          "scale": 0.35,
+          "ctx": "div.wall-frame2 > div.wall-window > span.pcrop > img.pimg",
+          "nw": 420,
+          "nh": 360,
+          "box": "149x98"
+        },
+        {
+          "key": "?",
+          "scale": 0.269,
+          "ctx": "div.wall-hang > div.wall-frame2 > div.wall-window > img.pimg",
+          "nw": 278,
+          "nh": 360,
+          "box": "76x98"
+        },
+        {
+          "key": "?",
+          "scale": 0.366,
+          "ctx": "div.wall-frame2 > div.wall-window > span.pcrop > img.pimg",
+          "nw": 375,
+          "nh": 338,
+          "box": "139x98"
+        },
+        {
+          "key": "?",
+          "scale": 0.269,
+          "ctx": "div.wall-hang > div.wall-frame2 > div.wall-window > img.pimg",
+          "nw": 226,
+          "nh": 360,
+          "box": "62x98"
+        },
+        {
+          "key": "?",
+          "scale": 0.307,
+          "ctx": "div.wall-frame2 > div.wall-window > span.pcrop > img.pimg",
+          "nw": 206,
+          "nh": 360,
+          "box": "64x98"
+        },
+        {
+          "key": "?",
+          "scale": 0.267,
+          "ctx": "div.wall-hang > div.wall-frame2 > div.wall-window > img.pimg",
+          "nw": 266,
+          "nh": 360,
+          "box": "72x98"
+        },
+        {
+          "key": "?",
+          "scale": 0.269,
+          "ctx": "div.wall-hang > div.wall-frame2 > div.wall-window > img.pimg",
+          "nw": 238,
+          "nh": 360,
+          "box": "65x98"
+        },
+        {
+          "key": "?",
+          "scale": 0.269,
+          "ctx": "div.wall-hang > div.wall-frame2 > div.wall-window > img.pimg",
+          "nw": 267,
+          "nh": 360,
+          "box": "73x98"
+        }
+      ],
+      "focusableCount": 15
+    },
+    "character": {
+      "minFont": 12.6416,
+      "minFontAt": "div#screen-character.screen.active > div.char-screen-inner > div.char-screen-head > div#char-screen-subtitle.char-subtitle \"CPUs will pick from whoe\"",
+      "font": [],
+      "overflow": [],
+      "portraitOver": [],
+      "focus": [],
+      "portraits": [
+        {
+          "key": "?",
+          "scale": 0.222,
+          "ctx": "div#char-grid.char-grid > div.char-card > div.char-avatar > img",
+          "nw": 215,
+          "nh": 360,
+          "box": "72x80"
+        },
+        {
+          "key": "?",
+          "scale": 0.222,
+          "ctx": "div#char-grid.char-grid > div.char-card > div.char-avatar > img",
+          "nw": 206,
+          "nh": 360,
+          "box": "72x80"
+        },
+        {
+          "key": "?",
+          "scale": 0.222,
+          "ctx": "div#char-grid.char-grid > div.char-card > div.char-avatar > img",
+          "nw": 294,
+          "nh": 360,
+          "box": "72x80"
+        },
+        {
+          "key": "?",
+          "scale": 0.164,
+          "ctx": "div#char-grid.char-grid > div.char-card > div.char-avatar > img",
+          "nw": 439,
+          "nh": 360,
+          "box": "72x80"
+        },
+        {
+          "key": "?",
+          "scale": 0.222,
+          "ctx": "div#char-grid.char-grid > div.char-card > div.char-avatar > img",
+          "nw": 267,
+          "nh": 360,
+          "box": "72x80"
+        },
+        {
+          "key": "?",
+          "scale": 0.222,
+          "ctx": "div#char-grid.char-grid > div.char-card > div.char-avatar > img",
+          "nw": 266,
+          "nh": 360,
+          "box": "72x80"
+        },
+        {
+          "key": "?",
+          "scale": 0.222,
+          "ctx": "div#char-grid.char-grid > div.char-card > div.char-avatar > img",
+          "nw": 278,
+          "nh": 360,
+          "box": "72x80"
+        },
+        {
+          "key": "?",
+          "scale": 0.222,
+          "ctx": "div#char-grid.char-grid > div.char-card > div.char-avatar > img",
+          "nw": 300,
+          "nh": 360,
+          "box": "72x80"
+        },
+        {
+          "key": "?",
+          "scale": 0.171,
+          "ctx": "div#char-grid.char-grid > div.char-card > div.char-avatar > img",
+          "nw": 420,
+          "nh": 360,
+          "box": "72x80"
+        },
+        {
+          "key": "?",
+          "scale": 0.222,
+          "ctx": "div#char-grid.char-grid > div.char-card > div.char-avatar > img",
+          "nw": 241,
+          "nh": 360,
+          "box": "72x80"
+        },
+        {
+          "key": "?",
+          "scale": 0.222,
+          "ctx": "div#char-grid.char-grid > div.char-card > div.char-avatar > img",
+          "nw": 259,
+          "nh": 360,
+          "box": "72x80"
+        },
+        {
+          "key": "?",
+          "scale": 0.222,
+          "ctx": "div#char-grid.char-grid > div.char-card > div.char-avatar > img",
+          "nw": 223,
+          "nh": 360,
+          "box": "72x80"
+        },
+        {
+          "key": "?",
+          "scale": 0.222,
+          "ctx": "div#char-grid.char-grid > div.char-card > div.char-avatar > img",
+          "nw": 226,
+          "nh": 360,
+          "box": "72x80"
+        },
+        {
+          "key": "?",
+          "scale": 0.289,
+          "ctx": "div#char-grid.char-grid > div.char-card > div.char-avatar > img",
+          "nw": 218,
+          "nh": 277,
+          "box": "72x80"
+        },
+        {
+          "key": "?",
+          "scale": 0.222,
+          "ctx": "div#char-grid.char-grid > div.char-card > div.char-avatar > img",
+          "nw": 250,
+          "nh": 360,
+          "box": "72x80"
+        },
+        {
+          "key": "?",
+          "scale": 0.222,
+          "ctx": "div#char-grid.char-grid > div.char-card > div.char-avatar > img",
+          "nw": 196,
+          "nh": 360,
+          "box": "72x80"
+        },
+        {
+          "key": "?",
+          "scale": 0.192,
+          "ctx": "div#char-grid.char-grid > div.char-card > div.char-avatar > img",
+          "nw": 375,
+          "nh": 338,
+          "box": "72x80"
+        },
+        {
+          "key": "?",
+          "scale": 0.222,
+          "ctx": "div#char-grid.char-grid > div.char-card > div.char-avatar > img",
+          "nw": 279,
+          "nh": 360,
+          "box": "72x80"
+        },
+        {
+          "key": "?",
+          "scale": 0.222,
+          "ctx": "div#char-grid.char-grid > div.char-card > div.char-avatar > img",
+          "nw": 238,
+          "nh": 360,
+          "box": "72x80"
+        },
+        {
+          "key": "?",
+          "scale": 0.222,
+          "ctx": "div#char-grid.char-grid > div.char-card > div.char-avatar > img",
+          "nw": 179,
+          "nh": 360,
+          "box": "72x80"
+        }
+      ],
+      "focusableCount": 22
+    },
+    "lobby": {
+      "minFont": 11.2368,
+      "minFontAt": "div.panel > div.lobby-players > div.lobby-player > span.lobby-tag \"YOU\"",
+      "font": [],
+      "overflow": [],
+      "portraitOver": [],
+      "focus": [],
+      "portraits": [
+        {
+          "key": "?",
+          "scale": 0.167,
+          "ctx": "div.lobby-players > div.lobby-player > div.lobby-avatar > img",
+          "nw": 278,
+          "nh": 360,
+          "box": "54x60"
+        },
+        {
+          "key": "?",
+          "scale": 0.167,
+          "ctx": "div.lobby-players > div.lobby-player > div.lobby-avatar > img",
+          "nw": 226,
+          "nh": 360,
+          "box": "54x60"
+        },
+        {
+          "key": "?",
+          "scale": 0.144,
+          "ctx": "div.lobby-players > div.lobby-player > div.lobby-avatar > img",
+          "nw": 375,
+          "nh": 338,
+          "box": "54x60"
+        },
+        {
+          "key": "?",
+          "scale": 0.167,
+          "ctx": "div.lobby-players > div.lobby-player > div.lobby-avatar > img",
+          "nw": 300,
+          "nh": 360,
+          "box": "54x60"
+        }
+      ],
+      "focusableCount": 15
+    },
+    "waiting": {
+      "minFont": 11.2368,
+      "minFontAt": "div.waiting-inner > div.waiting-panel > div > div#waiting-count.player-count-badge \"0 / 6 players\"",
+      "font": [],
+      "overflow": [],
+      "portraitOver": [],
+      "focus": [],
+      "portraits": [],
+      "focusableCount": 4
+    },
+    "game": {
+      "minFont": 11.2,
+      "minFontAt": "div#arena-arc > div.seat.arena-frame > div.af-plate > span.af-name \"Jasper\"",
+      "font": [],
+      "overflow": [],
+      "portraitOver": [],
+      "focus": [],
+      "portraits": [
+        {
+          "key": "?",
+          "scale": 0.453,
+          "ctx": "div.seat.arena-frame > div.af-body > div.af-portrait > img.pimg",
+          "nw": 300,
+          "nh": 360,
+          "box": "136x163"
+        },
+        {
+          "key": "?",
+          "scale": 0.515,
+          "ctx": "div.af-body > div.af-portrait > span.pcrop > img.pimg",
+          "nw": 206,
+          "nh": 360,
+          "box": "106x163"
+        },
+        {
+          "key": "?",
+          "scale": 0.451,
+          "ctx": "div.seat.arena-frame > div.af-body > div.af-portrait > img.pimg",
+          "nw": 266,
+          "nh": 360,
+          "box": "120x163"
+        },
+        {
+          "key": "?",
+          "scale": 0.309,
+          "ctx": "div#my-dock > div.seat.is-me > div.me-chip > img.pimg",
+          "nw": 278,
+          "nh": 360,
+          "box": "86x112"
+        }
+      ],
+      "focusableCount": 14
+    },
+    "modal": {
+      "minFont": 11.2,
+      "minFontAt": "div#arena-arc > div.seat.arena-frame > div.af-plate > span.af-name \"Jasper\"",
+      "font": [],
+      "overflow": [],
+      "portraitOver": [],
+      "focus": [],
+      "portraits": [
+        {
+          "key": "?",
+          "scale": 0.453,
+          "ctx": "div.seat.arena-frame > div.af-body > div.af-portrait > img.pimg",
+          "nw": 300,
+          "nh": 360,
+          "box": "136x163"
+        },
+        {
+          "key": "?",
+          "scale": 0.515,
+          "ctx": "div.af-body > div.af-portrait > span.pcrop > img.pimg",
+          "nw": 206,
+          "nh": 360,
+          "box": "106x163"
+        },
+        {
+          "key": "?",
+          "scale": 0.451,
+          "ctx": "div.seat.arena-frame > div.af-body > div.af-portrait > img.pimg",
+          "nw": 266,
+          "nh": 360,
+          "box": "120x163"
+        },
+        {
+          "key": "?",
+          "scale": 0.309,
+          "ctx": "div#my-dock > div.seat.is-me > div.me-chip > img.pimg",
+          "nw": 278,
+          "nh": 360,
+          "box": "86x112"
+        }
+      ],
+      "focusableCount": 28
+    },
+    "auction": {
+      "minFont": 11.2368,
+      "minFontAt": "div#screen-auction.screen.active > div#auction-layout > div#auction-hist-panel.auction-side-panel > div.auction-side-label \"Auctioned\"",
+      "font": [],
+      "overflow": [],
+      "portraitOver": [],
+      "focus": [],
+      "portraits": [],
+      "focusableCount": 2
+    },
+    "reveal": {
+      "minFont": 11.2368,
+      "minFontAt": "div#reveal-grid.reveal-grid > div.reveal-card.winner-card > div.reveal-player-name > span \"👑\"",
+      "font": [],
+      "overflow": [],
+      "portraitOver": [],
+      "focus": [],
+      "portraits": [],
+      "focusableCount": 3
+    },
+    "winner": {
+      "minFont": 11.2368,
+      "minFontAt": "div#screen-winner.screen.active > div#winner-stats > div \"FINAL STANDINGS\"",
+      "font": [],
+      "overflow": [],
+      "portraitOver": [],
+      "focus": [],
+      "portraits": [
+        {
+          "key": "?",
+          "scale": 0.583,
+          "ctx": "div#winner-portrait > div.win-frame > div.win-port > img.pimg",
+          "nw": 278,
+          "nh": 360,
+          "box": "162x210"
+        }
+      ],
+      "focusableCount": 3
+    },
+    "__errors": {
+      "pageerrors": [],
+      "consoleErrors": []
+    }
+  },
+  "iphone14-390": {
+    "landing": {
+      "minFont": 11.2368,
+      "minFontAt": "div#screen-landing.screen.active > div.landing-grid > div.landing-center > div \"Bluff. Challenge. Surviv\"",
+      "font": [],
+      "overflow": [],
+      "portraitOver": [],
+      "focus": [],
+      "portraits": [
+        {
+          "key": "?",
+          "scale": 0.136,
+          "ctx": "div#home-chars.home-chars > div.home-char > div.home-char-frame > img",
+          "nw": 278,
+          "nh": 360,
+          "box": "38x49"
+        },
+        {
+          "key": "?",
+          "scale": 0.104,
+          "ctx": "div#home-chars.home-chars > div.home-char > div.home-char-frame > img",
+          "nw": 375,
+          "nh": 338,
+          "box": "39x36"
+        },
+        {
+          "key": "?",
+          "scale": 0.136,
+          "ctx": "div#home-chars.home-chars > div.home-char > div.home-char-frame > img",
+          "nw": 241,
+          "nh": 360,
+          "box": "33x49"
+        },
+        {
+          "key": "?",
+          "scale": 0.134,
+          "ctx": "div#home-chars.home-chars > div.home-char > div.home-char-frame > img",
+          "nw": 238,
+          "nh": 360,
+          "box": "32x49"
+        },
+        {
+          "key": "?",
+          "scale": 0.135,
+          "ctx": "div#home-chars.home-chars > div.home-char > div.home-char-frame > img",
+          "nw": 259,
+          "nh": 360,
+          "box": "35x49"
+        },
+        {
+          "key": "?",
+          "scale": 0.133,
+          "ctx": "div#home-chars.home-chars > div.home-char > div.home-char-frame > img",
+          "nw": 294,
+          "nh": 360,
+          "box": "39x48"
+        }
+      ],
+      "focusableCount": 9
+    },
+    "rules": {
+      "minFont": 11.2368,
+      "minFontAt": "div#screen-landing.screen.active > div.landing-grid > div.landing-center > div \"Bluff. Challenge. Surviv\"",
+      "font": [],
+      "overflow": [],
+      "portraitOver": [],
+      "focus": [],
+      "portraits": [
+        {
+          "key": "?",
+          "scale": 0.136,
+          "ctx": "div#home-chars.home-chars > div.home-char > div.home-char-frame > img",
+          "nw": 278,
+          "nh": 360,
+          "box": "38x49"
+        },
+        {
+          "key": "?",
+          "scale": 0.104,
+          "ctx": "div#home-chars.home-chars > div.home-char > div.home-char-frame > img",
+          "nw": 375,
+          "nh": 338,
+          "box": "39x36"
+        },
+        {
+          "key": "?",
+          "scale": 0.136,
+          "ctx": "div#home-chars.home-chars > div.home-char > div.home-char-frame > img",
+          "nw": 241,
+          "nh": 360,
+          "box": "33x49"
+        },
+        {
+          "key": "?",
+          "scale": 0.134,
+          "ctx": "div#home-chars.home-chars > div.home-char > div.home-char-frame > img",
+          "nw": 238,
+          "nh": 360,
+          "box": "32x49"
+        },
+        {
+          "key": "?",
+          "scale": 0.135,
+          "ctx": "div#home-chars.home-chars > div.home-char > div.home-char-frame > img",
+          "nw": 259,
+          "nh": 360,
+          "box": "35x49"
+        },
+        {
+          "key": "?",
+          "scale": 0.133,
+          "ctx": "div#home-chars.home-chars > div.home-char > div.home-char-frame > img",
+          "nw": 294,
+          "nh": 360,
+          "box": "39x48"
+        }
+      ],
+      "focusableCount": 15
+    },
+    "character": {
+      "minFont": 12.6416,
+      "minFontAt": "div#screen-character.screen.active > div.char-screen-inner > div.char-screen-head > div#char-screen-subtitle.char-subtitle \"CPUs will pick from whoe\"",
+      "font": [],
+      "overflow": [],
+      "portraitOver": [],
+      "focus": [],
+      "portraits": [
+        {
+          "key": "?",
+          "scale": 0.222,
+          "ctx": "div#char-grid.char-grid > div.char-card > div.char-avatar > img",
+          "nw": 215,
+          "nh": 360,
+          "box": "72x80"
+        },
+        {
+          "key": "?",
+          "scale": 0.222,
+          "ctx": "div#char-grid.char-grid > div.char-card > div.char-avatar > img",
+          "nw": 206,
+          "nh": 360,
+          "box": "72x80"
+        },
+        {
+          "key": "?",
+          "scale": 0.222,
+          "ctx": "div#char-grid.char-grid > div.char-card > div.char-avatar > img",
+          "nw": 294,
+          "nh": 360,
+          "box": "72x80"
+        },
+        {
+          "key": "?",
+          "scale": 0.164,
+          "ctx": "div#char-grid.char-grid > div.char-card > div.char-avatar > img",
+          "nw": 439,
+          "nh": 360,
+          "box": "72x80"
+        },
+        {
+          "key": "?",
+          "scale": 0.222,
+          "ctx": "div#char-grid.char-grid > div.char-card > div.char-avatar > img",
+          "nw": 267,
+          "nh": 360,
+          "box": "72x80"
+        },
+        {
+          "key": "?",
+          "scale": 0.222,
+          "ctx": "div#char-grid.char-grid > div.char-card > div.char-avatar > img",
+          "nw": 266,
+          "nh": 360,
+          "box": "72x80"
+        },
+        {
+          "key": "?",
+          "scale": 0.222,
+          "ctx": "div#char-grid.char-grid > div.char-card > div.char-avatar > img",
+          "nw": 278,
+          "nh": 360,
+          "box": "72x80"
+        },
+        {
+          "key": "?",
+          "scale": 0.222,
+          "ctx": "div#char-grid.char-grid > div.char-card > div.char-avatar > img",
+          "nw": 300,
+          "nh": 360,
+          "box": "72x80"
+        },
+        {
+          "key": "?",
+          "scale": 0.171,
+          "ctx": "div#char-grid.char-grid > div.char-card > div.char-avatar > img",
+          "nw": 420,
+          "nh": 360,
+          "box": "72x80"
+        },
+        {
+          "key": "?",
+          "scale": 0.222,
+          "ctx": "div#char-grid.char-grid > div.char-card > div.char-avatar > img",
+          "nw": 241,
+          "nh": 360,
+          "box": "72x80"
+        },
+        {
+          "key": "?",
+          "scale": 0.222,
+          "ctx": "div#char-grid.char-grid > div.char-card > div.char-avatar > img",
+          "nw": 259,
+          "nh": 360,
+          "box": "72x80"
+        },
+        {
+          "key": "?",
+          "scale": 0.222,
+          "ctx": "div#char-grid.char-grid > div.char-card > div.char-avatar > img",
+          "nw": 223,
+          "nh": 360,
+          "box": "72x80"
+        },
+        {
+          "key": "?",
+          "scale": 0.222,
+          "ctx": "div#char-grid.char-grid > div.char-card > div.char-avatar > img",
+          "nw": 226,
+          "nh": 360,
+          "box": "72x80"
+        },
+        {
+          "key": "?",
+          "scale": 0.289,
+          "ctx": "div#char-grid.char-grid > div.char-card > div.char-avatar > img",
+          "nw": 218,
+          "nh": 277,
+          "box": "72x80"
+        },
+        {
+          "key": "?",
+          "scale": 0.222,
+          "ctx": "div#char-grid.char-grid > div.char-card > div.char-avatar > img",
+          "nw": 250,
+          "nh": 360,
+          "box": "72x80"
+        },
+        {
+          "key": "?",
+          "scale": 0.222,
+          "ctx": "div#char-grid.char-grid > div.char-card > div.char-avatar > img",
+          "nw": 196,
+          "nh": 360,
+          "box": "72x80"
+        },
+        {
+          "key": "?",
+          "scale": 0.192,
+          "ctx": "div#char-grid.char-grid > div.char-card > div.char-avatar > img",
+          "nw": 375,
+          "nh": 338,
+          "box": "72x80"
+        },
+        {
+          "key": "?",
+          "scale": 0.222,
+          "ctx": "div#char-grid.char-grid > div.char-card > div.char-avatar > img",
+          "nw": 279,
+          "nh": 360,
+          "box": "72x80"
+        },
+        {
+          "key": "?",
+          "scale": 0.222,
+          "ctx": "div#char-grid.char-grid > div.char-card > div.char-avatar > img",
+          "nw": 238,
+          "nh": 360,
+          "box": "72x80"
+        },
+        {
+          "key": "?",
+          "scale": 0.222,
+          "ctx": "div#char-grid.char-grid > div.char-card > div.char-avatar > img",
+          "nw": 179,
+          "nh": 360,
+          "box": "72x80"
+        }
+      ],
+      "focusableCount": 22
+    },
+    "lobby": {
+      "minFont": 11.2368,
+      "minFontAt": "div.panel > div.lobby-players > div.lobby-player > span.lobby-tag \"YOU\"",
+      "font": [],
+      "overflow": [],
+      "portraitOver": [],
+      "focus": [],
+      "portraits": [
+        {
+          "key": "?",
+          "scale": 0.167,
+          "ctx": "div.lobby-players > div.lobby-player > div.lobby-avatar > img",
+          "nw": 278,
+          "nh": 360,
+          "box": "54x60"
+        },
+        {
+          "key": "?",
+          "scale": 0.167,
+          "ctx": "div.lobby-players > div.lobby-player > div.lobby-avatar > img",
+          "nw": 226,
+          "nh": 360,
+          "box": "54x60"
+        },
+        {
+          "key": "?",
+          "scale": 0.144,
+          "ctx": "div.lobby-players > div.lobby-player > div.lobby-avatar > img",
+          "nw": 375,
+          "nh": 338,
+          "box": "54x60"
+        },
+        {
+          "key": "?",
+          "scale": 0.167,
+          "ctx": "div.lobby-players > div.lobby-player > div.lobby-avatar > img",
+          "nw": 300,
+          "nh": 360,
+          "box": "54x60"
+        }
+      ],
+      "focusableCount": 15
+    },
+    "waiting": {
+      "minFont": 11.2368,
+      "minFontAt": "div.waiting-inner > div.waiting-panel > div > div#waiting-count.player-count-badge \"0 / 6 players\"",
+      "font": [],
+      "overflow": [],
+      "portraitOver": [],
+      "focus": [],
+      "portraits": [],
+      "focusableCount": 4
+    },
+    "game": {
+      "minFont": 11.2368,
+      "minFontAt": "div#screen-game.screen.active > div#top-bar > div#tb-room.tb-room \"Solo\"",
+      "font": [],
+      "overflow": [],
+      "portraitOver": [],
+      "focus": [],
+      "portraits": [
+        {
+          "key": "?",
+          "scale": 0.136,
+          "ctx": "div.seat.arena-frame > div.af-body > div.af-portrait > img.pimg",
+          "nw": 300,
+          "nh": 360,
+          "box": "41x49"
+        },
+        {
+          "key": "?",
+          "scale": 0.155,
+          "ctx": "div.af-body > div.af-portrait > span.pcrop > img.pimg",
+          "nw": 206,
+          "nh": 360,
+          "box": "32x49"
+        },
+        {
+          "key": "?",
+          "scale": 0.135,
+          "ctx": "div.seat.arena-frame > div.af-body > div.af-portrait > img.pimg",
+          "nw": 266,
+          "nh": 360,
+          "box": "36x49"
+        },
+        {
+          "key": "?",
+          "scale": 0.244,
+          "ctx": "div#my-dock > div.seat.is-me > div.me-chip > img.pimg",
+          "nw": 278,
+          "nh": 360,
+          "box": "68x88"
+        }
+      ],
+      "focusableCount": 12
+    },
+    "modal": {
+      "minFont": 11.2368,
+      "minFontAt": "div#screen-game.screen.active > div#top-bar > div#tb-room.tb-room \"Solo\"",
+      "font": [],
+      "overflow": [],
+      "portraitOver": [],
+      "focus": [],
+      "portraits": [
+        {
+          "key": "?",
+          "scale": 0.136,
+          "ctx": "div.seat.arena-frame > div.af-body > div.af-portrait > img.pimg",
+          "nw": 300,
+          "nh": 360,
+          "box": "41x49"
+        },
+        {
+          "key": "?",
+          "scale": 0.155,
+          "ctx": "div.af-body > div.af-portrait > span.pcrop > img.pimg",
+          "nw": 206,
+          "nh": 360,
+          "box": "32x49"
+        },
+        {
+          "key": "?",
+          "scale": 0.135,
+          "ctx": "div.seat.arena-frame > div.af-body > div.af-portrait > img.pimg",
+          "nw": 266,
+          "nh": 360,
+          "box": "36x49"
+        },
+        {
+          "key": "?",
+          "scale": 0.244,
+          "ctx": "div#my-dock > div.seat.is-me > div.me-chip > img.pimg",
+          "nw": 278,
+          "nh": 360,
+          "box": "68x88"
+        }
+      ],
+      "focusableCount": 26
+    },
+    "auction": {
+      "minFont": 11.2368,
+      "minFontAt": "div#screen-auction.screen.active > div#auction-layout > div#auction-center > div.auction-header \"AUCTION HOUSE\"",
+      "font": [],
+      "overflow": [],
+      "portraitOver": [],
+      "focus": [],
+      "portraits": [],
+      "focusableCount": 2
+    },
+    "reveal": {
+      "minFont": 11.2368,
+      "minFontAt": "div#reveal-grid.reveal-grid > div.reveal-card.winner-card > div.reveal-player-name > span \"👑\"",
+      "font": [],
+      "overflow": [],
+      "portraitOver": [],
+      "focus": [],
+      "portraits": [],
+      "focusableCount": 3
+    },
+    "winner": {
+      "minFont": 11.2368,
+      "minFontAt": "div#screen-winner.screen.active > div#winner-stats > div \"FINAL STANDINGS\"",
+      "font": [],
+      "overflow": [],
+      "portraitOver": [],
+      "focus": [],
+      "portraits": [
+        {
+          "key": "?",
+          "scale": 0.583,
+          "ctx": "div#winner-portrait > div.win-frame > div.win-port > img.pimg",
+          "nw": 278,
+          "nh": 360,
+          "box": "162x210"
+        }
+      ],
+      "focusableCount": 3
+    },
+    "__errors": {
+      "pageerrors": [],
+      "consoleErrors": []
+    }
+  },
+  "android-360": {
+    "landing": {
+      "minFont": 11.2368,
+      "minFontAt": "div#screen-landing.screen.active > div.landing-grid > div.landing-center > div \"Bluff. Challenge. Surviv\"",
+      "font": [],
+      "overflow": [],
+      "portraitOver": [],
+      "focus": [],
+      "portraits": [
+        {
+          "key": "?",
+          "scale": 0.136,
+          "ctx": "div#home-chars.home-chars > div.home-char > div.home-char-frame > img",
+          "nw": 278,
+          "nh": 360,
+          "box": "38x49"
+        },
+        {
+          "key": "?",
+          "scale": 0.104,
+          "ctx": "div#home-chars.home-chars > div.home-char > div.home-char-frame > img",
+          "nw": 375,
+          "nh": 338,
+          "box": "39x36"
+        },
+        {
+          "key": "?",
+          "scale": 0.136,
+          "ctx": "div#home-chars.home-chars > div.home-char > div.home-char-frame > img",
+          "nw": 241,
+          "nh": 360,
+          "box": "33x49"
+        },
+        {
+          "key": "?",
+          "scale": 0.134,
+          "ctx": "div#home-chars.home-chars > div.home-char > div.home-char-frame > img",
+          "nw": 238,
+          "nh": 360,
+          "box": "32x49"
+        },
+        {
+          "key": "?",
+          "scale": 0.135,
+          "ctx": "div#home-chars.home-chars > div.home-char > div.home-char-frame > img",
+          "nw": 259,
+          "nh": 360,
+          "box": "35x49"
+        },
+        {
+          "key": "?",
+          "scale": 0.133,
+          "ctx": "div#home-chars.home-chars > div.home-char > div.home-char-frame > img",
+          "nw": 294,
+          "nh": 360,
+          "box": "39x48"
+        }
+      ],
+      "focusableCount": 9
+    },
+    "rules": {
+      "minFont": 11.2368,
+      "minFontAt": "div#screen-landing.screen.active > div.landing-grid > div.landing-center > div \"Bluff. Challenge. Surviv\"",
+      "font": [],
+      "overflow": [],
+      "portraitOver": [],
+      "focus": [],
+      "portraits": [
+        {
+          "key": "?",
+          "scale": 0.136,
+          "ctx": "div#home-chars.home-chars > div.home-char > div.home-char-frame > img",
+          "nw": 278,
+          "nh": 360,
+          "box": "38x49"
+        },
+        {
+          "key": "?",
+          "scale": 0.104,
+          "ctx": "div#home-chars.home-chars > div.home-char > div.home-char-frame > img",
+          "nw": 375,
+          "nh": 338,
+          "box": "39x36"
+        },
+        {
+          "key": "?",
+          "scale": 0.136,
+          "ctx": "div#home-chars.home-chars > div.home-char > div.home-char-frame > img",
+          "nw": 241,
+          "nh": 360,
+          "box": "33x49"
+        },
+        {
+          "key": "?",
+          "scale": 0.134,
+          "ctx": "div#home-chars.home-chars > div.home-char > div.home-char-frame > img",
+          "nw": 238,
+          "nh": 360,
+          "box": "32x49"
+        },
+        {
+          "key": "?",
+          "scale": 0.135,
+          "ctx": "div#home-chars.home-chars > div.home-char > div.home-char-frame > img",
+          "nw": 259,
+          "nh": 360,
+          "box": "35x49"
+        },
+        {
+          "key": "?",
+          "scale": 0.133,
+          "ctx": "div#home-chars.home-chars > div.home-char > div.home-char-frame > img",
+          "nw": 294,
+          "nh": 360,
+          "box": "39x48"
+        }
+      ],
+      "focusableCount": 15
+    },
+    "character": {
+      "minFont": 12.6416,
+      "minFontAt": "div#screen-character.screen.active > div.char-screen-inner > div.char-screen-head > div#char-screen-subtitle.char-subtitle \"CPUs will pick from whoe\"",
+      "font": [],
+      "overflow": [],
+      "portraitOver": [],
+      "focus": [],
+      "portraits": [
+        {
+          "key": "?",
+          "scale": 0.222,
+          "ctx": "div#char-grid.char-grid > div.char-card > div.char-avatar > img",
+          "nw": 215,
+          "nh": 360,
+          "box": "72x80"
+        },
+        {
+          "key": "?",
+          "scale": 0.222,
+          "ctx": "div#char-grid.char-grid > div.char-card > div.char-avatar > img",
+          "nw": 206,
+          "nh": 360,
+          "box": "72x80"
+        },
+        {
+          "key": "?",
+          "scale": 0.222,
+          "ctx": "div#char-grid.char-grid > div.char-card > div.char-avatar > img",
+          "nw": 294,
+          "nh": 360,
+          "box": "72x80"
+        },
+        {
+          "key": "?",
+          "scale": 0.164,
+          "ctx": "div#char-grid.char-grid > div.char-card > div.char-avatar > img",
+          "nw": 439,
+          "nh": 360,
+          "box": "72x80"
+        },
+        {
+          "key": "?",
+          "scale": 0.222,
+          "ctx": "div#char-grid.char-grid > div.char-card > div.char-avatar > img",
+          "nw": 267,
+          "nh": 360,
+          "box": "72x80"
+        },
+        {
+          "key": "?",
+          "scale": 0.222,
+          "ctx": "div#char-grid.char-grid > div.char-card > div.char-avatar > img",
+          "nw": 266,
+          "nh": 360,
+          "box": "72x80"
+        },
+        {
+          "key": "?",
+          "scale": 0.222,
+          "ctx": "div#char-grid.char-grid > div.char-card > div.char-avatar > img",
+          "nw": 278,
+          "nh": 360,
+          "box": "72x80"
+        },
+        {
+          "key": "?",
+          "scale": 0.222,
+          "ctx": "div#char-grid.char-grid > div.char-card > div.char-avatar > img",
+          "nw": 300,
+          "nh": 360,
+          "box": "72x80"
+        },
+        {
+          "key": "?",
+          "scale": 0.171,
+          "ctx": "div#char-grid.char-grid > div.char-card > div.char-avatar > img",
+          "nw": 420,
+          "nh": 360,
+          "box": "72x80"
+        },
+        {
+          "key": "?",
+          "scale": 0.222,
+          "ctx": "div#char-grid.char-grid > div.char-card > div.char-avatar > img",
+          "nw": 241,
+          "nh": 360,
+          "box": "72x80"
+        },
+        {
+          "key": "?",
+          "scale": 0.222,
+          "ctx": "div#char-grid.char-grid > div.char-card > div.char-avatar > img",
+          "nw": 259,
+          "nh": 360,
+          "box": "72x80"
+        },
+        {
+          "key": "?",
+          "scale": 0.222,
+          "ctx": "div#char-grid.char-grid > div.char-card > div.char-avatar > img",
+          "nw": 223,
+          "nh": 360,
+          "box": "72x80"
+        },
+        {
+          "key": "?",
+          "scale": 0.222,
+          "ctx": "div#char-grid.char-grid > div.char-card > div.char-avatar > img",
+          "nw": 226,
+          "nh": 360,
+          "box": "72x80"
+        },
+        {
+          "key": "?",
+          "scale": 0.289,
+          "ctx": "div#char-grid.char-grid > div.char-card > div.char-avatar > img",
+          "nw": 218,
+          "nh": 277,
+          "box": "72x80"
+        },
+        {
+          "key": "?",
+          "scale": 0.222,
+          "ctx": "div#char-grid.char-grid > div.char-card > div.char-avatar > img",
+          "nw": 250,
+          "nh": 360,
+          "box": "72x80"
+        },
+        {
+          "key": "?",
+          "scale": 0.222,
+          "ctx": "div#char-grid.char-grid > div.char-card > div.char-avatar > img",
+          "nw": 196,
+          "nh": 360,
+          "box": "72x80"
+        },
+        {
+          "key": "?",
+          "scale": 0.192,
+          "ctx": "div#char-grid.char-grid > div.char-card > div.char-avatar > img",
+          "nw": 375,
+          "nh": 338,
+          "box": "72x80"
+        },
+        {
+          "key": "?",
+          "scale": 0.222,
+          "ctx": "div#char-grid.char-grid > div.char-card > div.char-avatar > img",
+          "nw": 279,
+          "nh": 360,
+          "box": "72x80"
+        },
+        {
+          "key": "?",
+          "scale": 0.222,
+          "ctx": "div#char-grid.char-grid > div.char-card > div.char-avatar > img",
+          "nw": 238,
+          "nh": 360,
+          "box": "72x80"
+        },
+        {
+          "key": "?",
+          "scale": 0.222,
+          "ctx": "div#char-grid.char-grid > div.char-card > div.char-avatar > img",
+          "nw": 179,
+          "nh": 360,
+          "box": "72x80"
+        }
+      ],
+      "focusableCount": 22
+    },
+    "lobby": {
+      "minFont": 11.2368,
+      "minFontAt": "div.panel > div.lobby-players > div.lobby-player > span.lobby-tag \"YOU\"",
+      "font": [],
+      "overflow": [],
+      "portraitOver": [],
+      "focus": [],
+      "portraits": [
+        {
+          "key": "?",
+          "scale": 0.167,
+          "ctx": "div.lobby-players > div.lobby-player > div.lobby-avatar > img",
+          "nw": 278,
+          "nh": 360,
+          "box": "54x60"
+        },
+        {
+          "key": "?",
+          "scale": 0.217,
+          "ctx": "div.lobby-players > div.lobby-player > div.lobby-avatar > img",
+          "nw": 218,
+          "nh": 277,
+          "box": "54x60"
+        },
+        {
+          "key": "?",
+          "scale": 0.167,
+          "ctx": "div.lobby-players > div.lobby-player > div.lobby-avatar > img",
+          "nw": 294,
+          "nh": 360,
+          "box": "54x60"
+        },
+        {
+          "key": "?",
+          "scale": 0.144,
+          "ctx": "div.lobby-players > div.lobby-player > div.lobby-avatar > img",
+          "nw": 375,
+          "nh": 338,
+          "box": "54x60"
+        }
+      ],
+      "focusableCount": 15
+    },
+    "waiting": {
+      "minFont": 11.2368,
+      "minFontAt": "div.waiting-inner > div.waiting-panel > div > div#waiting-count.player-count-badge \"0 / 6 players\"",
+      "font": [],
+      "overflow": [],
+      "portraitOver": [],
+      "focus": [],
+      "portraits": [],
+      "focusableCount": 4
+    },
+    "game": {
+      "minFont": 11.2368,
+      "minFontAt": "div#screen-game.screen.active > div#top-bar > div#tb-room.tb-room \"Solo\"",
+      "font": [],
+      "overflow": [],
+      "portraitOver": [],
+      "focus": [],
+      "portraits": [
+        {
+          "key": "?",
+          "scale": 0.132,
+          "ctx": "div.seat.arena-frame > div.af-body > div.af-portrait > img.pimg",
+          "nw": 250,
+          "nh": 360,
+          "box": "33x48"
+        },
+        {
+          "key": "?",
+          "scale": 0.174,
+          "ctx": "div.af-body > div.af-portrait > span.pcrop > img.pimg",
+          "nw": 420,
+          "nh": 360,
+          "box": "73x48"
+        },
+        {
+          "key": "?",
+          "scale": 0.133,
+          "ctx": "div.seat.arena-frame > div.af-body > div.af-portrait > img.pimg",
+          "nw": 279,
+          "nh": 360,
+          "box": "37x48"
+        },
+        {
+          "key": "?",
+          "scale": 0.225,
+          "ctx": "div#my-dock > div.seat.is-me > div.me-chip > img.pimg",
+          "nw": 278,
+          "nh": 360,
+          "box": "63x81"
+        }
+      ],
+      "focusableCount": 12
+    },
+    "modal": {
+      "minFont": 11.2368,
+      "minFontAt": "div#screen-game.screen.active > div#top-bar > div#tb-room.tb-room \"Solo\"",
+      "font": [],
+      "overflow": [],
+      "portraitOver": [],
+      "focus": [],
+      "portraits": [
+        {
+          "key": "?",
+          "scale": 0.132,
+          "ctx": "div.seat.arena-frame > div.af-body > div.af-portrait > img.pimg",
+          "nw": 250,
+          "nh": 360,
+          "box": "33x48"
+        },
+        {
+          "key": "?",
+          "scale": 0.174,
+          "ctx": "div.af-body > div.af-portrait > span.pcrop > img.pimg",
+          "nw": 420,
+          "nh": 360,
+          "box": "73x48"
+        },
+        {
+          "key": "?",
+          "scale": 0.133,
+          "ctx": "div.seat.arena-frame > div.af-body > div.af-portrait > img.pimg",
+          "nw": 279,
+          "nh": 360,
+          "box": "37x48"
+        },
+        {
+          "key": "?",
+          "scale": 0.225,
+          "ctx": "div#my-dock > div.seat.is-me > div.me-chip > img.pimg",
+          "nw": 278,
+          "nh": 360,
+          "box": "63x81"
+        }
+      ],
+      "focusableCount": 26
+    },
+    "auction": {
+      "minFont": 11.2368,
+      "minFontAt": "div#screen-auction.screen.active > div#auction-layout > div#auction-center > div.auction-header \"AUCTION HOUSE\"",
+      "font": [],
+      "overflow": [],
+      "portraitOver": [],
+      "focus": [],
+      "portraits": [],
+      "focusableCount": 2
+    },
+    "reveal": {
+      "minFont": 11.2368,
+      "minFontAt": "div#reveal-grid.reveal-grid > div.reveal-card.winner-card > div.reveal-player-name > span \"👑\"",
+      "font": [],
+      "overflow": [],
+      "portraitOver": [],
+      "focus": [],
+      "portraits": [],
+      "focusableCount": 3
+    },
+    "winner": {
+      "minFont": 11.2368,
+      "minFontAt": "div#screen-winner.screen.active > div#winner-stats > div \"FINAL STANDINGS\"",
+      "font": [],
+      "overflow": [],
+      "portraitOver": [],
+      "focus": [],
+      "portraits": [
+        {
+          "key": "?",
+          "scale": 0.583,
+          "ctx": "div#winner-portrait > div.win-frame > div.win-port > img.pimg",
+          "nw": 278,
+          "nh": 360,
+          "box": "162x210"
+        }
+      ],
+      "focusableCount": 3
+    },
+    "__errors": {
+      "pageerrors": [],
+      "consoleErrors": []
+    }
+  }
+}

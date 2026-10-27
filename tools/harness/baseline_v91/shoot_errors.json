@@ -1,0 +1,122 @@
+{
+  "desktop-1920": {
+    "pageerrors": [],
+    "consoleErrors": [
+      "Error: <rect> attribute width: A negative value is not valid. (\"-3\")",
+      "Error: <rect> attribute height: A negative value is not valid. (\"-3\")",
+      "Error: <rect> attribute width: A negative value is not valid. (\"-3\")",
+      "Error: <rect> attribute height: A negative value is not valid. (\"-3\")",
+      "Error: <rect> attribute width: A negative value is not valid. (\"-3\")",
+      "Error: <rect> attribute height: A negative value is not valid. (\"-3\")",
+      "Error: <rect> attribute width: A negative value is not valid. (\"-3\")",
+      "Error: <rect> attribute height: A negative value is not valid. (\"-3\")",
+      "Error: <rect> attribute width: A negative value is not valid. (\"-3\")",
+      "Error: <rect> attribute height: A negative value is not valid. (\"-3\")",
+      "Error: <rect> attribute width: A negative value is not valid. (\"-3\")",
+      "Error: <rect> attribute height: A negative value is not valid. (\"-3\")",
+      "Error: <rect> attribute width: A negative value is not valid. (\"-3\")",
+      "Error: <rect> attribute height: A negative value is not valid. (\"-3\")",
+      "Error: <rect> attribute width: A negative value is not valid. (\"-3\")",
+      "Error: <rect> attribute height: A negative value is not valid. (\"-3\")",
+      "Error: <rect> attribute width: A negative value is not valid. (\"-3\")",
+      "Error: <rect> attribute height: A negative value is not valid. (\"-3\")"
+    ],
+    "windowErrors": []
+  },
+  "laptop-1440": {
+    "pageerrors": [],
+    "consoleErrors": [
+      "Error: <rect> attribute width: A negative value is not valid. (\"-3\")",
+      "Error: <rect> attribute height: A negative value is not valid. (\"-3\")",
+      "Error: <rect> attribute width: A negative value is not valid. (\"-3\")",
+      "Error: <rect> attribute height: A negative value is not valid. (\"-3\")",
+      "Error: <rect> attribute width: A negative value is not valid. (\"-3\")",
+      "Error: <rect> attribute height: A negative value is not valid. (\"-3\")",
+      "Error: <rect> attribute width: A negative value is not valid. (\"-3\")",
+      "Error: <rect> attribute height: A negative value is not valid. (\"-3\")",
+      "Error: <rect> attribute width: A negative value is not valid. (\"-3\")",
+      "Error: <rect> attribute height: A negative value is not valid. (\"-3\")",
+      "Error: <rect> attribute width: A negative value is not valid. (\"-3\")",
+      "Error: <rect> attribute height: A negative value is not valid. (\"-3\")",
+      "Error: <rect> attribute width: A negative value is not valid. (\"-3\")",
+      "Error: <rect> attribute height: A negative value is not valid. (\"-3\")",
+      "Error: <rect> attribute width: A negative value is not valid. (\"-3\")",
+      "Error: <rect> attribute height: A negative value is not valid. (\"-3\")",
+      "Error: <rect> attribute width: A negative value is not valid. (\"-3\")",
+      "Error: <rect> attribute height: A negative value is not valid. (\"-3\")"
+    ],
+    "windowErrors": []
+  },
+  "ipad-1024": {
+    "pageerrors": [],
+    "consoleErrors": [
+      "Error: <rect> attribute width: A negative value is not valid. (\"-3\")",
+      "Error: <rect> attribute height: A negative value is not valid. (\"-3\")",
+      "Error: <rect> attribute width: A negative value is not valid. (\"-3\")",
+      "Error: <rect> attribute height: A negative value is not valid. (\"-3\")",
+      "Error: <rect> attribute width: A negative value is not valid. (\"-3\")",
+      "Error: <rect> attribute height: A negative value is not valid. (\"-3\")",
+      "Error: <rect> attribute width: A negative value is not valid. (\"-3\")",
+      "Error: <rect> attribute height: A negative value is not valid. (\"-3\")",
+      "Error: <rect> attribute width: A negative value is not valid. (\"-3\")",
+      "Error: <rect> attribute height: A negative value is not valid. (\"-3\")",
+      "Error: <rect> attribute width: A negative value is not valid. (\"-3\")",
+      "Error: <rect> attribute height: A negative value is not valid. (\"-3\")",
+      "Error: <rect> attribute width: A negative value is not valid. (\"-3\")",
+      "Error: <rect> attribute height: A negative value is not valid. (\"-3\")",
+      "Error: <rect> attribute width: A negative value is not valid. (\"-3\")",
+      "Error: <rect> attribute height: A negative value is not valid. (\"-3\")",
+      "Error: <rect> attribute width: A negative value is not valid. (\"-3\")",
+      "Error: <rect> attribute height: A negative value is not valid. (\"-3\")"
+    ],
+    "windowErrors": []
+  },
+  "iphone14-390": {
+    "pageerrors": [],
+    "consoleErrors": [
+      "Error: <rect> attribute width: A negative value is not valid. (\"-3\")",
+      "Error: <rect> attribute height: A negative value is not valid. (\"-3\")",
+      "Error: <rect> attribute width: A negative value is not valid. (\"-3\")",
+      "Error: <rect> attribute height: A negative value is not valid. (\"-3\")",
+      "Error: <rect> attribute width: A negative value is not valid. (\"-3\")",
+      "Error: <rect> attribute height: A negative value is not valid. (\"-3\")",
+      "Error: <rect> attribute width: A negative value is not valid. (\"-3\")",
+      "Error: <rect> attribute height: A negative value is not valid. (\"-3\")",
+      "Error: <rect> attribute width: A negative value is not valid. (\"-3\")",
+      "Error: <rect> attribute height: A negative value is not valid. (\"-3\")",
+      "Error: <rect> attribute width: A negative value is not valid. (\"-3\")",
+      "Error: <rect> attribute height: A negative value is not valid. (\"-3\")",
+      "Error: <rect> attribute width: A negative value is not valid. (\"-3\")",
+      "Error: <rect> attribute height: A negative value is not valid. (\"-3\")",
+      "Error: <rect> attribute width: A negative value is not valid. (\"-3\")",
+      "Error: <rect> attribute height: A negative value is not valid. (\"-3\")",
+      "Error: <rect> attribute width: A negative value is not valid. (\"-3\")",
+      "Error: <rect> attribute height: A negative value is not valid. (\"-3\")"
+    ],
+    "windowErrors": []
+  },
+  "android-360": {
+    "pageerrors": [],
+    "consoleErrors": [
+      "Error: <rect> attribute width: A negative value is not valid. (\"-3\")",
+      "Error: <rect> attribute height: A negative value is not valid. (\"-3\")",
+      "Error: <rect> attribute width: A negative value is not valid. (\"-3\")",
+      "Error: <rect> attribute height: A negative value is not valid. (\"-3\")",
+      "Error: <rect> attribute width: A negative value is not valid. (\"-3\")",
+      "Error: <rect> attribute height: A negative value is not valid. (\"-3\")",
+      "Error: <rect> attribute width: A negative value is not valid. (\"-3\")",
+      "Error: <rect> attribute height: A negative value is not valid. (\"-3\")",
+      "Error: <rect> attribute width: A negative value is not valid. (\"-3\")",
+      "Error: <rect> attribute height: A negative value is not valid. (\"-3\")",
+      "Error: <rect> attribute width: A negative value is not valid. (\"-3\")",
+      "Error: <rect> attribute height: A negative value is not valid. (\"-3\")",
+      "Error: <rect> attribute width: A negative value is not valid. (\"-3\")",
+      "Error: <rect> attribute height: A negative value is not valid. (\"-3\")",
+      "Error: <rect> attribute width: A negative value is not valid. (\"-3\")",
+      "Error: <rect> attribute height: A negative value is not valid. (\"-3\")",
+      "Error: <rect> attribute width: A negative value is not valid. (\"-3\")",
+      "Error: <rect> attribute height: A negative value is not valid. (\"-3\")"
+    ],
+    "windowErrors": []
+  }
+}

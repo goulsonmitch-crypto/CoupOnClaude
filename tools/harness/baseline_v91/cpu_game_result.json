@@ -1,0 +1,87 @@
+[
+  {
+    "viewport": "desktop-1920",
+    "completed": true,
+    "seconds": 117,
+    "steps": 444,
+    "winnerName": "Baby (CPU)",
+    "turns": 32,
+    "actionAreaHeights": {
+      "69": 422,
+      "114": 4,
+      "127": 1,
+      "177": 16
+    },
+    "pageerrors": [],
+    "consoleErrors": [],
+    "windowErrors": []
+  },
+  {
+    "viewport": "laptop-1440",
+    "completed": true,
+    "seconds": 91,
+    "steps": 343,
+    "winnerName": "Yossi (CPU)",
+    "turns": 27,
+    "actionAreaHeights": {
+      "69": 300,
+      "114": 5,
+      "127": 1,
+      "177": 36
+    },
+    "pageerrors": [],
+    "consoleErrors": [],
+    "windowErrors": []
+  },
+  {
+    "viewport": "ipad-1024",
+    "completed": true,
+    "seconds": 122,
+    "steps": 467,
+    "winnerName": "Jonny Soul (CPU)",
+    "turns": 29,
+    "actionAreaHeights": {
+      "69": 443,
+      "114": 6,
+      "127": 1,
+      "177": 16
+    },
+    "pageerrors": [],
+    "consoleErrors": [],
+    "windowErrors": []
+  },
+  {
+    "viewport": "iphone14-390",
+    "completed": true,
+    "seconds": 138,
+    "steps": 530,
+    "winnerName": "Bevman (CPU)",
+    "turns": 39,
+    "actionAreaHeights": {
+      "69": 503,
+      "107": 5,
+      "167": 1,
+      "258": 20
+    },
+    "pageerrors": [],
+    "consoleErrors": [],
+    "windowErrors": []
+  },
+  {
+    "viewport": "android-360",
+    "completed": true,
+    "seconds": 88,
+    "steps": 332,
+    "winnerName": "Bevman (CPU)",
+    "turns": 24,
+    "actionAreaHeights": {
+      "69": 296,
+      "107": 5,
+      "167": 2,
+      "258": 28
+    },
+    "pageerrors": [],
+    "consoleErrors": [],
+    "windowErrors": []
+  }
+]

@@ -1,0 +1,15 @@
+{
+  "reducedMotion": {
+    "animations": 2,
+    "longOrInfinite": [],
+    "activeFrameRing": true,
+    "activeGlowOpacity": "1"
+  },
+  "layers": {
+    "holders": [
+      ".seat.is-me.arena-me.my-turn-glow::before => opacity"
+    ],
+    "leaks": [],
+    "layoutKeyframes": []
+  }
+}
